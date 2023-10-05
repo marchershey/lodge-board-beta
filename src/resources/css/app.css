@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: "Inter";
+        src: url(../../public/fonts/Inter.ttf) format("truetype");
+    }
+    #nprogress .bar {
+        @apply z-[2000] !h-1 !rounded-full !bg-primary;
+    }
+    #nprogress .bar {
+        box-shadow:
+            0 0 10px #3b82f6,
+            0 0 20px #3b82f6 !important;
+    }
+    #nprogress .peg {
+        @apply !hidden !w-full !rotate-0 rounded-full !bg-primary;
+    }
+
+    #nprogress .spinner {
+        @apply z-[2000];
+    }
+    #nprogress .spinner .spinner-icon {
+        @apply !h-6 !w-6 !border-4 !border-l-primary border-t-primary;
+    }
+}
+
+@layer components {
+    /* Typography */
+    .link {
+        @apply text-primary underline-offset-1 hover:underline dark:text-primary-light;
+    }
+
+    /* Page Elements */
+    .page-title {
+        @apply text-2xl font-bold;
+    }
+
+    /* Cards */
+    .card-container {
+        @apply mx-0 tablet:mx-6;
+    }
+    .card {
+        @apply border-y border-gray-300 bg-white shadow-xl dark:border-gray-700/30 dark:bg-gray-800 tablet:w-full tablet:rounded-xl tablet:border;
+    }
+    .card-form {
+        @apply grid grid-cols-12 gap-x-6 gap-y-8;
+    }
+    .card-form div {
+        @apply col-span-full;
+    }
+    .card-padding {
+        @apply px-6 py-10 tablet:px-8;
+    }
+
+    /* Alerts */
+    .alert-container {
+        @apply flex flex-col space-y-2 rounded-lg px-4 py-5 ring-1;
+    }
+    .alert-title {
+        @apply text-base font-semibold;
+    }
+    .alert-body {
+        @apply text-sm;
+    }
+    .alert-type-error {
+        @apply bg-red-600/80 text-white ring-red-500;
+    }
+
+    /* Form & Form Elements*/
+    .form-label {
+        @apply mb-2 block cursor-pointer font-medium leading-5 text-gray-900 dark:text-white;
+    }
+    .form-label-error {
+        @apply !text-red-500;
+    }
+    .form-input {
+        @apply block w-full rounded-md border-0 bg-gray-100 px-4 py-2.5 text-base leading-6 ring-1 ring-gray-300 placeholder:text-gray-300 hover:ring-2 hover:ring-gray-400 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-primary dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary tablet:text-lg;
+    }
+    .form-input-error {
+        @apply !ring-2 !ring-red-500;
+    }
+    .form-desc {
+        @apply mt-2 block text-xs leading-4 text-muted dark:text-muted-dark;
+    }
+    .form-desc-error {
+        @apply !text-red-500;
+    }
+    .form-checkbox {
+        @apply mt-1 h-6 w-6 rounded border-gray-300 bg-gray-100 text-primary dark:border-gray-700 dark:bg-gray-900/70 dark:ring-0 dark:ring-offset-gray-700;
+    }
+    .form-checkbox-container {
+        @apply relative flex items-start;
+    }
+    .form-checkbox-container label {
+        @apply ml-3 flex flex-col space-y-1;
+    }
+    .form-toggle {
+        @apply flex items-center justify-between;
+    }
+    .form-toggle button {
+        @apply relative ml-4 inline-flex w-14 rounded-full bg-gray-100 py-1 ring-1 ring-gray-300 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary group-hover:ring-2 group-hover:ring-gray-400 dark:bg-gray-900/70 dark:ring-gray-700 dark:focus-visible:ring-primary dark:group-hover:ring-gray-700;
+    }
+    .form-toggle span {
+        @apply h-5 w-5 rounded-full bg-white shadow-md ring-1 ring-gray-300 transition-transform;
+    }
+    .form-toggle-button-active {
+        @apply !bg-primary focus-visible:!ring-black group-hover:!bg-primary-hover group-hover:!ring-0 dark:focus-visible:!ring-white dark:group-hover:!ring-primary-hover;
+    }
+    .form-toggle-span-active {
+        /* @apply ; */
+    }
+
+    /* Buttons */
+    .button {
+        @apply flex h-[48px] items-center justify-center rounded-md px-4 font-medium outline-none ring-black focus-visible:ring-2 dark:ring-white;
+    }
+    .button-link {
+    }
+    .button-primary {
+        @apply bg-primary text-white hover:bg-primary-hover active:bg-primary-active;
+    }
+    .button-muted {
+        @apply bg-muted-lighter text-gray-800 ring-1 ring-gray-300 hover:bg-gray-300 dark:bg-gray-900/70 dark:text-white dark:ring-gray-700 dark:hover:bg-gray-900;
+    }
+    .button:disabled {
+        @apply cursor-not-allowed opacity-50 hover:bg-primary;
+    }
+}
