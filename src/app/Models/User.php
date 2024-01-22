@@ -43,4 +43,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    function full_name(): string
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
+
+    function initials(): string
+    {
+        $names = explode(' ', $this->full_name());
+        $initials = '';
+        foreach ($names as $name) {
+            $initials .= strtoupper(substr($name, 0, 1));
+        }
+
+        return $initials;
+    }
 }

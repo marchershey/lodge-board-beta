@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'LodgeBoard'),
     'build' => env('APP_BUILD', 'X.X.X'),
 
     /*

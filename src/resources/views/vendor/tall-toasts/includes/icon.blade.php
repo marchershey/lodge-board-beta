@@ -4,7 +4,7 @@
 
 {{-- Debug --}}
 <template x-if="toast.type==='debug'">
-    <svg class="{{ $iconSize }} text-muted-light dark:text-gray-700" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <svg class="{{ $iconSize }} text-muted-lighter dark:text-gray-700" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
         <path d="M8 9h8"></path>
         <path d="M8 13h6"></path>

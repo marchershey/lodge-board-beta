@@ -9,7 +9,7 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
 
-    protected $withoutDuplicates = false;
+    protected $withoutDuplicates = true;
 
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
@@ -28,7 +28,7 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            // 
+            //
         });
     }
 
@@ -39,8 +39,8 @@ class Handler extends ExceptionHandler
      */
     // protected function context(): array
     // {
-    //     return array_merge(parent::context(), [
-    //         'foo' => 'bar',
-    //     ]);
+    // return array_merge(parent::context(), [
+    //     'foo' => 'bar',
+    // ]);
     // }
 }

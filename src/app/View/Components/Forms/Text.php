@@ -15,11 +15,12 @@ class Text extends Component
     public $type;
     public $autocomplete;
     public $class;
+    public $onfocus;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $label = "", string $desc = "", string $placeholder = "", string $type = "text", string $autocomplete = "", string $class = "")
+    public function __construct(string $wiremodel, string $label = "", string $desc = "", string $placeholder = "", string $type = "text", string $autocomplete = "", string $class = "", string $onfocus = "")
     {
         $this->wiremodel = $wiremodel;
         $this->label = $label;
@@ -28,6 +29,7 @@ class Text extends Component
         $this->type = $type;
         $this->autocomplete = $autocomplete;
         $this->class = $class;
+        $this->onfocus = $onfocus;
     }
 
     /**

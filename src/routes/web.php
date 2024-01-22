@@ -1,5 +1,7 @@
 <?php
 
+use App\Settings\GeneralSettings;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', function () {
-    return redirect()->route('host.dashboard');
-});
-
 require __DIR__ . '/_auth.php';
 require __DIR__ . '/_frontend.php';
-require __DIR__ . '/_guest.php';
 require __DIR__ . '/_host.php';
+require __DIR__ . '/_setup.php';
 require __DIR__ . '/_util.php';
+
+Route::get('/test', function () {
+    $data = timezone_list();
+
+    return collect($data)->toJson();
+});

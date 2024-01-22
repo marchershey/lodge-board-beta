@@ -3,20 +3,14 @@
 namespace App\Http\Pages\Auth;
 
 use App\Models\User;
-use Exception;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Benchmark;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Sleep;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Livewire\Features\SupportRedirects\HandlesRedirects;
-use Livewire\Features\SupportRedirects\Redirector;
 use Throwable;
 use Usernotnull\Toast\Concerns\WireToast;
 
-#[Layout('layouts.auth', ['title' => 'Register', 'text' => 'Create your new account'])]
+#[Layout('layouts.min', ['title' => 'Register'])]
 class Register extends Component
 {
     /**
@@ -24,6 +18,7 @@ class Register extends Component
      * 
      * - Add activity tracking
      * - Add ability to disable form when an error has occured.
+     * 
      */
 
     use WireToast;
@@ -33,7 +28,7 @@ class Register extends Component
     public $email;
     public $password;
     public $password_confirmation;
-    public $accepted;
+    public $terms;
 
     protected $rules = [
         'first_name' => ['required', 'string', 'max:250'],
@@ -41,17 +36,43 @@ class Register extends Component
         'email' => ['required', 'string', 'email', 'max:250', 'unique:users'],
         'password' => ['required', 'string', 'min:8', 'confirmed'],
         'password_confirmation' => ['required', 'string', 'min:8'],
-        'accepted' => ['required']
+        'terms' => ['accepted'],
     ];
 
     protected $validationAttributes = [
         'first_name' => 'First Name',
-        'password' => 'password',
-        'password_confirmation' => 'password',
+        'last_name' => 'Last Name',
+        'email' => 'Email Address',
+        'password' => 'Password',
+        'password_confirmation' => 'Password',
+        'terms' => 'Terms of Service',
     ];
 
     protected $messages = [
-        'email.unique' => 'This email address is already attached to an existing account.',
+        'first_name.required' => 'Please enter your first name.',
+        'first_name.string' => 'The first name you entered is invalid.',
+        'first_name.max' => 'Your first name is too long. Max 250 characters.',
+
+        'last_name.required' => 'Please enter your last name.',
+        'last_name.string' => 'The last name you entered is invalid.',
+        'last_name.max' => 'Your last name is too long. Max 250 characters.',
+
+        'email.required' => 'Please enter your email address.',
+        'email.string' => 'The email address you entered is invalid.',
+        'email.email' => 'The email address you enetered is invalid.',
+        'email.max' => 'Your email address is too long. Max 250 characters.',
+        'email.unique' => 'Looks like you already have an account. Please sign in instead.',
+
+        'password.required' => 'Please confirm your password.',
+        'password.string' => 'The password above is invalid.',
+        'password.min' => 'This password is too short. Min 8 characters.',
+        'password.confirmed' => 'The passwords you entered do not match.',
+
+        'password_confirmation.required' => 'Please enter a password for your account.',
+        'password_confirmation.string' => 'The password above is invalid.',
+        'password_confirmation.min' => 'The password above is too short. Min 8 characters.',
+
+        'terms.accepted' => 'You must agree to the terms of service before you can create an account.',
     ];
 
     /**
@@ -64,12 +85,18 @@ class Register extends Component
         return view('pages.auth.register');
     }
 
+    /**
+     * FOR DEV TESTING ONLY
+     * If the app's environment is local, dummy data will be loaded
+     *
+     * @return void
+     */
     function mount(): void
     {
         // If application's environment is local, then inject dummy data for testing
         if (app()->isLocal()) {
-            $this->first_name = "Host";
-            $this->last_name = "Account";
+            $this->first_name = "Marc";
+            $this->last_name = "Hershey";
             $this->email = "host@email.com";
             $this->password = "password";
             $this->password_confirmation = "password";
@@ -108,56 +135,43 @@ class Register extends Component
     }
 
     /**
-     * Submit Registration Form
+     * Submit the Registration Form
      * 
      * Runs when the user presses the "Create Account" button
      * on the regiration page.
      * 
-     * - Validate
+     * - Validate user data
      * - Create user
-     * - *Add user settings
-     * - *Dispatch user created job
+     * - TODO: Add user settings
+     * - TODO: Dispatch NewUserCreated job
      * - Authenticate user
      * - Dispatch Toast
      * - Redirect to dashboard
      * 
      * @throws Throwable
-     * @return null | bool
+     * @return mixed
      */
-    function submit(): null | bool
+    function submit(): mixed
     {
-        attempt(function () {
-            $user = User::create($this->only(['first_name', 'last_name', 'email', 'password']));
-        }, 'User creating account');
-
-        return false;
-
-        // Validate
+        // Validate user data
         $this->validate();
 
-        // Create User
-        try {
-            $user = User::create($this->only(['first_names', 'last_name', 'email', 'password']));
-        } catch (Exception $e) {
-            report($e);
+        attempt(function () {
+            // Create user
+            $user = User::create($this->only(['first_name', 'last_name', 'email', 'password']));
 
-            if (app()->isLocal()) {
-                toast()->debug($e->getMessage())->sticky()->push();
-            } else {
-                toast()->danger('There was an issue adding your account to the database. Please manually refresh the page and try again.', 'Server Error')->sticky()->push();
-            }
+            // TODO
+            // Insert user settings??? (we'll come back to this)
+            // Dispatch NewUserCreated job
 
-            return false;
-        }
+            // Authenticate user
+            Auth::login($user);
+        }, 'Account registration');
 
-        // Authenticate user
-        Auth::login($user);
-
-        // Dispatch toast
+        // Dispatch toast to user
         toast()->success('Your account has been successfully created.', 'Account Created')->pushOnNextPage();
 
         // Redirect to dashboard
-        // return redirect()->route('dashboard');
         return $this->redirect('/dashboard', navigate: true);
     }
 }

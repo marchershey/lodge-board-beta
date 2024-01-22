@@ -9,13 +9,15 @@ use Illuminate\View\Component;
 class Spinner extends Component
 {
     public $wiretarget;
+    public $size;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiretarget)
+    public function __construct(string $wiretarget = "", string $size = "w-5 h-5")
     {
         $this->wiretarget = $wiretarget;
+        $this->size = $size;
     }
 
     /**
