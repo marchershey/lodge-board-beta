@@ -6,9 +6,12 @@ use App\Settings\SetupSettings;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class SetupIndex extends Component
 {
+    use WireToast;
+
     public $current_step = null;
 
     #[Layout('layouts.min', ['title' => 'Setup'])]
@@ -45,8 +48,11 @@ class SetupIndex extends Component
 
     function previousStep(): void
     {
-        $this->current_step--;
-        $this->updateDatabaseWithCurrentStep();
+        if ($this->current_step > 1) {
+            $this->current_step--;
+            $this->updateDatabaseWithCurrentStep();
+            toast()->debug('Current Step: ' . $this->current_step)->push();
+        }
     }
 
     /**

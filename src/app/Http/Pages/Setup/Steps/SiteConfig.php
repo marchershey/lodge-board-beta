@@ -3,6 +3,7 @@
 namespace App\Http\Pages\Setup\Steps;
 
 use App\Settings\GeneralSettings;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
@@ -52,10 +53,15 @@ class SiteConfig extends Component
         ]
     ];
 
-    public function render()
+    public function render(): View
     {
         $this->timezone_list = timezone_list();
         return view('pages.setup.steps.site-config');
+    }
+
+    public function load(): void
+    {
+        $this->autofillTestData();
     }
 
     /**
@@ -94,5 +100,14 @@ class SiteConfig extends Component
         $settings->save();
 
         $this->dispatch('next-step');
+    }
+
+    public function autofillTestData(): void
+    {
+        if (app()->isLocal()) {
+            $this->site_name = "Serrate Rentals";
+            $this->site_url = "http://localhost";
+            $this->timezone = "America/Kentucky/Louisville";
+        }
     }
 }

@@ -1,18 +1,31 @@
-<div>
-    <div class="card card-padding card-flex">
+<div wire:init="load">
+    <form class="card card-padding card-flex" wire:submit.prevent="submit">
         <div class="card-header">
             <h1>First Rental</h1>
-            <p>Awesome! We're almost done. Last step is to add your first rental property!</p>
+            <p>Now let's add your very first rental.</p>
         </div>
-        <form class="card-form" wire:submit.prevent="submit">
+        <div class="card-form">
             <x-forms.text class="capitalize" type="text" wiremodel="rental_name" label="Rental Name" desc="Give this rental property a name." placeholder="Ohana Burnside" />
-            <x-forms.text type="text" wiremodel="site_url" label="Website URL" desc="What URL will your renters use to access your website? Be sure to include the protocol (http / https)." placeholder="lodgeboard.com" />
-            <div>
-                <button class="w-full button button-primary button-xl" type="submit">
-                    <x-spinner wiretarget="submit" />
-                    Continue
-                </button>
+        </div>
+        <div class="card-header">
+            <h1>Rental Address</h1>
+            <p>This is the address that will be given to guests.</p>
+        </div>
+        <div class="card-form">
+            <x-forms.text class="capitalize" type="text" wiremodel="rental_street" label="Street Address" placeholder="23 S Highland Dr" />
+            <x-forms.text class="capitalize" type="text" wiremodel="rental_city" label="City" placeholder="Burnside" />
+            <div class="!col-span-8">
+                <x-forms.select wiremodel="rental_state" label="State" :options="state_list()" placeholder="Kentucky" />
             </div>
-        </form>
-    </div>
+            <div class="!col-span-4">
+                <x-forms.text type="tel" wiremodel="rental_zip" label="Zip" placeholder="42519" />
+            </div>
+        </div>
+        <div>
+            <button class="w-full mt-4 button button-primary button-xl" type="submit">
+                <x-spinner wiretarget="submit" />
+                Continue
+            </button>
+        </div>
+    </form>
 </div>

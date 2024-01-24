@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -67,6 +68,11 @@ return [
 
         'daily' => [
             'driver' => 'daily',
+            'formatter' => LineFormatter::class,
+            'formatter_with' => [
+                'format' => "[%datetime%] %channel%.%level_name%: %message%\n %context%\n",
+                'dateFormat' => "Y-m-d H:i:s"
+            ],
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,

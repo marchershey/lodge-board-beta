@@ -10,23 +10,31 @@
             <div class="card card-padding card-flex">
                 <div class="card-header">
                     <h1>Application Setup</h1>
-                    <p>Welcome to {{ config('app.name') }}. We're so excited to have you onboard! It appears you're the first visitor to you personal {{ config('app.name') }}, so we're assuming you'll be the Administrator. If that's not the case, please contact your Adminstrator to setup your LodgeBoard.</p>
-                    <p>Before we get into it, we need some basic information from you about your business. When you're ready to begin, simply click "Continue"</p>
+                    <p class="mt-4">Welcome to {{ config('app.name') }}. We're so excited to have you onboard! It appears you're the first visitor to you personal {{ config('app.name') }}, so we're assuming you'll be the Administrator. If that's not the case, please contact your Adminstrator to setup your LodgeBoard.</p>
+                    <p class="mt-4">Before we get into it, we need some basic information from you about your business. When you're ready to begin, simply click "Continue"</p>
                 </div>
                 <div class="text-center">
                     <button class="button button-xl button-full" wire:click="nextStep">Continue</button>
                 </div>
             </div>
         @endif
-        {{-- Step 1 - Site configuration --}}
+        {{-- Site configuration --}}
         @if ($current_step == 2)
             <livewire:pages.setup.steps.site-config />
         @endif
-        {{-- Step 2 - First Rental --}}
+        {{-- First Rental --}}
         @if ($current_step == 3)
             <livewire:pages.setup.steps.first-rental />
         @endif
+        {{-- Rental Photos --}}
+        @if ($current_step == 3)
+            <livewire:pages.setup.steps.rental-photos />
+        @endif
 
-        <button wire:click="previousStep">Go back</button>
+        @if (app()->isLocal())
+            <div class="text-center card-padding">
+                <button wire:click="previousStep">Go back</button>
+            </div>
+        @endif
     </div>
 </div>

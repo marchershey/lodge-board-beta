@@ -1,7 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Validator;
 
 function settings($type = 'general')
 {
@@ -15,9 +15,9 @@ function settings($type = 'general')
 
 function timezone_list()
 {
+    // Get the list of timezones
     $timezones = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, 'US');
 
-    $timezone_offsets = array();
     foreach ($timezones as $timezone) {
         $tz = new DateTimeZone($timezone);
         $timezone_offsets[$timezone] = $tz->getOffset(new DateTime);
@@ -26,18 +26,82 @@ function timezone_list()
     // sort timezone by offset
     arsort($timezone_offsets);
 
-    $timezone_list = array();
     foreach ($timezone_offsets as $timezone => $offset) {
         $offset_prefix = $offset < 0 ? '-' : '+';
         $offset_formatted = gmdate('H:i', abs($offset));
-
-        $pretty_offset = "UTC" . $offset_prefix . $offset_formatted;
-
-        // $timezone_list[$timezone] = "(" . $pretty_offset . ") $timezone"; // "America/Kentucky/Louisville" => "(UTC-05:00) America/Kentucky/Louisville"
-        $timezone_list[$timezone] = $timezone; // "America/Kentucky/Louisville" => "America/Kentucky/Louisville"
+        $pretty_offset = $offset_prefix . $offset_formatted;
+        $timezone_list[$timezone] = "(UTC" . $pretty_offset . ") " . $timezone;
     }
 
     return $timezone_list;
+}
+
+function state_list()
+{
+    return [
+        'AL' => 'Alabama',
+        'AK' => 'Alaska',
+        'AS' => 'American Samoa',
+        'AZ' => 'Arizona',
+        'AR' => 'Arkansas',
+        'CA' => 'California',
+        'CO' => 'Colorado',
+        'CT' => 'Connecticut',
+        'DE' => 'Delaware',
+        'DC' => 'District Of Columbia',
+        'FM' => 'Federated States Of Micronesia',
+        'FL' => 'Florida',
+        'GA' => 'Georgia',
+        'GU' => 'Guam Gu',
+        'HI' => 'Hawaii',
+        'ID' => 'Idaho',
+        'IL' => 'Illinois',
+        'IN' => 'Indiana',
+        'IA' => 'Iowa',
+        'KS' => 'Kansas',
+        'KY' => 'Kentucky',
+        'LA' => 'Louisiana',
+        'ME' => 'Maine',
+        'MH' => 'Marshall Islands',
+        'MD' => 'Maryland',
+        'MA' => 'Massachusetts',
+        'MI' => 'Michigan',
+        'MN' => 'Minnesota',
+        'MS' => 'Mississippi',
+        'MO' => 'Missouri',
+        'MT' => 'Montana',
+        'NE' => 'Nebraska',
+        'NV' => 'Nevada',
+        'NH' => 'New Hampshire',
+        'NJ' => 'New Jersey',
+        'NM' => 'New Mexico',
+        'NY' => 'New York',
+        'NC' => 'North Carolina',
+        'ND' => 'North Dakota',
+        'MP' => 'Northern Mariana Islands',
+        'OH' => 'Ohio',
+        'OK' => 'Oklahoma',
+        'OR' => 'Oregon',
+        'PW' => 'Palau',
+        'PA' => 'Pennsylvania',
+        'PR' => 'Puerto Rico',
+        'RI' => 'Rhode Island',
+        'SC' => 'South Carolina',
+        'SD' => 'South Dakota',
+        'TN' => 'Tennessee',
+        'TX' => 'Texas',
+        'UT' => 'Utah',
+        'VT' => 'Vermont',
+        'VI' => 'Virgin Islands',
+        'VA' => 'Virginia',
+        'WA' => 'Washington',
+        'WV' => 'West Virginia',
+        'WI' => 'Wisconsin',
+        'WY' => 'Wyoming',
+        'AE' => 'Armed Forces Africa \ Canada \ Europe \ Middle East',
+        'AA' => 'Armed Forces America (Except Canada)',
+        'AP' => 'Armed Forces Pacific'
+    ];
 }
 
 
@@ -53,11 +117,41 @@ function timezone_list()
  * @throws Throwable
  * @return null;
  */
-function attempt($callback, string $action, bool $trace = false): mixed
+function attempt(callable $callback, ...$args): mixed
 {
+    // // Generate attemp ID: 
+    // $id = "(" . rand(1000, 9999) . ") ";
+
+    // Log::info($id . 'Starting new attempt...');
+
+    // // First, get the information of the user who is starting this attempt function. 
+    // $user = collect(Auth::user())->toArray(); // "collect()" to satifiy vscode. 
+    // Log::info($id . 'User information:');
+    // Log::info($user);
+
+    // // Second, get the caller of the attempt function (the backtrace info)
+    // $backtrace = debug_backtrace();
+    // $comment = end($backtrace[0]['args']);
+    // $caller_file = $backtrace[0]['file'];
+    // $caller_line = $backtrace[0]['line'];
+
     try {
-        return $callback();
+        return $callback(...$args);
     } catch (Throwable $e) {
+        // Build the report information
+        $user = [
+            auth()->user()->id;
+        ];
+        $backtrace = debug_backtrace();
+        $comment = end($backtrace[0]['args']);
+        $caller_file = $backtrace[0]['file'];
+        $caller_line = $backtrace[0]['line'];
+
+        Log::info('User Info', auth()->user()->toArray());
+        Log::info($comment);
+        Log::info($caller_file);
+        Log::info($caller_line);
+
 
         // Idk if I want to use this or not. Let's come back to this.
         // report($e);
@@ -68,12 +162,7 @@ function attempt($callback, string $action, bool $trace = false): mixed
         }
 
         // Format and log the error
-        Log::info('');
-        Log::info('-------------------START-------------------');
-        Log::info('');
-        Log::error($action, ['error' => $e->getMessage()]);
-        Log::info('--------------------END--------------------');
-        Log::info('');
+        Log::emergency(['error' => collect($e->getMessage())->toArray()]);
 
 
         // Dispatch a notification for the user to see

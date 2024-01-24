@@ -84,22 +84,25 @@
         @apply bg-white shadow-sm ring-1 ring-gray-900/5 tablet-sm:rounded-lg;
     }
     .card-flex {
-        @apply flex flex-col space-y-10;
+        @apply flex flex-col space-y-8;
+    }
+    .card-header {
+        /* @apply -pb-4; */
     }
     .card-header h1 {
         @apply text-xl font-medium;
     }
     .card-header p {
-        @apply mt-2 text-base text-muted;
+        @apply text-base text-muted;
     }
     .card-form {
-        @apply grid grid-cols-12 gap-x-6 gap-y-8;
+        @apply grid grid-cols-12 gap-4;
     }
     .card-form div {
         @apply col-span-full;
     }
     .card-padding {
-        @apply px-6 py-10 tablet-sm:px-8;
+        @apply px-6 py-8 tablet-sm:px-8;
     }
 
     /* Alerts */
@@ -150,14 +153,14 @@
         @apply !text-red-500;
     }
     .form-input {
-        @apply block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-1 ring-gray-300 placeholder:text-muted hover:ring-2 hover:ring-gray-400 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-primary tablet-sm:text-base dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary;
+        @apply block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-1 ring-gray-300 placeholder:text-muted-light hover:ring-2 hover:ring-gray-400 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-primary tablet-sm:text-base dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary;
     }
     .form-input-error {
         @apply !ring-2 !ring-red-500;
     }
 
     .form-select {
-        @apply block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-1 ring-gray-300 placeholder:text-gray-300 hover:ring-2 hover:ring-gray-400 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-primary tablet-sm:text-base dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary;
+        @apply form-input;
     }
     .form-select option::disabled {
         @apply text-muted;
