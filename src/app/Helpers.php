@@ -139,15 +139,15 @@ function attempt(callable $callback, ...$args): mixed
         return $callback(...$args);
     } catch (Throwable $e) {
         // Build the report information
-        $user = [
-            auth()->user()->id;
-        ];
+        // $user = [
+        //     auth()->user()->id,
+        // ];
         $backtrace = debug_backtrace();
         $comment = end($backtrace[0]['args']);
         $caller_file = $backtrace[0]['file'];
         $caller_line = $backtrace[0]['line'];
 
-        Log::info('User Info', auth()->user()->toArray());
+        // Log::info('User Info', auth()->user()->toArray());
         Log::info($comment);
         Log::info($caller_file);
         Log::info($caller_line);
