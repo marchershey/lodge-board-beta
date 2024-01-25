@@ -113,7 +113,7 @@ class FirstRental extends Component
             } else {
                 dd('no');
             }
-        }, $new_rental, $this->rental_name, 'Adding first rental to database');
+        }, $new_rental, 'Adding first rental to database');
     }
 
     public function autofillTestData(): void

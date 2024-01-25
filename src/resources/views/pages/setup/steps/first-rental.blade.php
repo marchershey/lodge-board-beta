@@ -15,7 +15,7 @@
             <x-forms.text class="capitalize" type="text" wiremodel="rental_street" label="Street Address" placeholder="23 S Highland Dr" />
             <x-forms.text class="capitalize" type="text" wiremodel="rental_city" label="City" placeholder="Burnside" />
             <div class="!col-span-8">
-                <x-forms.select wiremodel="rental_state" label="State" :options="state_list()" placeholder="Kentucky" />
+                <x-forms.select wiremodel="rental_state" label="State" :options="\App\Helpers\GeographyHelper::getStates()" placeholder="Kentucky" />
             </div>
             <div class="!col-span-4">
                 <x-forms.text type="tel" wiremodel="rental_zip" label="Zip" placeholder="42519" />

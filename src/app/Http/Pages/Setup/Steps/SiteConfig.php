@@ -17,7 +17,6 @@ class SiteConfig extends Component
     public $site_active;
     public $reservation_active;
     public $registration_active;
-    public $timezone_list = [];
 
     protected $rules = [
         'site_name' => ['required', 'string', 'min:3', 'max:250'],
@@ -55,7 +54,6 @@ class SiteConfig extends Component
 
     public function render(): View
     {
-        $this->timezone_list = timezone_list();
         return view('pages.setup.steps.site-config');
     }
 
