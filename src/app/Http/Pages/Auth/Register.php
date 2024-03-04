@@ -61,7 +61,7 @@ class Register extends Component
         'email.string' => 'The email address you entered is invalid.',
         'email.email' => 'The email address you enetered is invalid.',
         'email.max' => 'Your email address is too long. Max 250 characters.',
-        'email.unique' => 'Looks like you already have an account. Please sign in instead.',
+        'email.unique' => 'An account with this email address already exists.',
 
         'password.required' => 'Please confirm your password.',
         'password.string' => 'The password above is invalid.',
@@ -72,7 +72,7 @@ class Register extends Component
         'password_confirmation.string' => 'The password above is invalid.',
         'password_confirmation.min' => 'The password above is too short. Min 8 characters.',
 
-        'terms.accepted' => 'You must agree to the terms of service before you can create an account.',
+        'terms.accepted' => 'Please agree to the Terms of Service.',
     ];
 
     /**

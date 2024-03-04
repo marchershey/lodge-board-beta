@@ -3,6 +3,7 @@
 <div class="flex-none">
     <div class="w-full h-6 bg-gray-100 border-t dark:bg-black dark:border-gray-700 dark:text-white">
         <div class="flex items-center justify-center h-full space-x-5 text-xs">
+
             <!-- Screen Size -->
             <div class="flex">
                 <span class="font-bold">Screen size:&nbsp;</span>
@@ -20,6 +21,7 @@
                     <span class="hidden 2xl:block">(2xl)</span>
                 </div>
             </div>
+
             <!-- Theme Switcher -->
             <div class="flex">
                 <span class="font-bold">Mode:&nbsp;</span>
@@ -43,6 +45,18 @@
                         <path d="M12 20v2"></path>
                     </svg>
                 </button>
+            </div>
+
+            <!-- Environment Type -->
+            <div class="flex">
+                <span class="font-bold">Env:&nbsp;</span>
+                <span>{{ config('app.env') }}</span>
+            </div>
+
+            <!-- Build -->
+            <div class="flex">
+                <span class="font-bold">Build:&nbsp;</span>
+                <span>{{ config('app.build') }}</span>
             </div>
         </div>
     </div>

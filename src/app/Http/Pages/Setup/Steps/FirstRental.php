@@ -4,17 +4,20 @@ namespace App\Http\Pages\Setup\Steps;
 
 use App\Models\Rental;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\WithFileUploads as SupportFileUploadsWithFileUploads;
+use Livewire\WithFileUploads;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class FirstRental extends Component
 {
-    use WireToast;
+    use WireToast, SupportFileUploadsWithFileUploads;
 
     public $rental_name;
     public $rental_street;
     public $rental_city;
     public $rental_state;
     public $rental_zip;
+    public $photos = [];
 
     protected $rules = [
         'rental_name' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
@@ -78,6 +81,7 @@ class FirstRental extends Component
     public function load()
     {
         $this->autofillTestData();
+        $this->dispatch('init-draggable');
     }
 
     /**
@@ -96,24 +100,52 @@ class FirstRental extends Component
         $this->validateOnly($property);
     }
 
+    function nextTab($step): void
+    {
+        toast()->debug($step)->push();
+
+        switch ($step) {
+            case 'name':
+                $this->validateOnly('rental_name');
+                break;
+            case 'address':
+                $this->validate();
+                break;
+        }
+
+        $this->dispatch('next-tab');
+    }
+
+    public function upload($name): void
+    {
+        toast()->debug($name)->push();
+    }
+
     public function submit(): void
     {
         $validated = $this->validate();
 
-        $new_rental = new Rental();
-        $new_rental->name = $this->rental_name;
-        $new_rental->address_street = $this->rental_street;
-        $new_rental->address_city = $this->rental_city;
-        $new_rental->address_state = $this->rental_state;
-        $new_rental->address_zip = $this->rental_zip;
+        // Check if a rental already exists
+        if (Rental::count() > 0) {
+            // A rental record exists, so set that as active rental
+            $rental = Rental::first();
+        } else {
+            // No rentals exists, create a new one.
+            $rental = new Rental();
+        }
 
-        attempt(function ($new_rental) {
-            if ($new_rental->save()) {
-                dd('yes');
+        $rental->name = $this->rental_name;
+        $rental->address_street = $this->rental_street;
+        $rental->address_city = $this->rental_city;
+        $rental->address_state = $this->rental_state;
+        $rental->address_zip = $this->rental_zip;
+
+        attempt(function ($rental) {
+            if ($rental->save()) {
             } else {
                 dd('no');
             }
-        }, $new_rental, 'Adding first rental to database');
+        }, $rental, 'Adding first rental to database');
     }
 
     public function autofillTestData(): void
@@ -124,6 +156,8 @@ class FirstRental extends Component
             $this->rental_city = "Burnside";
             $this->rental_state = "KY";
             $this->rental_zip = "42519";
+
+            toast()->debug('Test Data filled.')->push();
         }
     }
 }

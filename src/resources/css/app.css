@@ -8,7 +8,7 @@
         src: url(../../public/fonts/Inter.ttf) format("truetype");
     }
     * {
-        @apply font-inter;
+        @apply font-sans;
     }
     html {
         /* Set the default text size */
@@ -37,7 +37,7 @@
 @layer components {
     /* Typography */
     .link {
-        @apply cursor-pointer font-medium text-primary underline-offset-2 hover:underline;
+        @apply cursor-pointer font-medium text-primary underline-offset-2 hover:underline focus-visible:outline-offset-4;
     }
     .link-muted {
         @apply !text-muted;
@@ -84,21 +84,21 @@
         @apply bg-white shadow-sm ring-1 ring-gray-900/5 tablet-sm:rounded-lg;
     }
     .card-flex {
-        @apply flex flex-col space-y-8;
+        @apply flex flex-col gap-y-8;
     }
     .card-header {
         /* @apply -pb-4; */
     }
     .card-header h1 {
-        @apply text-xl font-medium;
+        @apply text-xl font-semibold;
     }
     .card-header p {
         @apply text-base text-muted;
     }
     .card-form {
-        @apply grid grid-cols-12 gap-4;
+        @apply grid grid-cols-12 gap-6;
     }
-    .card-form div {
+    .card-form > div {
         @apply col-span-full;
     }
     .card-padding {
@@ -141,7 +141,7 @@
 
     /* Form Elements */
     .form-label {
-        @apply mb-2 block cursor-pointer text-base font-medium leading-5 text-gray-900 dark:text-white;
+        @apply block cursor-pointer pb-2 text-base font-medium leading-5 text-gray-900 dark:text-white;
     }
     .form-label-error {
         @apply !text-red-500;
@@ -153,7 +153,7 @@
         @apply !text-red-500;
     }
     .form-input {
-        @apply block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-1 ring-gray-300 placeholder:text-muted-light hover:ring-2 hover:ring-gray-400 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-primary tablet-sm:text-base dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary;
+        @apply block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-1 ring-inset ring-gray-300 placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary tablet-sm:text-base dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary;
     }
     .form-input-error {
         @apply !ring-2 !ring-red-500;
@@ -169,18 +169,19 @@
         @apply !ring-2 !ring-red-500;
     }
 
-    .form-checkbox {
-        @apply mt-1 h-6 w-6 rounded border-gray-300 bg-gray-100 text-primary dark:border-gray-700 dark:bg-gray-900/70 dark:ring-0 dark:ring-offset-gray-700;
-    }
-    .form-checkbox-error {
-        @apply block;
-    }
     .form-checkbox-container {
-        @apply relative flex items-start;
+        @apply relative flex cursor-pointer items-start;
     }
     .form-checkbox-container label {
         @apply ml-3 flex flex-col space-y-1;
     }
+    .form-checkbox {
+        @apply mt-1 h-6 w-6 cursor-pointer rounded-md border border-gray-300 bg-gray-100 ring-0 ring-offset-0;
+    }
+    .form-checkbox-error {
+        @apply block !ring-red-500;
+    }
+
     .form-toggle {
         @apply flex items-center justify-between;
     }
@@ -199,7 +200,13 @@
 
     /* Buttons */
     .button {
-        @apply rounded-md bg-primary px-2.5 py-1.5 text-base font-semibold text-white;
+        @apply block cursor-pointer rounded-md bg-primary px-3 py-2 text-center text-sm font-medium text-white focus-visible:outline-offset-4;
+    }
+    .button:disabled {
+        @apply cursor-not-allowed opacity-50;
+    }
+    .button-gray {
+        @apply border border-gray-300 bg-gray-100 text-gray-600 ring-gray-300 hover:bg-gray-100 hover:ring-gray-400;
     }
     .button svg {
         @apply -ml-1;
@@ -211,19 +218,13 @@
         @apply w-full;
     }
     .button-xs {
-        @apply px-2 py-1 !text-xs;
+        @apply px-2.5 py-1.5 !text-xs;
     }
     .button-sm {
-        @apply px-2 py-1;
+        @apply px-3 py-2 !text-xs;
     }
     .button-lg {
-        @apply px-3 py-2;
-    }
-    .button-xl {
-        @apply px-3.5 py-2.5;
-    }
-    .button:disabled {
-        @apply cursor-not-allowed opacity-50 hover:bg-primary;
+        @apply px-3.5 py-2.5 text-base;
     }
 
     /* .button {

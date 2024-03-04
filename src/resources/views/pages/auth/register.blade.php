@@ -14,7 +14,7 @@
             <x-forms.text type="password" wiremodel="password" label="Confirm Password" placeholder="Password" desc="Retype your password" />
             <x-forms.checkbox wiremodel="terms" label="Terms of Service Agreement" desc="By checking this box, you acknowledge that you have read and agree to our <a class='link' href='#'>Terms of Service</a>, as well as our <a class='link' href='#'>Privacy Policy</a>." />
             <div>
-                <button class="w-full button button-xl button-primary" type="submit">
+                <button class="w-full button button-lg button-primary" type="submit">
                     <x-spinner wiretarget="submit" />
                     Create Account
                 </button>

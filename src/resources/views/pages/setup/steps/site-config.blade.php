@@ -10,7 +10,7 @@
             <x-forms.select wiremodel="timezone" label="Default Timezone" desc="This is the timezone that you live in." placeholder="Select a timezone..." :options="\App\Helpers\GeographyHelper::getTimezones()" showKeyAsSelection />
         </div>
         <div>
-            <button class="w-full button button-primary button-xl" type="submit">
+            <button class="w-full button button-primary button-lg" type="submit">
                 <x-spinner wiretarget="submit" />
                 Continue
             </button>

@@ -7,7 +7,7 @@
             <x-forms.text type="password" wiremodel="password" label="Password" placeholder="password123" />
             <x-forms.toggle wiremodel="remember" label="Remember me" desc="Enable this to stay signed in forever. Do not enable this unless you're on a private computer." />
             <div>
-                <button class="w-full button button-primary button-xl" type="submit">
+                <button class="w-full button button-primary button-lg" type="submit">
                     <x-spinner wiretarget="submit" />
                     Sign in
                 </button>

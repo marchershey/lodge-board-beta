@@ -21,6 +21,8 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "@alpinejs/ui": "^3.13.3-beta.4"
+        "@alpinejs/collapse": "^3.13.5",
+        "@alpinejs/ui": "^3.13.3-beta.4",
+        "@shopify/draggable": "^1.1.3"
     }
 }
