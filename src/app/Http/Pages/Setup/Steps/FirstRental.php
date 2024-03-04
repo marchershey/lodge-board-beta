@@ -80,8 +80,12 @@ class FirstRental extends Component
 
     public function load()
     {
+        // If in local mode, fill test data
         $this->autofillTestData();
-        $this->dispatch('init-draggable');
+
+        // Init the ability to sort photos
+        // $this->dispatch('init-sortable-photos');
+        // toast()->debug('Photos initialized')->push();
     }
 
     /**
@@ -157,7 +161,7 @@ class FirstRental extends Component
             $this->rental_state = "KY";
             $this->rental_zip = "42519";
 
-            toast()->debug('Test Data filled.')->push();
+            toast()->debug('Test Data filled')->push();
         }
     }
 }

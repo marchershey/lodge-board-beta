@@ -18,7 +18,7 @@
                 <x-forms.text class="capitalize" type="text" wiremodel="rental_name" label="Rental Name" desc="Give this rental property a name." placeholder="Rental Name" />
             </div>
             <div class="flex items-center justify-end space-x-2">
-                <button class="button button-wide button-primary" type="button" wire:click="nextTab('name')">
+                <button class="button button-wide" type="button" wire:click="nextTab('name')">
                     Next
                 </button>
             </div>
@@ -43,7 +43,7 @@
             </div>
             <div class="flex items-center justify-between transition delay-150" :class="active == 2 ? 'opacity-100' : ' opacity-0'">
                 <button class="button button-wide button-gray" type="button" x-on:click="prevTab">
-                    Previous
+                    Back
                 </button>
                 <button class="button button-wide button-primary" type="button" wire:click="nextTab('address')">
                     Next
@@ -59,16 +59,10 @@
         </div>
         <div class="card-flex" x-show="active == 3" x-collapse :class="active == 3 ? '!overflow-visible' : 'overflow-hidden'">
             <div class="mt-8 transition delay-150" :class="active == 3 ? 'opacity-100' : ' opacity-0'">
-                <div class="card-form" x-data="photosuploader" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
+                {{-- <div class="card-form" x-data="photosuploader" x-on:livewire-upload-start="isuploading = true" x-on:livewire-upload-finish="isuploading = false" x-on:livewire-upload-error="isuploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress"> --}}
+                <div class="card-form" x-data="photosuploader" x-on:livewire-upload-start="isuploading = true" x-on:livewire-upload-finish="isuploading = false, $wire.dispatch('init-sortable-photos')" x-on:livewire-upload-error="isuploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
 
-                    <div>
-                        <label class="button-full button button-lg" for="photos">
-                            <span>Select Photos...</span>
-                            <input class="hidden" id="photos" type="file" wire:model="photos" accept="image/jpg, image/jpeg, image/png, image/gif" multiple>
-                        </label>
-                    </div>
-
-                    <div x-show="uploading">
+                    <div x-show="isuploading">
                         <div class="flex items-center justify-between mb-1">
                             <div class="flex items-center space-x-2">
                                 <svg class="w-4 h-4 animate-spin text-muted-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -84,328 +78,46 @@
                         </div>
                     </div>
 
-                    {{-- <div class="flex">
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8" role="list">
-                            @for ($i = 0; $i < 9; $i++)
-                                <li class="relative" wire:key="{{ $i }}" draggable="true">
-                                    <div class="block w-full overflow-hidden bg-gray-100 rounded-lg group aspect-h-7 aspect-w-10 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                        <img class="object-cover pointer-events-none group-hover:opacity-75" src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=512&amp;q=80" alt="">
-                                        <button class="absolute inset-0 focus:outline-none" type="button">
-                                            <span class="sr-only">View details for IMG_4985.HEIC</span>
-                                        </button>
-                                    </div>
-                                    <p class="block mt-2 text-sm font-medium text-gray-900 truncate pointer-events-none">{{ rand(111, 9999) }}</p>
-                                    <p class="block text-sm font-medium text-gray-500 pointer-events-none">3.9 MB</p>
-                                </li>
-                            @endfor
-                        </ul>
-                    </div> --}}
-
-                    <div class="grid hidden grid-cols-3 gap-4 select-none draggable" wire:ignore>
-                        @for ($i = 0; $i < 9; $i++)
-                            <div class="relative draggable--item hover:scale-110 hover:shadow-lg group">
-                                <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                    <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/wAy4vKv.png" alt="">
-                                </div>
-                                <button class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                    <div class="p-1 bg-white rounded-full cursor-move">
-                                        <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M18 9l3 3l-3 3" />
-                                            <path d="M15 12h6" />
-                                            <path d="M6 9l-3 3l3 3" />
-                                            <path d="M3 12h6" />
-                                            <path d="M9 18l3 3l3 -3" />
-                                            <path d="M12 15v6" />
-                                            <path d="M15 6l-3 -3l-3 3" />
-                                            <path d="M12 3v6" />
-                                        </svg>
-                                    </div>
-                                </button>
-                                <button class="draggable--handle absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 6l-12 12" />
-                                        <path d="M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-                        @endfor
+                    <div x-show="!isuploading">
+                        <label class="button-full button button-lg" for="photos-input">
+                            <span>Select Photos...</span>
+                            <input class="hidden photos-input" id="photos-input" type="file" wire:model="photos" accept="image/jpg, image/jpeg, image/png, image/gif, image/webp" multiple>
+                        </label>
                     </div>
 
-                    {{-- <div class="grid hidden grid-cols-3 gap-4 select-none draggable">
-                        <div class="relative hover:scale-110 hover:shadow-lg group">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/wAy4vKv.png" alt="">
-                            </div>
-                            <div class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                <div class="p-1 bg-white rounded-full cursor-move">
-                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 9l3 3l-3 3" />
-                                        <path d="M15 12h6" />
-                                        <path d="M6 9l-3 3l3 3" />
-                                        <path d="M3 12h6" />
-                                        <path d="M9 18l3 3l3 -3" />
-                                        <path d="M12 15v6" />
-                                        <path d="M15 6l-3 -3l-3 3" />
-                                        <path d="M12 3v6" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M18 6l-12 12" />
-                                    <path d="M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="relative hover:scale-110 hover:shadow-lg group">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/Ln0Ap0k.png" alt="">
-                            </div>
-                            <div class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                <div class="p-1 bg-white rounded-full cursor-move">
-                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 9l3 3l-3 3" />
-                                        <path d="M15 12h6" />
-                                        <path d="M6 9l-3 3l3 3" />
-                                        <path d="M3 12h6" />
-                                        <path d="M9 18l3 3l3 -3" />
-                                        <path d="M12 15v6" />
-                                        <path d="M15 6l-3 -3l-3 3" />
-                                        <path d="M12 3v6" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M18 6l-12 12" />
-                                    <path d="M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="relative hover:scale-110 hover:shadow-lg group">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/ikY2Afj.png" alt="">
-                            </div>
-                            <div class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                <div class="p-1 bg-white rounded-full cursor-move">
-                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 9l3 3l-3 3" />
-                                        <path d="M15 12h6" />
-                                        <path d="M6 9l-3 3l3 3" />
-                                        <path d="M3 12h6" />
-                                        <path d="M9 18l3 3l3 -3" />
-                                        <path d="M12 15v6" />
-                                        <path d="M15 6l-3 -3l-3 3" />
-                                        <path d="M12 3v6" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M18 6l-12 12" />
-                                    <path d="M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="relative hover:scale-110 hover:shadow-lg group">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/E9CNLLq.png" alt="">
-                            </div>
-                            <div class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                <div class="p-1 bg-white rounded-full cursor-move">
-                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 9l3 3l-3 3" />
-                                        <path d="M15 12h6" />
-                                        <path d="M6 9l-3 3l3 3" />
-                                        <path d="M3 12h6" />
-                                        <path d="M9 18l3 3l3 -3" />
-                                        <path d="M12 15v6" />
-                                        <path d="M15 6l-3 -3l-3 3" />
-                                        <path d="M12 3v6" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M18 6l-12 12" />
-                                    <path d="M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="relative hover:scale-110 hover:shadow-lg group">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/Gn1zp5M.png" alt="">
-                            </div>
-                            <div class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                <div class="p-1 bg-white rounded-full cursor-move">
-                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 9l3 3l-3 3" />
-                                        <path d="M15 12h6" />
-                                        <path d="M6 9l-3 3l3 3" />
-                                        <path d="M3 12h6" />
-                                        <path d="M9 18l3 3l3 -3" />
-                                        <path d="M12 15v6" />
-                                        <path d="M15 6l-3 -3l-3 3" />
-                                        <path d="M12 3v6" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M18 6l-12 12" />
-                                    <path d="M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="relative hover:scale-110 hover:shadow-lg group">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/QGUSeop.png" alt="">
-                            </div>
-                            <div class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                <div class="p-1 bg-white rounded-full cursor-move">
-                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 9l3 3l-3 3" />
-                                        <path d="M15 12h6" />
-                                        <path d="M6 9l-3 3l3 3" />
-                                        <path d="M3 12h6" />
-                                        <path d="M9 18l3 3l3 -3" />
-                                        <path d="M12 15v6" />
-                                        <path d="M15 6l-3 -3l-3 3" />
-                                        <path d="M12 3v6" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M18 6l-12 12" />
-                                    <path d="M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="relative hover:scale-110 hover:shadow-lg group">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/p5GB5VD.png" alt="">
-                            </div>
-                            <div class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                <div class="p-1 bg-white rounded-full cursor-move">
-                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 9l3 3l-3 3" />
-                                        <path d="M15 12h6" />
-                                        <path d="M6 9l-3 3l3 3" />
-                                        <path d="M3 12h6" />
-                                        <path d="M9 18l3 3l3 -3" />
-                                        <path d="M12 15v6" />
-                                        <path d="M15 6l-3 -3l-3 3" />
-                                        <path d="M12 3v6" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M18 6l-12 12" />
-                                    <path d="M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="relative hover:scale-110 hover:shadow-lg group">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/MIxfzXx.png" alt="">
-                            </div>
-                            <div class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                <div class="p-1 bg-white rounded-full cursor-move">
-                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 9l3 3l-3 3" />
-                                        <path d="M15 12h6" />
-                                        <path d="M6 9l-3 3l3 3" />
-                                        <path d="M3 12h6" />
-                                        <path d="M9 18l3 3l3 -3" />
-                                        <path d="M12 15v6" />
-                                        <path d="M15 6l-3 -3l-3 3" />
-                                        <path d="M12 3v6" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M18 6l-12 12" />
-                                    <path d="M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="relative hover:scale-110 hover:shadow-lg group">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none group-hover:opacity-50" src="https://i.imgur.com/DEertti.jpg" alt="">
-                            </div>
-                            <div class="absolute inset-0 items-center justify-center hidden group-hover:flex">
-                                <div class="p-1 bg-white rounded-full cursor-move">
-                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18 9l3 3l-3 3" />
-                                        <path d="M15 12h6" />
-                                        <path d="M6 9l-3 3l3 3" />
-                                        <path d="M3 12h6" />
-                                        <path d="M9 18l3 3l3 -3" />
-                                        <path d="M12 15v6" />
-                                        <path d="M15 6l-3 -3l-3 3" />
-                                        <path d="M12 3v6" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="absolute cursor-pointer hidden p-0.5 bg-red-500 text-white rounded-full group-hover:block -top-1 -right-1.5">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M18 6l-12 12" />
-                                    <path d="M6 6l12 12" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <!--[if ENDBLOCK]><![endif]-->
-                    </div> --}}
-
                     @if ($photos)
+                        <div class="grid grid-cols-3 gap-4 draggable">
+                            @foreach ($photos as $photo_key => $photo)
+                                <div class="relative first:col-span-full hover:scale-110 hover:shadow-lg group draggable--item" data-photo-id="{{ $photo_key }}">
+                                    <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                                        <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="{{ $photo->temporaryUrl() }}" alt="">
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                    <div class="p-4 text-xs bg-gray-100 rounded-lg">
+                        <p class="font-medium">Note:</p>
+                        <p>You can reorder the photos by clicking and dragging them in the correct order.</p>
+                    </div>
+
+                    {{-- @if ($photos)
                         <div>
-                            <div class="grid grid-cols-3 gap-4 select-none draggable" wire:draggable>
+                            <div class="grid grid-cols-3 gap-4 select-none draggable">
                                 @foreach ($photos as $photo_key => $photo)
                                     <div class="overflow-hidden bg-gray-100 rounded-lg shadow-lg select-none draggable--item aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                        <img class="object-cover pointer-events-none group-hover:opacity-75" src="{{ $photo->temporaryUrl() }}" alt="">
+                                        <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-75" src="{{ $photo->temporaryUrl() }}" alt="">
                                     </div>
                                 @endforeach
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
 
-                    <div class="flex items-center justify-between transition delay-150" :class="active == 3 ? 'opacity-100' : ' opacity-0'">
+                    <div class="flex items-center justify-between mt-4 transition delay-150" :class="active == 3 ? 'opacity-100' : ' opacity-0'">
                         <button class="button button-wide button-gray" type="button" x-on:click="prevTab">
-                            Previous
+                            Back
                         </button>
-                        <button class="button button-wide button-primary" type="button" disabled wire:click="nextTab('address')">
+                        <button class="button button-wide" type="button" @if (!$photos) disabled @endif wire:click="submit">
                             Next
                         </button>
                     </div>
@@ -415,70 +127,119 @@
     </div>
 </div>
 
-@script
+@push('scripts')
     <script>
-        document.addEventListener('livewire:initialized', () => {
-            // Runs immediately after Livewire has finished initializing
-            // on the page...
-
-        })
+        window.addEventListener("init-sortable-photos", (event) => {
+            // initSortablePhotos();
+            setTimeout(function() {
+                //your code to be executed after 1 second
+                Sortable();
+            }, 150);
+        });
     </script>
-@endscript
+@endpush
 
 {{-- @push('scripts')
     <script>
-        function initDraggable() {
+        document.addEventListener('livewire:initialized', () => {
 
-            let file = Livewire.el.querySelector('input[type="file"]').files[0]
-            Livewire.upload('photo', file, (uploadedFilename) => {
-                // Success callback...
-                console.log('success')
-            }, () => {
-                // Error callback...
-                console.log('error')
-            }, (event) => {
-                // Progress callback...
-                console.log('progress')
-                // event.detail.progress contains a number between 1 and 100 as the upload progresses
-            }, () => {
-                // Cancelled callback...
-                console.log('cancelled')
+            Livewire.on('init-sortable-photos', () => {
+
+                // const containerSelector = '.draggable';
+                // const containers = document.querySelectorAll(containerSelector);
+
+                // if (containers.length === 0) {
+                //     return false;
+                // }
+
+                // const sortable = new Sortable(containers, {
+                //     draggable: '.draggable--item',
+                //     mirror: {
+                //         appendTo: containerSelector,
+                //         constrainDimensions: true,
+                //     },
+                // });
+
+                // const draggable = new Sortable(document.querySelectorAll('.draggable'), {
+                //     draggable: '.draggable--item',
+                //     handle: '.draggable--handle',
+                //     classes: {
+                //         'mirror': ['opacity-50'],
+                //         'draggable:over': ['opacity-0'],
+                //         'source:original': ['hidden'],
+                //     },
+                //     mirror: {
+                //         constrainDimensions: true,
+                //     },
+                //     plugins: [Plugins.SortAnimation],
+                //     swapAnimation: {
+                //         duration: 200,
+                //         easingFunction: "ease-in-out",
+                //     },
+                // });
+                // draggable.on("drag:stopped", (event) => {
+                //     @this.reorderUploadedPhotos(
+                //         Array.from(document.querySelectorAll('.draggable--item')).map(el => el.dataset.photoId)
+                //     )
+                // });
+
             })
+        })
+        // document.addEventListener('livewire:initialized', () => {
+        //     let file = document.querySelector('#photos-input').files[0]
+        //     Livewire.upload('photo', file, (uploadedFilename) => {
+        //         // Success callback...
+        //         console.log('success')
+        //     }, () => {
+        //         // Error callback...
+        //         console.log('error')
+        //     }, (event) => {
+        //         // Progress callback...
+        //         console.log('progress')
+        //         // event.detail.progress contains a number between 1 and 100 as the upload progresses
+        //     }, () => {
+        //         // Cancelled callback...
+        //         console.log('cancelled')
+        //     })
+        // })
+    </script>
+    <script>
+        // function initDraggable() {
 
-            const sortable = new Sortable(document.querySelectorAll('.draggable'), {
-                draggable: '.draggable--item',
-            });
+        //     const sortable = new Sortable(document.querySelectorAll('.draggable'), {
+        //         draggable: '.draggable--item',
+        //     });
 
-            sortable.on('sortable:start', () => console.log('sortable:start'));
-            sortable.on('sortable:sort', () => console.log('sortable:sort'));
-            sortable.on('sortable:sorted', () => console.log('sortable:sorted'));
-            sortable.on('sortable:stop', () => console.log('sortable:stop'));
-            // const draggable = new Sortable(document.querySelectorAll('.draggable'), {
-            //     draggable: '.draggable--item',
-            //     handle: '.draggable--handle',
-            //     classes: {
-            //         'mirror': ['opacity-50'],
-            //         'draggable:over': ['opacity-0'],
-            //         'source:original': ['hidden'],
-            //     },
-            //     mirror: {
-            //         constrainDimensions: true,
-            //     },
-            //     plugins: [Plugins.SortAnimation],
-            //     swapAnimation: {
-            //         duration: 200,
-            //         easingFunction: "ease-in-out",
-            //     },
-            // });
-            // draggable.on("drag:stopped", (event) => {
-            //     @this.reorderUploadedPhotos(
-            //         Array.from(document.querySelectorAll('.draggable--item')).map(el => el.dataset.photoId)
-            //     )
-            // });
-        }
+        //     sortable.on('sortable:start', () => console.log('sortable:start'));
+        //     sortable.on('sortable:sort', () => console.log('sortable:sort'));
+        //     sortable.on('sortable:sorted', () => console.log('sortable:sorted'));
+        //     sortable.on('sortable:stop', () => console.log('sortable:stop'));
+        // const draggable = new Sortable(document.querySelectorAll('.draggable'), {
+        //     draggable: '.draggable--item',
+        //     handle: '.draggable--handle',
+        //     classes: {
+        //         'mirror': ['opacity-50'],
+        //         'draggable:over': ['opacity-0'],
+        //         'source:original': ['hidden'],
+        //     },
+        //     mirror: {
+        //         constrainDimensions: true,
+        //     },
+        //     plugins: [Plugins.SortAnimation],
+        //     swapAnimation: {
+        //         duration: 200,
+        //         easingFunction: "ease-in-out",
+        //     },
+        // });
+        // draggable.on("drag:stopped", (event) => {
+        //     @this.reorderUploadedPhotos(
+        //         Array.from(document.querySelectorAll('.draggable--item')).map(el => el.dataset.photoId)
+        //     )
+        // });
+        // }
 
-        window.addEventListener("init-draggable", (event) => {
-            initDraggable();
-        });
+        // window.addEventListener("init-draggable", (event) => {
+        //     initDraggable();
+        // });
     </script>
 @endpush --}}

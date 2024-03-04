@@ -22,16 +22,8 @@ Alpine.plugin(ToastComponent);
 // Theme Mode
 import "./themeMode";
 
-// Photos Uploader
-import "./photouploader";
-
-/**
- * Draggable - v1.1.3
- * https://github.com/Shopify/draggable
- */
-import { Sortable, Plugins } from "@shopify/draggable";
-window.Sortable = Sortable;
-window.Plugins = Plugins;
+// Photos
+import "./photos";
 
 // Start Livewire
 Livewire.start();
