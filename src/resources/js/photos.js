@@ -29,12 +29,28 @@ export default function InitSort() {
         mirror: {
             appendTo: containerSelector,
             constrainDimensions: true,
+            cursorOffsetX: -20,
+            cursorOffsetY: -20,
         },
+
         classes: {
-            mirror: ["opacity-100"],
-            "draggable:over": ["opacity-50"],
-            "source:original": ["hidden"],
+            mirror: ["opacity-100", "blur-lg"],
+            "draggable:over": [
+                "draggable--over",
+                "bg-red-200",
+                "bg-opacity-10",
+            ],
+            "source:original": ["block"],
         },
+    });
+
+    sortable.on("drag:start", (event) => {
+        const { source } = event;
+        const firstDiv = containers[0].children[0];
+
+        if (source == firstDiv) {
+            event.cancel();
+        }
     });
 
     return sortable;
