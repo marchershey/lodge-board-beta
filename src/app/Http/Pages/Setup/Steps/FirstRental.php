@@ -84,7 +84,7 @@ class FirstRental extends Component
         $this->autofillTestData();
 
         // Init the ability to sort photos
-        $this->dispatch('init-sortable-photos');
+        // $this->dispatch('init-sortable');
         // toast()->debug('Photos initialized')->push();
     }
 

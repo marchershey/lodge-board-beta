@@ -60,7 +60,7 @@
         <div class="card-flex" x-show="active == 3" x-collapse :class="active == 3 ? '!overflow-visible' : 'overflow-hidden'">
             <div class="mt-8 transition delay-150" :class="active == 3 ? 'opacity-100' : ' opacity-0'">
                 {{-- <div class="card-form" x-data="photosuploader" x-on:livewire-upload-start="isuploading = true" x-on:livewire-upload-finish="isuploading = false" x-on:livewire-upload-error="isuploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress"> --}}
-                <div class="card-form" x-data="photosuploader" x-on:livewire-upload-start="isuploading = true" x-on:livewire-upload-finish="isuploading = false, $wire.dispatch('init-sortable-photos')" x-on:livewire-upload-error="isuploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
+                <div class="card-form" x-data="photosuploader" x-on:livewire-upload-start="isuploading = true" x-on:livewire-upload-finish="isuploading = false, $wire.dispatch('init-sortable')" x-on:livewire-upload-error="isuploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
 
                     <div x-show="isuploading">
                         <div class="flex items-center justify-between mb-1">
@@ -86,66 +86,66 @@
                     </div>
 
                     @if ($photos)
-                        <div class="grid grid-cols-3 gap-4 select-none draggable">
+                        <div class="grid grid-cols-3 gap-4 select-none sortable">
                             @foreach ($photos as $photo_key => $photo)
-                                <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="{{ $photo_key }}">
-                                    <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                        <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="{{ $photo->temporaryUrl() }}" alt="">
+                                <div class="relative first:col-span-full group sortable--item" data-photo-id="{{ $photo_key }}">
+                                    <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                        <img class="object-cover pointer-events-none" src="{{ $photo->temporaryUrl() }}" alt="">
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                     @endif
 
-                    <div class="grid grid-cols-3 gap-4 select-none draggable" tabindex="0">
+                    {{-- <div class="grid grid-cols-3 gap-4 select-none sortable" tabindex="0">
                         <!--[if BLOCK]><![endif]-->
-                        <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="0" tabindex="0">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="http://localhost/livewire/preview-file/5d2awWjRKkunGKRK3TCceacZYSBjk6-metaMS5qcGc=-.jpg?expires=1709607599&amp;signature=1bccbd115f10f516c6bab1aa3f6f99d420106df9609bebd4752251d49ae94781" alt="">
+                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="0" tabindex="0">
+                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/UVZ9rKGv1jSC5VtqvMLxF8l27eQi4N-metaMS5qcGc=-.jpg?expires=1709776799&amp;signature=748cee7e56e56fa997ed5e98a8e2844c4ac31cdf2ea01c02ce0f3eea5c789daa" alt="">
                             </div>
                         </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="1" tabindex="0">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="http://localhost/livewire/preview-file/BNOFi5H2ajmhCibqRp9R90HK4ILg27-metaMi5qcGc=-.jpg?expires=1709607599&amp;signature=dc55134648294f1e3901d2a96e3677528f5afb4818594855e978241b4bd27e9c" alt="">
+                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="1" tabindex="0">
+                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/jL1LMrlm8GSVHGnDKYKKQHcZ8IEaXl-metaMi5qcGc=-.jpg?expires=1709776799&amp;signature=7560e90a26b173fd3e0da195d563fd2cc7c61583ea395c0bbcbb6e0cf3a7a652" alt="">
                             </div>
                         </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="2" tabindex="0">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="http://localhost/livewire/preview-file/2K5doUzqotTKDYEI9uwZuXs7f05Jk5-metaMy5qcGc=-.jpg?expires=1709607599&amp;signature=14f112470054671824cf1fff980affa7bf8e309595e083e3b058e6e3d01e52bb" alt="">
+                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="2" tabindex="0">
+                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/vmEheLxYKm63pjn01RJ3fgrpzJR2vY-metaMy5qcGc=-.jpg?expires=1709776799&amp;signature=a98afdde27a90d54fad5cc388629730723be1645cb7898411968b9db8d6daefd" alt="">
                             </div>
                         </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="3" tabindex="0">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="http://localhost/livewire/preview-file/rY3ITEEMFYMKf2bCFPLKjVolaSmyuM-metaNC5qcGc=-.jpg?expires=1709607599&amp;signature=687773df99e9c049dd9d21fb007b4ac00b9c0e3d05f8f36436ff508664341b24" alt="">
+                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="3" tabindex="0">
+                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/zzecOoGE2wt1U9JxRTuqE5kifChyJY-metaNC5qcGc=-.jpg?expires=1709776799&amp;signature=ded1e267bda34109a601f7d44b414c96fb2f99b77271de3d790c417ae02e7a37" alt="">
                             </div>
                         </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="4" tabindex="0">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="http://localhost/livewire/preview-file/u7aPCUHra1oJsdIkG5kQaiR4QqbfgV-metaNS5qcGc=-.jpg?expires=1709607599&amp;signature=49c4f38ef1912abd373e88fe8f60f9b6ab530f5e7f341f84b9732cf52f6fd71d" alt="">
+                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="4" tabindex="0">
+                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/JNMC1oF46LwWZRbg2gqdmARuOa1OMe-metaNS5qcGc=-.jpg?expires=1709776799&amp;signature=5c4cf09d82727223cbc4cf3fd8005c93b72f318cbe587983e2575ec5170f14d2" alt="">
                             </div>
                         </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="5" tabindex="0">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="http://localhost/livewire/preview-file/zwBbImKkEta0xunddPU70nwsF7gmIJ-metaNi5qcGc=-.jpg?expires=1709607599&amp;signature=ecf5af28847ad8dcadb5fe736f973c4084fbf79d43d31b238fd36250042ac093" alt="">
+                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="5" tabindex="0">
+                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/yOqcFpbsf8cgHQA74BAMVNqK0z6HOI-metaNi5qcGc=-.jpg?expires=1709776799&amp;signature=22a518eb6f54b2099ed3d42828225d62dc7b6fdb89d4ff3bce5ec014a871aa4a" alt="">
                             </div>
                         </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="6" tabindex="0">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="http://localhost/livewire/preview-file/abIP2EbbgidBsCZC4Za1jkhOiz76YC-metaNy5qcGc=-.jpg?expires=1709607599&amp;signature=5d62d3e7e8fedcaeb5b00f634397b3c9b57b0e7e9b317e397e33164f91f67d18" alt="">
+                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="6" tabindex="0">
+                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/F940izFe9nXnQNG9ty1776AnVyVH4b-metaNy5qcGc=-.jpg?expires=1709776799&amp;signature=3027d18295dfd216cbf2020c5502a14a63d1873766c4c9ba5aa1e9574b621678" alt="">
                             </div>
                         </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="7" tabindex="0">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="http://localhost/livewire/preview-file/4oVxQ5E7VbC22eVDMZlbZvfunHpERA-metaOC5qcGc=-.jpg?expires=1709607599&amp;signature=5bb43ffde16b90a1529eae06670e95a21a8f134bd0ddc57313dfc20c08d8c11b" alt="">
+                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="7" tabindex="0">
+                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/EvdBRgldHt1fzoYcxeXmwLi0IMHSZx-metaOC5qcGc=-.jpg?expires=1709776799&amp;signature=d935a6165821f851d2a0ac549a0986392cd02f5f70799f182063b078ce2eac9a" alt="">
                             </div>
                         </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group draggable--item" data-photo-id="8" tabindex="0">
-                            <div class="overflow-hidden transition bg-gray-100 rounded-lg shadow-black aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                                <img class="object-cover pointer-events-none draggable--handle group-hover:opacity-50" src="http://localhost/livewire/preview-file/h3wNiAFmOiXKyLbRHYplWvcRhE4o85-metaOS5qcGc=-.jpg?expires=1709607599&amp;signature=591d231d8be4f0da042c486e549b6e16422846ea3c78207ac02cf6c834129044" alt="">
+                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="8" tabindex="0">
+                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/bmu6k9omPvwKUD3Q1a2oL28Y77A2MZ-metaOS5qcGc=-.jpg?expires=1709776799&amp;signature=1c80a24715154627ae62faa1311789b6662f44c37afdd5bffcf0df08cd25d304" alt="">
                             </div>
                         </div>
                         <!--[if ENDBLOCK]><![endif]-->
-                    </div>
+                    </div> --}}
 
                     <div class="p-4 text-xs bg-gray-100 rounded-lg">
                         <p class="font-medium">Note:</p>
@@ -165,18 +165,6 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        window.addEventListener("init-sortable-photos", (event) => {
-            // initSortablePhotos();
-            setTimeout(function() {
-                //your code to be executed after 1 second
-                Sortable();
-            }, 150);
-        });
-    </script>
-@endpush
 
 {{-- @push('scripts')
     <script>
