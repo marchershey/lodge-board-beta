@@ -14,6 +14,8 @@
             $refs.button.focus()
         }
     }" x-on:click.away="open = false" x-init="$watch('selectedKey', value => @this.$refresh())">
+        <span x-text="selectedKey"></span>
+        <span x-text="selectedValue"></span>
         <button class="text-left form-input group @error($wiremodel) form-input-error @enderror" type="button" x-ref="button" x-on:click="open = !open">
             <span class="block mr-4 truncate" :class="selectedKey ? '' : 'text-muted-light'" x-text="{{ $showKeyAsSelection ? 'selectedKey' : 'selectedValue' }} || '{{ $placeholder }}'"></span>
             <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">

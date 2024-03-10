@@ -1,5 +1,5 @@
 <div class="card-flex" wire:init="load" x-data="{
-    active: 3,
+    active: 2,
     nextTab() {
         this.active++
     },
@@ -59,7 +59,6 @@
         </div>
         <div class="card-flex" x-show="active == 3" x-collapse :class="active == 3 ? '!overflow-visible' : 'overflow-hidden'">
             <div class="mt-8 transition delay-150" :class="active == 3 ? 'opacity-100' : ' opacity-0'">
-                {{-- <div class="card-form" x-data="photosuploader" x-on:livewire-upload-start="isuploading = true" x-on:livewire-upload-finish="isuploading = false" x-on:livewire-upload-error="isuploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress"> --}}
                 <div class="card-form" x-data="photosuploader" x-on:livewire-upload-start="isuploading = true" x-on:livewire-upload-finish="isuploading = false, $wire.dispatch('init-sortable')" x-on:livewire-upload-error="isuploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
 
                     <div x-show="isuploading">
@@ -86,71 +85,27 @@
                     </div>
 
                     @if ($photos)
+                        <div class="p-4 text-xs bg-gray-100 rounded-lg">
+                            <p class="font-semibold">Note:</p>
+                            <p>You can reorder the photos by clicking and dragging them in the correct order.</p>
+                        </div>
                         <div class="grid grid-cols-3 gap-4 select-none sortable">
                             @foreach ($photos as $photo_key => $photo)
                                 <div class="relative first:col-span-full group sortable--item" data-photo-id="{{ $photo_key }}">
-                                    <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
+                                    <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7 sortable--handle">
                                         <img class="object-cover pointer-events-none" src="{{ $photo->temporaryUrl() }}" alt="">
                                     </div>
+                                    <button class="absolute cursor-pointer group-hover:visible invisible p-1 bg-white rounded-full -top-1.5 -right-2" wire:click="deletePhoto({{ $photo_key }})">
+                                        <svg class="w-4 h-4 text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M18 6l-12 12" />
+                                            <path d="M6 6l12 12" />
+                                        </svg>
+                                    </button>
                                 </div>
                             @endforeach
                         </div>
                     @endif
-
-                    {{-- <div class="grid grid-cols-3 gap-4 select-none sortable" tabindex="0">
-                        <!--[if BLOCK]><![endif]-->
-                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="0" tabindex="0">
-                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
-                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/UVZ9rKGv1jSC5VtqvMLxF8l27eQi4N-metaMS5qcGc=-.jpg?expires=1709776799&amp;signature=748cee7e56e56fa997ed5e98a8e2844c4ac31cdf2ea01c02ce0f3eea5c789daa" alt="">
-                            </div>
-                        </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="1" tabindex="0">
-                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
-                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/jL1LMrlm8GSVHGnDKYKKQHcZ8IEaXl-metaMi5qcGc=-.jpg?expires=1709776799&amp;signature=7560e90a26b173fd3e0da195d563fd2cc7c61583ea395c0bbcbb6e0cf3a7a652" alt="">
-                            </div>
-                        </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="2" tabindex="0">
-                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
-                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/vmEheLxYKm63pjn01RJ3fgrpzJR2vY-metaMy5qcGc=-.jpg?expires=1709776799&amp;signature=a98afdde27a90d54fad5cc388629730723be1645cb7898411968b9db8d6daefd" alt="">
-                            </div>
-                        </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="3" tabindex="0">
-                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
-                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/zzecOoGE2wt1U9JxRTuqE5kifChyJY-metaNC5qcGc=-.jpg?expires=1709776799&amp;signature=ded1e267bda34109a601f7d44b414c96fb2f99b77271de3d790c417ae02e7a37" alt="">
-                            </div>
-                        </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="4" tabindex="0">
-                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
-                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/JNMC1oF46LwWZRbg2gqdmARuOa1OMe-metaNS5qcGc=-.jpg?expires=1709776799&amp;signature=5c4cf09d82727223cbc4cf3fd8005c93b72f318cbe587983e2575ec5170f14d2" alt="">
-                            </div>
-                        </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="5" tabindex="0">
-                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
-                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/yOqcFpbsf8cgHQA74BAMVNqK0z6HOI-metaNi5qcGc=-.jpg?expires=1709776799&amp;signature=22a518eb6f54b2099ed3d42828225d62dc7b6fdb89d4ff3bce5ec014a871aa4a" alt="">
-                            </div>
-                        </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="6" tabindex="0">
-                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
-                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/F940izFe9nXnQNG9ty1776AnVyVH4b-metaNy5qcGc=-.jpg?expires=1709776799&amp;signature=3027d18295dfd216cbf2020c5502a14a63d1873766c4c9ba5aa1e9574b621678" alt="">
-                            </div>
-                        </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="7" tabindex="0">
-                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
-                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/EvdBRgldHt1fzoYcxeXmwLi0IMHSZx-metaOC5qcGc=-.jpg?expires=1709776799&amp;signature=d935a6165821f851d2a0ac549a0986392cd02f5f70799f182063b078ce2eac9a" alt="">
-                            </div>
-                        </div>
-                        <div class="relative first:col-span-full hover:shadow-lg group sortable--item" data-photo-id="8" tabindex="0">
-                            <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7">
-                                <img class="object-cover pointer-events-none" src="http://localhost/livewire/preview-file/bmu6k9omPvwKUD3Q1a2oL28Y77A2MZ-metaOS5qcGc=-.jpg?expires=1709776799&amp;signature=1c80a24715154627ae62faa1311789b6662f44c37afdd5bffcf0df08cd25d304" alt="">
-                            </div>
-                        </div>
-                        <!--[if ENDBLOCK]><![endif]-->
-                    </div> --}}
-
-                    <div class="p-4 text-xs bg-gray-100 rounded-lg">
-                        <p class="font-medium">Note:</p>
-                        <p>You can reorder the photos by clicking and dragging them in the correct order.</p>
-                    </div>
 
                     <div class="flex items-center justify-between mt-4 transition delay-150" :class="active == 3 ? 'opacity-100' : ' opacity-0'">
                         <button class="button button-wide button-gray" type="button" x-on:click="prevTab">
@@ -165,108 +120,3 @@
         </div>
     </div>
 </div>
-
-{{-- @push('scripts')
-    <script>
-        document.addEventListener('livewire:initialized', () => {
-
-            Livewire.on('init-sortable-photos', () => {
-
-                // const containerSelector = '.draggable';
-                // const containers = document.querySelectorAll(containerSelector);
-
-                // if (containers.length === 0) {
-                //     return false;
-                // }
-
-                // const sortable = new Sortable(containers, {
-                //     draggable: '.draggable--item',
-                //     mirror: {
-                //         appendTo: containerSelector,
-                //         constrainDimensions: true,
-                //     },
-                // });
-
-                // const draggable = new Sortable(document.querySelectorAll('.draggable'), {
-                //     draggable: '.draggable--item',
-                //     handle: '.draggable--handle',
-                //     classes: {
-                //         'mirror': ['opacity-50'],
-                //         'draggable:over': ['opacity-0'],
-                //         'source:original': ['hidden'],
-                //     },
-                //     mirror: {
-                //         constrainDimensions: true,
-                //     },
-                //     plugins: [Plugins.SortAnimation],
-                //     swapAnimation: {
-                //         duration: 200,
-                //         easingFunction: "ease-in-out",
-                //     },
-                // });
-                // draggable.on("drag:stopped", (event) => {
-                //     @this.reorderUploadedPhotos(
-                //         Array.from(document.querySelectorAll('.draggable--item')).map(el => el.dataset.photoId)
-                //     )
-                // });
-
-            })
-        })
-        // document.addEventListener('livewire:initialized', () => {
-        //     let file = document.querySelector('#photos-input').files[0]
-        //     Livewire.upload('photo', file, (uploadedFilename) => {
-        //         // Success callback...
-        //         console.log('success')
-        //     }, () => {
-        //         // Error callback...
-        //         console.log('error')
-        //     }, (event) => {
-        //         // Progress callback...
-        //         console.log('progress')
-        //         // event.detail.progress contains a number between 1 and 100 as the upload progresses
-        //     }, () => {
-        //         // Cancelled callback...
-        //         console.log('cancelled')
-        //     })
-        // })
-    </script>
-    <script>
-        // function initDraggable() {
-
-        //     const sortable = new Sortable(document.querySelectorAll('.draggable'), {
-        //         draggable: '.draggable--item',
-        //     });
-
-        //     sortable.on('sortable:start', () => console.log('sortable:start'));
-        //     sortable.on('sortable:sort', () => console.log('sortable:sort'));
-        //     sortable.on('sortable:sorted', () => console.log('sortable:sorted'));
-        //     sortable.on('sortable:stop', () => console.log('sortable:stop'));
-        // const draggable = new Sortable(document.querySelectorAll('.draggable'), {
-        //     draggable: '.draggable--item',
-        //     handle: '.draggable--handle',
-        //     classes: {
-        //         'mirror': ['opacity-50'],
-        //         'draggable:over': ['opacity-0'],
-        //         'source:original': ['hidden'],
-        //     },
-        //     mirror: {
-        //         constrainDimensions: true,
-        //     },
-        //     plugins: [Plugins.SortAnimation],
-        //     swapAnimation: {
-        //         duration: 200,
-        //         easingFunction: "ease-in-out",
-        //     },
-        // });
-        // draggable.on("drag:stopped", (event) => {
-        //     @this.reorderUploadedPhotos(
-        //         Array.from(document.querySelectorAll('.draggable--item')).map(el => el.dataset.photoId)
-        //     )
-        // });
-        // }
-
-        // window.addEventListener("init-draggable", (event) => {
-        //     initDraggable();
-        // });
-    </script>
-@endpush --}}

@@ -84,7 +84,7 @@ class FirstRental extends Component
         $this->autofillTestData();
 
         // Init the ability to sort photos
-        // $this->dispatch('init-sortable');
+        $this->dispatch('init-sortable');
         // toast()->debug('Photos initialized')->push();
     }
 
@@ -125,31 +125,43 @@ class FirstRental extends Component
         toast()->debug($name)->push();
     }
 
+    public function deletePhoto($key): void
+    {
+        unset($this->photos[$key]);
+    }
+
     public function submit(): void
     {
+        // Validate the rental information
         $validated = $this->validate();
 
         // Check if a rental already exists
         if (Rental::count() > 0) {
-            // A rental record exists, so set that as active rental
+            // A rental exists, so set that as active rental
             $rental = Rental::first();
         } else {
             // No rentals exists, create a new one.
             $rental = new Rental();
         }
 
-        $rental->name = $this->rental_name;
-        $rental->address_street = $this->rental_street;
-        $rental->address_city = $this->rental_city;
+        // Update the rental's information
+        $rental->name = ucwords($this->rental_name);
+        $rental->address_street = ucwords($this->rental_street);
+        $rental->address_city = ucwords($this->rental_city);
         $rental->address_state = $this->rental_state;
         $rental->address_zip = $this->rental_zip;
 
-        attempt(function ($rental) {
-            if ($rental->save()) {
-            } else {
-                dd('no');
-            }
-        }, $rental, 'Adding first rental to database');
+        // Save the rental information
+        $rental->save();
+        // attempt(function ($rental) {
+        //     if ($rental->save()) {
+        //         toast()->success('Rental created')->push();
+        //     } else {
+        //         toast()->danger('Error')->push();
+        //     }
+        // }, $rental, 'Adding first rental to database');
+
+
     }
 
     public function autofillTestData(): void
