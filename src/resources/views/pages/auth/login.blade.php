@@ -8,7 +8,7 @@
             <x-forms.toggle wiremodel="remember" label="Remember me" desc="Enable this to stay signed in forever. Do not enable this unless you're on a private computer." />
             <div>
                 <button class="w-full button button-primary button-lg" type="submit">
-                    <x-spinner text="Sign in" />
+                    Sign in
                 </button>
             </div>
             <div class="text-center">

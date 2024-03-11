@@ -19,7 +19,7 @@
             </div>
             <div class="flex items-center justify-end space-x-2">
                 <button class="button button-wide" type="button" wire:loading.attr="disabled" wire:click="validateStep('name')">
-                    <x-spinner text="Next" />
+                    Next
                 </button>
             </div>
         </div>
@@ -46,7 +46,7 @@
                     Back
                 </button>
                 <button class="button button-wide button-primary" type="button" wire:loading.attr="disabled" wire:click="validateStep('address')">
-                    <x-spinner text="Next" />
+                    Next
                 </button>
             </div>
         </div>
@@ -112,7 +112,7 @@
                             Back
                         </button>
                         <button class="button button-wide" type="button" wire:click="submit">
-                            <x-spinner text="Next" />
+                            Next
                         </button>
                     </div>
                 </div>
