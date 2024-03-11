@@ -4,7 +4,7 @@
     <h1 class="mb-8 text-center page-title">Welcome to {{ config('app.name') }}!</h1>
     <div class="w-full" wire:loading>
         <div class="text-center card card-padding">
-            <x-spinner size="w-12 h-12" />
+            <x-spinner color="text-muted" size="w-12 h-12" />
         </div>
     </div>
     <div wire:loading.remove>

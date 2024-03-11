@@ -84,7 +84,7 @@ class FirstRental extends Component
         $this->autofillTestData();
 
         // Init the ability to sort photos
-        $this->dispatch('init-sortable');
+        // $this->dispatch('init-sortable');
         // toast()->debug('Photos initialized')->push();
     }
 
@@ -102,13 +102,15 @@ class FirstRental extends Component
     function updated($property, $value): void
     {
         $this->validateOnly($property);
+
+        toast()->debug($value, $property . ' updated to:')->push();
     }
 
-    function nextTab($step): void
+    function validateStep($currentStep): void
     {
-        toast()->debug($step)->push();
+        toast()->debug('Next Step...')->push();
 
-        switch ($step) {
+        switch ($currentStep) {
             case 'name':
                 $this->validateOnly('rental_name');
                 break;
@@ -128,6 +130,7 @@ class FirstRental extends Component
     public function deletePhoto($key): void
     {
         unset($this->photos[$key]);
+        toast()->info('Photo was successfully removed.', 'Photo removed')->push();
     }
 
     public function submit(): void
@@ -151,8 +154,15 @@ class FirstRental extends Component
         $rental->address_state = $this->rental_state;
         $rental->address_zip = $this->rental_zip;
 
-        // Save the rental information
+        // Save the rental
         $rental->save();
+
+        // Save temp photos
+        dd($this->photos);
+        foreach ($this->photos as $photo) {
+        }
+
+
         // attempt(function ($rental) {
         //     if ($rental->save()) {
         //         toast()->success('Rental created')->push();

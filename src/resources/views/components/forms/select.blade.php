@@ -1,4 +1,4 @@
-<div>
+{{-- <div>
     @if ($label)
         <label class="form-label @error($wiremodel) form-label-error @enderror" for="{{ $wiremodel }}">{{ $label }}</label>
     @endif
@@ -13,9 +13,14 @@
             this.open = false
             $refs.button.focus()
         }
-    }" x-on:click.away="open = false" x-init="$watch('selectedKey', value => @this.$refresh())">
-        <span x-text="selectedKey"></span>
-        <span x-text="selectedValue"></span>
+    }" x-on:click.away="open = false" x-init="() => {
+        $watch('selectedKey', value => {
+            if (value) {
+                this.selectedValue = $refs['option' + value].textContent;
+            }
+        });
+        @this.$refresh();
+    }">
         <button class="text-left form-input group @error($wiremodel) form-input-error @enderror" type="button" x-ref="button" x-on:click="open = !open">
             <span class="block mr-4 truncate" :class="selectedKey ? '' : 'text-muted-light'" x-text="{{ $showKeyAsSelection ? 'selectedKey' : 'selectedValue' }} || '{{ $placeholder }}'"></span>
             <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -24,6 +29,8 @@
                 </svg>
             </span>
         </button>
+
+        <span x-text="selectedKey"></span>
 
         <div class="absolute z-10 min-w-full mt-1 overflow-y-auto bg-white rounded-lg shadow-xl max-w-72 ring-1 ring-gray-900/10 max-h-60" x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
             <div class="divide-y">
@@ -48,4 +55,23 @@
         </span>
     @endif
 
+</div> --}}
+
+<div x-data="{ value: @entangle($wiremodel) }">
+    @if ($label)
+        <label class="form-label @error($wiremodel) form-label-error @enderror" for="{{ $wiremodel }}">{{ $label }}</label>
+    @endif
+
+    {{-- <input class="form-input @error($wiremodel) form-input-error @enderror {{ $class }}" id="{{ $wiremodel }}" name="{{ $wiremodel }}" type="{{ $type }}" wire:model.blur="{{ $wiremodel }}" x-ref="inputField" x-on:focus="{{ $onfocus }}" {{ $attributes->merge(['class' => '']) }} @if ($placeholder) placeholder="{{ $placeholder }}" @endif autocomplete="{{ $autocomplete ?? $wiremodel }}"> --}}
+    <select class="form-input" id="" name="" wire:model="{{ $wiremodel }}">
+        @foreach ($options as $key => $value)
+            <option value="{{ $key }}">{{ $value }}</option>
+        @endforeach
+    </select>
+
+    @if ($desc || $errors->first($wiremodel))
+        <span class="form-desc @error($wiremodel) form-desc-error @enderror">
+            {!! empty($errors->first($wiremodel)) ? $desc : $errors->first($wiremodel) !!}
+        </span>
+    @endif
 </div>

@@ -5,9 +5,12 @@ namespace App\View\Components\Forms;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class Select extends Component
 {
+    use WireToast;
+
     public $options;
     public $wiremodel;
     public $label;
@@ -39,8 +42,8 @@ class Select extends Component
     // public function __construct(array $options, string $wiremodel, string $label = "", string $desc = "", string $placeholder = "", string $class = "")
     public function __construct(array $options, string $wiremodel, string $label, string $desc = "", string $placeholder = null, bool $showKeyAsSelection = false)
     {
-        $this->options = $options ?? [];
         $this->wiremodel = $wiremodel;
+        $this->options = $options;
         $this->label = $label ?? 'Select';
         $this->desc = $desc;
         $this->placeholder = $placeholder ?? 'Select an option...';

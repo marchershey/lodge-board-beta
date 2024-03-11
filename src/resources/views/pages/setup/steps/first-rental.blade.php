@@ -1,12 +1,12 @@
 <div class="card-flex" wire:init="load" x-data="{
-    active: 2,
-    nextTab() {
+    active: 1,
+    nextStep() {
         this.active++
     },
-    prevTab() {
+    prevStep() {
         this.active--
     }
-}" x-on:next-tab="nextTab" x-on:prev-tab="prevTab">
+}" x-on:next-tab="nextStep" x-on:prev-tab="prevStep">
 
     <div class="card card-padding">
         <div class="card-header">
@@ -18,8 +18,8 @@
                 <x-forms.text class="capitalize" type="text" wiremodel="rental_name" label="Rental Name" desc="Give this rental property a name." placeholder="Rental Name" />
             </div>
             <div class="flex items-center justify-end space-x-2">
-                <button class="button button-wide" type="button" wire:click="nextTab('name')">
-                    Next
+                <button class="button button-wide" type="button" wire:loading.attr="disabled" wire:click="validateStep('name')">
+                    <x-spinner text="Next" />
                 </button>
             </div>
         </div>
@@ -42,11 +42,11 @@
                 </div>
             </div>
             <div class="flex items-center justify-between transition delay-150" :class="active == 2 ? 'opacity-100' : ' opacity-0'">
-                <button class="button button-wide button-gray" type="button" x-on:click="prevTab">
+                <button class="button button-wide button-gray" type="button" x-on:click="prevStep">
                     Back
                 </button>
-                <button class="button button-wide button-primary" type="button" wire:click="nextTab('address')">
-                    Next
+                <button class="button button-wide button-primary" type="button" wire:loading.attr="disabled" wire:click="validateStep('address')">
+                    <x-spinner text="Next" />
                 </button>
             </div>
         </div>
@@ -80,7 +80,7 @@
                     <div x-show="!isuploading">
                         <label class="button-full button button-lg" for="photos-input">
                             <span>Select Photos...</span>
-                            <input class="hidden photos-input" id="photos-input" type="file" wire:model="photos" accept="image/jpg, image/jpeg, image/png, image/gif, image/webp" multiple>
+                            <input class="hidden photos-input" id="photos-input" type="file" wire:model="photos" accept="image/jpg, image/jpeg, image/png, image/webp" multiple>
                         </label>
                     </div>
 
@@ -89,7 +89,7 @@
                             <p class="font-semibold">Note:</p>
                             <p>You can reorder the photos by clicking and dragging them in the correct order.</p>
                         </div>
-                        <div class="grid grid-cols-3 gap-4 select-none sortable">
+                        <div class="grid grid-cols-2 gap-4 select-none sortable">
                             @foreach ($photos as $photo_key => $photo)
                                 <div class="relative first:col-span-full group sortable--item" data-photo-id="{{ $photo_key }}">
                                     <div class="overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7 sortable--handle">
@@ -108,11 +108,11 @@
                     @endif
 
                     <div class="flex items-center justify-between mt-4 transition delay-150" :class="active == 3 ? 'opacity-100' : ' opacity-0'">
-                        <button class="button button-wide button-gray" type="button" x-on:click="prevTab">
+                        <button class="button button-wide button-gray" type="button" x-on:click="prevStep">
                             Back
                         </button>
-                        <button class="button button-wide" type="button" @if (!$photos) disabled @endif wire:click="submit">
-                            Next
+                        <button class="button button-wide" type="button" wire:click="submit">
+                            <x-spinner text="Next" />
                         </button>
                     </div>
                 </div>

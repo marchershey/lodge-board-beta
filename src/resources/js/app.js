@@ -14,6 +14,7 @@ import AlpineCollapse from "@alpinejs/collapse";
 // Tall Toasts
 import ToastComponent from "../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts";
 
+// Init Alpine Plugins
 Alpine.plugin(AlpineUI);
 Alpine.plugin(AlpineFocus);
 Alpine.plugin(AlpineCollapse);

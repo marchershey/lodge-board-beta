@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('rental_photos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('size');
-            $table->string('mime');
+            $table->integer('size')->nullable();
+            $table->string('mime')->nullable();
             $table->string('path');
             $table->integer('order');
             $table->integer('rental_id');
