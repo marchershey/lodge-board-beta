@@ -28,3 +28,7 @@ import "./photos";
 
 // Start Livewire
 Livewire.start();
+
+window.addEventListener("console", (event) => {
+    console.log(event.detail);
+});

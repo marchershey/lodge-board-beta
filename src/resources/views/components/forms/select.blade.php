@@ -64,6 +64,7 @@
 
     {{-- <input class="form-input @error($wiremodel) form-input-error @enderror {{ $class }}" id="{{ $wiremodel }}" name="{{ $wiremodel }}" type="{{ $type }}" wire:model.blur="{{ $wiremodel }}" x-ref="inputField" x-on:focus="{{ $onfocus }}" {{ $attributes->merge(['class' => '']) }} @if ($placeholder) placeholder="{{ $placeholder }}" @endif autocomplete="{{ $autocomplete ?? $wiremodel }}"> --}}
     <select class="form-input" id="" name="" wire:model="{{ $wiremodel }}">
+        <option value="">Select a {{ $wiremodel }}...</option>
         @foreach ($options as $key => $value)
             <option value="{{ $key }}">{{ $value }}</option>
         @endforeach

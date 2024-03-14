@@ -27,16 +27,14 @@ class SetupIndex extends Component
      */
     function load(): void
     {
-        $this->current_step = app(SetupSettings::class)->current_step;
-        if ($this->current_step === 0) {
-            $this->nextStep();
-        }
+        $this->loadCurrentStep();
     }
 
     function updateDatabaseWithCurrentStep(): void
     {
         app(SetupSettings::class)->current_step = $this->current_step;
         app(SetupSettings::class)->save();
+        toast()->debug('Current step updated on database.')->push();
     }
 
     #[On('next-step')]
@@ -46,13 +44,11 @@ class SetupIndex extends Component
         $this->updateDatabaseWithCurrentStep();
     }
 
-    function previousStep(): void
+    #[On('prev-step')]
+    function prevStep(): void
     {
-        if ($this->current_step > 1) {
-            $this->current_step--;
-            $this->updateDatabaseWithCurrentStep();
-            toast()->debug('Current Step: ' . $this->current_step)->push();
-        }
+        $this->current_step > 1 && $this->current_step--;
+        $this->updateDatabaseWithCurrentStep();
     }
 
     /**
@@ -62,9 +58,13 @@ class SetupIndex extends Component
      *
      * @return void
      */
-    function setCurrentStep($value): void
+    function loadCurrentStep(): void
     {
-        // app(SetupSettings::class)->set('')
-        // $this->step = $value;
+        $this->current_step = app(SetupSettings::class)->current_step;
+
+        // If setup was never started, run nextStep() to set first step
+        if ($this->current_step === 0) {
+            $this->nextStep();
+        }
     }
 }

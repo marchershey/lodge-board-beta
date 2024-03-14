@@ -13,13 +13,17 @@ return new class extends Migration
     {
         Schema::create('rental_photos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('size')->nullable();
-            $table->string('mime')->nullable();
+            $table->string('url');
             $table->string('path');
-            $table->integer('order');
+            $table->string('hashName');
+            $table->string('extension');
+            $table->string('origName');
+            $table->string('origExtension');
+            $table->string('size');
+            $table->string('mime');
             $table->integer('rental_id');
             $table->integer('user_id');
+            $table->integer('order');
             $table->timestamps();
         });
     }

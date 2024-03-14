@@ -3,6 +3,9 @@
 namespace App\Http\Pages\Setup\Steps;
 
 use App\Models\Rental;
+use App\Models\RentalPhoto;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads as SupportFileUploadsWithFileUploads;
 use Livewire\WithFileUploads;
@@ -17,7 +20,7 @@ class FirstRental extends Component
     public $rental_city;
     public $rental_state;
     public $rental_zip;
-    public $photos = [];
+    // public $photos = [];
 
     protected $rules = [
         'rental_name' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
@@ -25,6 +28,7 @@ class FirstRental extends Component
         'rental_city' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
         'rental_state' => ['required', 'string', 'size:2', 'alpha'],
         'rental_zip' => ['required', 'string', 'digits:5', 'between:501,99734', 'numeric'],
+        // 'photos.*' => ['required', 'image', 'mimes:png,jpeg,jpg,webp', 'max:12288']
     ];
 
     protected $validationAttributes = [
@@ -82,10 +86,19 @@ class FirstRental extends Component
     {
         // If in local mode, fill test data
         $this->autofillTestData();
+    }
 
-        // Init the ability to sort photos
-        // $this->dispatch('init-sortable');
-        // toast()->debug('Photos initialized')->push();
+    public function autofillTestData(): void
+    {
+        if (app()->isLocal()) {
+            $this->rental_name = "Ohana Burnside";
+            $this->rental_street = "23 S Highland Dr";
+            $this->rental_city = "Burnside";
+            $this->rental_state = "KY";
+            $this->rental_zip = "42519";
+
+            toast()->debug('FirstRental test data filled.')->push();
+        }
     }
 
     /**
@@ -102,8 +115,6 @@ class FirstRental extends Component
     function updated($property, $value): void
     {
         $this->validateOnly($property);
-
-        toast()->debug($value, $property . ' updated to:')->push();
     }
 
     function validateStep($currentStep): void
@@ -133,10 +144,15 @@ class FirstRental extends Component
         toast()->info('Photo was successfully removed.', 'Photo removed')->push();
     }
 
+    function updatePhotoOrder(array $data): void
+    {
+        $this->photos = array_map(fn ($item) => $this->photos[$item['value']], $data);
+    }
+
     public function submit(): void
     {
         // Validate the rental information
-        $validated = $this->validate();
+        $this->validate();
 
         // Check if a rental already exists
         if (Rental::count() > 0) {
@@ -158,32 +174,27 @@ class FirstRental extends Component
         $rental->save();
 
         // Save temp photos
-        dd($this->photos);
-        foreach ($this->photos as $photo) {
+        foreach ($this->photos as $order => $photo) {
+            // Upload photo
+            $path = $photo->store($rental->id, 'photos');
+
+            $data = [
+                'url' => '/photos/' . $rental->id . '/' . $photo->hashName(),
+                'path' => $path,
+                'hashName' => $photo->hashName(),
+                'extension' => $photo->extension(),
+                'origName' => $photo->getClientOriginalName(),
+                'origExtension' => $photo->getClientOriginalExtension(),
+                'size' => $photo->getSize(),
+                'mime' => $photo->getMimeType(),
+                'rental_id' => $rental->id,
+                'user_id' => auth()->user()->id,
+                'order' => $order,
+            ];
+
+            RentalPhoto::create($data);
         }
 
-
-        // attempt(function ($rental) {
-        //     if ($rental->save()) {
-        //         toast()->success('Rental created')->push();
-        //     } else {
-        //         toast()->danger('Error')->push();
-        //     }
-        // }, $rental, 'Adding first rental to database');
-
-
-    }
-
-    public function autofillTestData(): void
-    {
-        if (app()->isLocal()) {
-            $this->rental_name = "Ohana Burnside";
-            $this->rental_street = "23 S Highland Dr";
-            $this->rental_city = "Burnside";
-            $this->rental_state = "KY";
-            $this->rental_zip = "42519";
-
-            toast()->debug('Test Data filled')->push();
-        }
+        $this->dispatch('next-step');
     }
 }

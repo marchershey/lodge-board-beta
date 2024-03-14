@@ -60,6 +60,22 @@ class SiteConfig extends Component
     public function load(): void
     {
         $this->autofillTestData();
+
+        $settings = app(GeneralSettings::class);
+        $this->site_name = (string) $settings->site_name;
+        $this->site_url = (string) $settings->site_url;
+        $this->timezone = (string) $settings->timezone;
+    }
+
+    public function autofillTestData(): void
+    {
+        if (app()->isLocal()) {
+            $this->site_name = "Demo Name (temp)";
+            $this->site_url = "http://demo.com";
+            $this->timezone = "America/Indiana/Indianapolis";
+
+            toast()->debug('SiteConfig test data filled.')->push();
+        }
     }
 
     /**
@@ -78,13 +94,6 @@ class SiteConfig extends Component
         $this->validateOnly($property);
     }
 
-    /**
-     * Undocumented function
-     *
-     * @param array $validated
-     * @param string $setup
-     * @return void
-     */
     public function submit(): void
     {
         // Validate the form
@@ -98,14 +107,5 @@ class SiteConfig extends Component
         $settings->save();
 
         $this->dispatch('next-step');
-    }
-
-    public function autofillTestData(): void
-    {
-        if (app()->isLocal()) {
-            $this->site_name = "Serrate Rentals";
-            $this->site_url = "http://localhost";
-            $this->timezone = "America/Kentucky/Louisville";
-        }
     }
 }

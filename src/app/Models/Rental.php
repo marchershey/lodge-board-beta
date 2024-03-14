@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Rental extends Model
 {
@@ -33,5 +34,13 @@ class Rental extends Model
         }
 
         return $newSlug;
+    }
+
+    /**
+     * Get the photos for the rental.
+     */
+    public function photos(): HasMany
+    {
+        return $this->hasMany(RentalPhoto::class)->orderBy('order');
     }
 }

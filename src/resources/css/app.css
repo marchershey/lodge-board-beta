@@ -32,6 +32,12 @@
     #nprogress .spinner .spinner-icon {
         @apply !h-6 !w-6 !border-4 !border-l-primary border-t-primary;
     }
+    .sortable-chosen button {
+        @apply !invisible;
+    }
+    .sortable-ghost button {
+        @apply !invisible;
+    }
 }
 
 @layer components {
@@ -77,14 +83,17 @@
     }
 
     /* Cards */
-    .card-container {
+    /* .card-container {
         @apply mx-0 w-full tablet-sm:mx-6;
-    }
+    } */
     .card {
         @apply bg-white shadow-sm ring-1 ring-gray-900/5 tablet-sm:rounded-lg;
     }
+    .card-padding {
+        @apply px-6 py-8 tablet-sm:px-8;
+    }
     .card-flex {
-        @apply flex flex-col gap-y-8;
+        @apply flex flex-col gap-8;
     }
     .card-header {
         /* @apply -pb-4; */
@@ -96,13 +105,13 @@
         @apply text-base text-muted;
     }
     .card-form {
-        @apply grid grid-cols-12 gap-6;
+        @apply grid grid-cols-12 gap-4;
     }
     .card-form > div {
         @apply col-span-full;
     }
-    .card-padding {
-        @apply px-6 py-8 tablet-sm:px-8;
+    .card-buttons {
+        @apply flex items-center; /* Remove justify-between here */
     }
 
     /* Alerts */
@@ -253,10 +262,6 @@
 }
 
 @layer utilities {
-    .flex-center {
-        @apply flex items-center justify-center;
-    }
-
     [x-cloak] {
         display: none !important;
     }
