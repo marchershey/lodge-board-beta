@@ -20,7 +20,7 @@ class Text extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $label = "", string $desc = "", string $placeholder = "", string $type = "text", string $autocomplete = "", string $class = "", string $onfocus = "")
+    public function __construct(string $wiremodel, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $class = null, string $onfocus = null)
     {
         $this->wiremodel = $wiremodel;
         $this->label = $label;
