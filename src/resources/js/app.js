@@ -26,6 +26,9 @@ import "./themeMode";
 // Photos
 import "./photos";
 
+// Dev bar
+import "./devbar";
+
 // Start Livewire
 Livewire.start();
 

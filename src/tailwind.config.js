@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
+const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 export default {
@@ -9,6 +10,7 @@ export default {
         "./resources/js/**/*.js",
         "./app/View/Components/**/*.php",
     ],
+    safelist: ["alert-type-info", "alert-type-error"],
     theme: {
         extend: {
             colors: {
@@ -42,7 +44,7 @@ export default {
                 desktop: "1280px", // => @media (min-width: 1280px) { ... }
             },
             fontFamily: {
-                inter: ["Inter", "sans-serif"],
+                default: ["Inter Tight", ...defaultTheme.fontFamily.sans],
             },
             fontWeight: {
                 thin: "100",

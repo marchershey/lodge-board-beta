@@ -20,7 +20,6 @@ class SiteConfig extends Component
 
     protected $rules = [
         'site_name' => ['required', 'string', 'min:3', 'max:250'],
-        // 'site_url' => ['required', 'string', 'min:3', 'max:250', 'regex:/^(https?:\/\/)?(?![-.])([\da-z\.-]+(?<!-)\.[a-z]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/'],
         'site_url' => ['required', 'string', 'min:3', 'max:250', 'regex:/^(https?:\/\/)?(?![-.])(localhost|[\da-z\.-]+(?<!-)\.[a-z]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/'],
         'timezone' => ['required', 'string', 'timezone:per_country,US'],
     ];
@@ -57,24 +56,36 @@ class SiteConfig extends Component
         return view('pages.setup.steps.site-config');
     }
 
+    /**
+     * Runs on init page load
+     *
+     * @return void
+     */
     public function load(): void
     {
-        $this->autofillTestData();
-
         $settings = app(GeneralSettings::class);
         $this->site_name = (string) $settings->site_name;
         $this->site_url = (string) $settings->site_url;
         $this->timezone = (string) $settings->timezone;
+
+        // If env local and empty settings, inject testing data
+        if (!$this->site_name && !$this->site_url && !$this->timezone) {
+            $this->injectTestData();
+        }
     }
 
-    public function autofillTestData(): void
+    /**
+     * Injects test data during development, or when the app env is locals
+     *
+     * @return void
+     */
+    public function injectTestData(): void
     {
         if (app()->isLocal()) {
             $this->site_name = "Demo Name (temp)";
             $this->site_url = "http://demo.com";
             $this->timezone = "America/Indiana/Indianapolis";
-
-            toast()->debug('SiteConfig test data filled.')->push();
+            devlog('SiteConfig test data filled');
         }
     }
 
@@ -94,6 +105,12 @@ class SiteConfig extends Component
         $this->validateOnly($property);
     }
 
+    /**
+     * Runs when the user presses the continue button. Validates the user's data, 
+     * updates the settings, continues to next step.
+     *
+     * @return void
+     */
     public function submit(): void
     {
         // Validate the form

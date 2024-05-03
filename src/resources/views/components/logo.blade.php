@@ -20,7 +20,7 @@
             </h1>
         @endif
         @if (!$hideBuild)
-            <span class="inline-flex items-center px-1 py-0.5 text-[9px] font-medium text-white rounded-lg bg-primary ring-1 ring-inset">
+            <span class="inline-flex items-center px-1 py-0.5 text-[9px] align-middle font-medium text-white rounded-lg bg-primary ring-1 ring-inset">
                 {{ config('app.build') }}
             </span>
         @endif

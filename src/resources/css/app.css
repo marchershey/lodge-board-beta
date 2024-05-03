@@ -1,15 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-    @font-face {
+    /* @font-face {
         font-family: "Inter";
         src: url(../../public/fonts/Inter.ttf) format("truetype");
-    }
-    * {
-        @apply font-sans;
-    }
+    } */
     html {
         /* Set the default text size */
         font-size: 14px;
@@ -48,6 +47,12 @@
     .link-muted {
         @apply !text-muted;
     }
+    .host {
+        @apply font-bold text-green-600;
+    }
+    .staff {
+        @apply font-bold text-blue-500;
+    }
 
     /* Page Elements */
     .page-x-padding {
@@ -78,6 +83,9 @@
     .page-title {
         @apply text-2xl font-semibold text-gray-800 tablet:font-bold;
     }
+    .page-desc {
+        @apply mt-2 text-muted;
+    }
     .page-footer {
         @apply page-padding bg-gray-200 text-xs text-muted;
     }
@@ -87,19 +95,22 @@
         @apply mx-0 w-full tablet-sm:mx-6;
     } */
     .card {
-        @apply bg-white shadow-sm ring-1 ring-gray-900/5 tablet-sm:rounded-lg;
+        @apply bg-white ring-1 ring-gray-900/10 tablet-sm:rounded-xl;
     }
     .card-padding {
         @apply px-6 py-8 tablet-sm:px-8;
     }
     .card-flex {
-        @apply flex flex-col gap-8;
+        @apply flex flex-col space-y-8;
     }
+    /* .card-padding-sm {
+        @apply px-6 py-6 tablet-sm:px-8;
+    } */
     .card-header {
         /* @apply -pb-4; */
     }
     .card-header h1 {
-        @apply text-xl font-semibold;
+        @apply text-xl font-medium;
     }
     .card-header p {
         @apply text-base text-muted;
@@ -114,20 +125,6 @@
         @apply flex items-center; /* Remove justify-between here */
     }
 
-    /* Alerts */
-    .alert-container {
-        @apply flex flex-col space-y-2 rounded-lg px-4 py-5 ring-1;
-    }
-    .alert-title {
-        @apply text-base font-semibold;
-    }
-    .alert-body {
-        @apply text-sm;
-    }
-    .alert-type-error {
-        @apply bg-red-600/80 text-white ring-red-500;
-    }
-
     /* Forms */
     .form-container {
         @apply mb-10 flex flex-col space-y-10;
@@ -139,7 +136,7 @@
         @apply flex flex-col space-y-1;
     }
     .form-section-header {
-        @apply text-base font-semibold text-gray-800;
+        @apply text-base font-semibold;
     }
     .form-section-desc {
         @apply text-sm font-normal text-muted;
@@ -150,7 +147,7 @@
 
     /* Form Elements */
     .form-label {
-        @apply block cursor-pointer pb-2 text-base font-medium leading-5 text-gray-900 dark:text-white;
+        @apply block cursor-pointer pb-2 text-base font-medium leading-5 text-gray-800 dark:text-white;
     }
     .form-label-error {
         @apply !text-red-500;
@@ -162,12 +159,13 @@
         @apply !text-red-500;
     }
     .form-input {
-        @apply block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-1 ring-inset ring-gray-300 placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary tablet-sm:text-base dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary;
+        @apply block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-1 ring-inset ring-gray-900/10 placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary tablet-sm:text-base;
     }
     .form-input-error {
         @apply !ring-2 !ring-red-500;
     }
 
+    /* Form: select */
     .form-select {
         @apply form-input;
     }
@@ -178,6 +176,7 @@
         @apply !ring-2 !ring-red-500;
     }
 
+    /* Form: checkbox */
     .form-checkbox-container {
         @apply relative flex cursor-pointer items-start;
     }
@@ -191,6 +190,7 @@
         @apply block !ring-red-500;
     }
 
+    /* Form: toggle */
     .form-toggle {
         @apply flex items-center justify-between;
     }
@@ -209,7 +209,7 @@
 
     /* Buttons */
     .button {
-        @apply block cursor-pointer rounded-md bg-primary px-3 py-2 text-center text-sm font-medium text-white focus-visible:outline-offset-4;
+        @apply block cursor-pointer rounded-md bg-primary px-3 py-2 text-center text-base font-medium text-white focus-visible:outline-offset-4;
     }
     .button:disabled {
         @apply cursor-not-allowed bg-opacity-50;
@@ -235,6 +235,43 @@
     .button-lg {
         @apply px-3.5 py-2.5 text-base;
     }
+
+    /* Alerts */
+    .alert-container {
+        @apply flex flex-col space-y-2 rounded-lg px-4 py-5 ring-1;
+    }
+    .alert-title {
+        @apply text-base font-semibold;
+    }
+    .alert-body {
+        @apply text-sm;
+    }
+    .alert-type-info {
+        @apply bg-primary/20 text-white ring-primary/50;
+    }
+    .alert-type-error {
+        @apply bg-red-600/80 text-white ring-red-500;
+    }
+
+    /** Uploader **/
+    /* .uploader {
+        @apply flex cursor-pointer flex-col items-center justify-center space-y-4 rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 text-muted;
+    }
+    .uploader .icon {
+        @apply m-3 rounded-full bg-gray-200/70 p-3 text-primary;
+    }
+    .uploader-body div {
+        @apply text-center;
+    }
+    .uploader svg {
+        @apply h-12 w-12;
+    }
+    .uploader-body {
+        @apply flex flex-col space-y-2;
+    }
+    .uploader-body span {
+        @apply link group-hover:underline;
+    } */
 
     /* .button {
         @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-md px-2.5 py-1.5 font-medium outline-none ring-black focus-visible:ring-2 dark:ring-white;
@@ -295,5 +332,12 @@
     .hide-scrollbar {
         -ms-overflow-style: none;
         scrollbar-width: none;
+    }
+
+    .flex-center {
+        @apply flex items-center justify-center;
+    }
+    .flex-col-center {
+        @apply flex flex-col items-center justify-center;
     }
 }

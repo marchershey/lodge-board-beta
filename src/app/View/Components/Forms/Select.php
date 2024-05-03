@@ -13,6 +13,7 @@ class Select extends Component
 
     public $options;
     public $wiremodel;
+    public $wiretarget;
     public $label;
     public $desc;
     public $placeholder;
@@ -40,9 +41,10 @@ class Select extends Component
      * Create a new component instance.
      */
     // public function __construct(array $options, string $wiremodel, string $label = "", string $desc = "", string $placeholder = "", string $class = "")
-    public function __construct(array $options, string $wiremodel, string $label, string $desc = "", string $placeholder = null, bool $showKeyAsSelection = false)
+    public function __construct(array $options, string $wiremodel, string $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, bool $showKeyAsSelection = false)
     {
         $this->wiremodel = $wiremodel;
+        $this->wiretarget = $wiretarget;
         $this->options = $options;
         $this->label = $label ?? 'Select';
         $this->desc = $desc;

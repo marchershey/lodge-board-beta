@@ -1,30 +1,24 @@
 @env('local')
 <!-- Development Bar -->
-<div class="flex-none">
-    <div class="w-full h-6 bg-gray-100 border-t dark:bg-black dark:border-gray-700 dark:text-white">
-        <div class="flex items-center justify-center h-full space-x-5 text-xs">
 
-            <!-- Screen Size -->
-            <div class="flex">
-                <span class="font-bold">Screen size:&nbsp;</span>
-                <div class="flex">
-                    <span class="block tablet-sm:hidden">mobile</span>
-                    <span class="hidden tablet-sm:block tablet:hidden">tablet-sm</span>
-                    <span class="hidden tablet:block laptop:hidden">tablet</span>
-                    <span class="hidden laptop:block desktop:hidden">laptop</span>
-                    <span class="hidden desktop:block">desktop</span>
-                    <span class="block sm:hidden">(xs)</span>
-                    <span class="hidden sm:block md:hidden">(sm)</span>
-                    <span class="hidden md:block lg:hidden">(md)</span>
-                    <span class="hidden lg:block xl:hidden">(lg)</span>
-                    <span class="hidden xl:block 2xl:hidden">(xl)</span>
-                    <span class="hidden 2xl:block">(2xl)</span>
-                </div>
-            </div>
+<div class="flex bg-white dark:bg-black dark:text-white" :class="$store.devbar.visible ? '' : 'absolute bottom-0'">
+    <button class="flex-none block" @click="$store.devbar.toggle()">
+        {{-- Close --}}
+        <svg class="w-6 h-6" x-cloak x-show="$store.devbar.visible" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M14 6l-6 6l6 6v-12" />
+        </svg>
+        {{-- Open --}}
+        <svg class="w-6 h-6" x-cloak x-show="!$store.devbar.visible" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M10 18l6 -6l-6 -6v12" />
+        </svg>
+    </button>
+    <div class="flex items-center justify-center w-full tablet-sm:justify-start" x-transition.in x-show="$store.devbar.visible">
+        <div class="flex items-center justify-center h-full space-x-5 text-xs tablet-sm:ml-4">
 
             <!-- Theme Switcher -->
             <div class="flex">
-                <span class="font-bold">Mode:&nbsp;</span>
                 <button x-button @click="changeThemeMode()">
                     <!-- Moon icon -->
                     <svg class="hidden w-4 h-4 dark:block p-0.5" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -47,16 +41,39 @@
                 </button>
             </div>
 
+            <!-- Screen Size -->
+            <div class="flex">
+                <span class="font-black">size:</span>
+                <div class="flex">
+                    <span class="block tablet-sm:hidden">mobile</span>
+                    <span class="hidden tablet-sm:block tablet:hidden">tablet-sm</span>
+                    <span class="hidden tablet:block laptop:hidden">tablet</span>
+                    <span class="hidden laptop:block desktop:hidden">laptop</span>
+                    <span class="hidden desktop:block">desktop</span>
+                    <span class="block sm:hidden">(xs)</span>
+                    <span class="hidden sm:block md:hidden">(sm)</span>
+                    <span class="hidden md:block lg:hidden">(md)</span>
+                    <span class="hidden lg:block xl:hidden">(lg)</span>
+                    <span class="hidden xl:block 2xl:hidden">(xl)</span>
+                    <span class="hidden 2xl:block">(2xl)</span>
+                </div>
+            </div>
+
             <!-- Environment Type -->
             <div class="flex">
-                <span class="font-bold">Env:&nbsp;</span>
+                <span class="font-black">env:</span>
                 <span>{{ config('app.env') }}</span>
             </div>
 
             <!-- Build -->
             <div class="flex">
-                <span class="font-bold">Build:&nbsp;</span>
+                <span class="font-black">ver:</span>
                 <span>{{ config('app.build') }}</span>
+            </div>
+
+            <!-- Links -->
+            <div class="flex">
+                <a class="link" href="{{ route('logout') }}">logout</a>
             </div>
         </div>
     </div>

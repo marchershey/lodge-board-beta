@@ -2,8 +2,9 @@
  * This handles the photos uploading progress
  */
 Alpine.data("photosuploader", () => ({
-    isuploading: false,
+    uploading: false,
     progress: "0",
+    photosCount: 0,
 }));
 
 // import "livewire-sortable";

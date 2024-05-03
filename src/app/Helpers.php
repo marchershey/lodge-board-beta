@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use WireToast;
+
 function settings($type = 'general')
 {
     switch ($type) {
@@ -10,8 +12,26 @@ function settings($type = 'general')
             return app(App\Settings\GeneralSettings::class);
         case 'setup':
             return app(App\Settings\SetupSettings::class);
+        case 'dev':
+            return app(App\Settings\DevSettings::class);
     }
 }
+
+function notify($message, $type = "info", $title = "")
+{
+    toast()->$type($message, $title)->push();
+}
+
+function devlog($action)
+{
+    if (settings('dev')->notifications) {
+        toast()->debug($action)->push();
+    }
+
+    $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+    $out->writeln("Hello from Terminal");
+}
+
 
 
 /**

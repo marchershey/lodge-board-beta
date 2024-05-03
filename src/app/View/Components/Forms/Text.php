@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 class Text extends Component
 {
     public $wiremodel;
+    public $wiretarget;
     public $label;
     public $desc;
     public $placeholder;
@@ -20,9 +21,10 @@ class Text extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $class = null, string $onfocus = null)
+    public function __construct(string $wiremodel, string $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $class = null, string $onfocus = null)
     {
         $this->wiremodel = $wiremodel;
+        $this->wiretarget = $wiretarget;
         $this->label = $label;
         $this->desc = $desc;
         $this->placeholder = $placeholder;

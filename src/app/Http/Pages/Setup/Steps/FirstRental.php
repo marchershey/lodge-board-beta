@@ -3,24 +3,16 @@
 namespace App\Http\Pages\Setup\Steps;
 
 use App\Models\Rental;
-use App\Models\RentalPhoto;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Livewire\Features\SupportFileUploads\WithFileUploads as SupportFileUploadsWithFileUploads;
-use Livewire\WithFileUploads;
-use Usernotnull\Toast\Concerns\WireToast;
 
 class FirstRental extends Component
 {
-    use WireToast, SupportFileUploadsWithFileUploads;
 
     public $rental_name;
     public $rental_street;
     public $rental_city;
     public $rental_state;
     public $rental_zip;
-    // public $photos = [];
 
     protected $rules = [
         'rental_name' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
@@ -28,7 +20,6 @@ class FirstRental extends Component
         'rental_city' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
         'rental_state' => ['required', 'string', 'size:2', 'alpha'],
         'rental_zip' => ['required', 'string', 'digits:5', 'between:501,99734', 'numeric'],
-        // 'photos.*' => ['required', 'image', 'mimes:png,jpeg,jpg,webp', 'max:12288']
     ];
 
     protected $validationAttributes = [
@@ -82,13 +73,23 @@ class FirstRental extends Component
         return view('pages.setup.steps.first-rental');
     }
 
+    /**
+     * Runs on init page load
+     *
+     * @return void
+     */
     public function load()
     {
         // If in local mode, fill test data
-        $this->autofillTestData();
+        $this->injectTestData();
     }
 
-    public function autofillTestData(): void
+    /**
+     * Injects test data during development, or when the app env is locals
+     *
+     * @return void
+     */
+    public function injectTestData(): void
     {
         if (app()->isLocal()) {
             $this->rental_name = "Ohana Burnside";
@@ -96,8 +97,6 @@ class FirstRental extends Component
             $this->rental_city = "Burnside";
             $this->rental_state = "KY";
             $this->rental_zip = "42519";
-
-            toast()->debug('FirstRental test data filled.')->push();
         }
     }
 
@@ -117,38 +116,14 @@ class FirstRental extends Component
         $this->validateOnly($property);
     }
 
-    function validateStep($currentStep): void
-    {
-        toast()->debug('Next Step...')->push();
-
-        switch ($currentStep) {
-            case 'name':
-                $this->validateOnly('rental_name');
-                break;
-            case 'address':
-                $this->validate();
-                break;
-        }
-
-        $this->dispatch('next-tab');
-    }
-
-    public function upload($name): void
-    {
-        toast()->debug($name)->push();
-    }
-
-    public function deletePhoto($key): void
-    {
-        unset($this->photos[$key]);
-        toast()->info('Photo was successfully removed.', 'Photo removed')->push();
-    }
-
-    function updatePhotoOrder(array $data): void
-    {
-        $this->photos = array_map(fn ($item) => $this->photos[$item['value']], $data);
-    }
-
+    /**
+     * Runs when the user presses the continue button. Validates the form data, checks
+     * if there is an existing rental property in the database, if so it sets that as
+     * the active rental, if not it creates a new one. Then it either adds or edits
+     * the rental data and saves it. Then continues to the next step.
+     *
+     * @return void
+     */
     public function submit(): void
     {
         // Validate the rental information
@@ -173,28 +148,7 @@ class FirstRental extends Component
         // Save the rental
         $rental->save();
 
-        // Save temp photos
-        foreach ($this->photos as $order => $photo) {
-            // Upload photo
-            $path = $photo->store($rental->id, 'photos');
-
-            $data = [
-                'url' => '/photos/' . $rental->id . '/' . $photo->hashName(),
-                'path' => $path,
-                'hashName' => $photo->hashName(),
-                'extension' => $photo->extension(),
-                'origName' => $photo->getClientOriginalName(),
-                'origExtension' => $photo->getClientOriginalExtension(),
-                'size' => $photo->getSize(),
-                'mime' => $photo->getMimeType(),
-                'rental_id' => $rental->id,
-                'user_id' => auth()->user()->id,
-                'order' => $order,
-            ];
-
-            RentalPhoto::create($data);
-        }
-
+        // Go to the next step
         $this->dispatch('next-step');
     }
 }

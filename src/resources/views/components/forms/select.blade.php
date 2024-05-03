@@ -57,14 +57,13 @@
 
 </div> --}}
 
-<div x-data="{ value: @entangle($wiremodel) }">
+<div x-data="{ value: @entangle($wiremodel) }" wire:loading.delay.class="pointer-events-none opacity-30" wire:target="load, submit, {{ $wiretarget }}">
     @if ($label)
         <label class="form-label @error($wiremodel) form-label-error @enderror" for="{{ $wiremodel }}">{{ $label }}</label>
     @endif
 
-    {{-- <input class="form-input @error($wiremodel) form-input-error @enderror {{ $class }}" id="{{ $wiremodel }}" name="{{ $wiremodel }}" type="{{ $type }}" wire:model.blur="{{ $wiremodel }}" x-ref="inputField" x-on:focus="{{ $onfocus }}" {{ $attributes->merge(['class' => '']) }} @if ($placeholder) placeholder="{{ $placeholder }}" @endif autocomplete="{{ $autocomplete ?? $wiremodel }}"> --}}
-    <select class="form-input" id="" name="" wire:model="{{ $wiremodel }}">
-        <option value="">Select a {{ $wiremodel }}...</option>
+    <select class="form-input @error($wiremodel) form-input-error @enderror" id="" name="" wire:model="{{ $wiremodel }}" wire:target="load, submit, {{ $wiretarget }}" wire:loading.attr="disabled">
+        <option value="">Select a {{ $placeholder ?? $wiremodel }}...</option>
         @foreach ($options as $key => $value)
             <option value="{{ $key }}">{{ $value }}</option>
         @endforeach

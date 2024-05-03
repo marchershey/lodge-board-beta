@@ -1,17 +1,26 @@
 <div class="mx-auto tablet-sm:max-w-md" wire:init="load" x-data="{
-    step: @entangle('current_step')
+    step: $wire.entangle('current_step'),
+    page_desc: $wire.entangle('page_desc')
 }">
-    <h1 class="mb-8 text-center page-title">Welcome to {{ config('app.name') }}!</h1>
 
-    <div class="w-full" wire:loading>
+    <header class="mb-12 text-center">
+        <h1 class="page-title">Welcome to {{ config('app.name') }}!</h1>
+        <p class="text-gray-500 page-desc">Get started by completing the following steps below.</p>
+    </header>
+
+    <div class="w-full" wire:loading.delay>
         <div class="text-center card card-padding">
             <x-spinner color="text-muted" size="w-12 h-12" />
         </div>
     </div>
 
-    <div wire:loading.remove>
-
+    <div wire:loading.delay.remove>
         @if ($current_step == 1)
+            <div wire:transition.in>
+                <livewire:pages.setup.steps.host-account />
+            </div>
+            {{-- <div></div>
+
             <div class="card card-padding card-flex">
                 <div class="card-header">
                     <h1>Application Setup</h1>
@@ -21,23 +30,31 @@
                 <div class="flex justify-end">
                     <button class="button button-lg button-full" @click="$dispatch('next-step')">Continue</button>
                 </div>
-            </div>
+            </div> --}}
         @endif
 
         @if ($current_step == 2)
-            <livewire:pages.setup.steps.site-config />
+            <div wire:transition.in>
+                <livewire:pages.setup.steps.site-config />
+            </div>
         @endif
 
         @if ($current_step == 3)
-            <livewire:pages.setup.steps.first-rental />
+            <div wire:transition.in>
+                <livewire:pages.setup.steps.first-rental />
+            </div>
         @endif
 
         @if ($current_step == 4)
-            <livewire:pages.setup.steps.rental-photos />
+            <div wire:transition.in>
+                <livewire:pages.setup.steps.rental-photos />
+            </div>
         @endif
 
         @if ($current_step == 5)
-            <livewire:pages.setup.steps.rental-details />
+            <div wire:transition.in>
+                <livewire:pages.setup.steps.rental-details />
+            </div>
         @endif
 
         {{-- <div x-cloak x-show="step == 1">

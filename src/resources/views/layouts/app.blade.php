@@ -4,27 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+    <link href="https://fonts.gstatic.com" rel="preconnect">
 
     <title>{{ $title . ' - ' . config('app.name') }}</title>
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    @livewireStyles
-
-    <script>
-        if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-            console.log('Setting theme mode to "dark"');
-            localStorage.theme = "dark"
-            document.documentElement.classList.add("dark");
-        } else {
-            console.log('Setting theme mode to "light"');
-            localStorage.theme = "light"
-            document.documentElement.classList.remove("dark");
-        }
-    </script>
 </head>
 
-<body class="flex flex-col h-full overflow-hidden bg-gray-800 overscroll-none">
+<body class="flex flex-col h-full overflow-hidden antialiased bg-gray-800 overscroll-none font-default">
     <!-- Toasts -->
     <livewire:toasts />
 
