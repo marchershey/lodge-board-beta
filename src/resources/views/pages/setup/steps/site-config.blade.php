@@ -1,6 +1,6 @@
 <section class="card card-padding card-flex" x-data="{ value: $wire.entangle('site_url') }" wire:init="load">
     <p class="text-center">
-        Awesome {{ Auth::user()->first_name ?? 'NO NAME' }}! Next step, let's get some basic information about your business.
+        Welcome aboard, <span class="font-bold">{{ Auth::user()->first_name ?? 'NO NAME' }}!</span> Next step, let's collect some basic information regarding your company.
     </p>
 
     <form class="form-grid" action="">

@@ -35,6 +35,9 @@
         <div class="!col-span-6">
             <x-forms.text class="capitalize" wiremodel="last_name" label="" placeholder="Last Name" hideAsterisk />
         </div>
+        <div class="col-span-full">
+
+        </div>
         <x-forms.text type="email" wiremodel="email" label="Email Address" desc="You'll need to confirm this email address in a later step." />
         <x-forms.text type="password" wiremodel="password" label="Password" desc="Passwords must be at least 8 characters long." />
 

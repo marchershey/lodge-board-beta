@@ -66,8 +66,8 @@ class SiteConfig extends Component
     public function load(): void
     {
         // Check if user is authenticated
-        if (!Auth::check()) {
-            toast()->success('yes')->push();
+        if (Auth::check()) {
+            toast()->info(auth()->user()->first_name . ', you have been signed in.', 'Signed In')->push();
         }
 
         $settings = app(GeneralSettings::class);
@@ -77,7 +77,7 @@ class SiteConfig extends Component
 
         // If env local and empty settings, inject testing data
         if (!$this->site_name && !$this->site_url && !$this->timezone) {
-            $this->injectTestData();
+            // $this->injectTestData();
         }
     }
 
