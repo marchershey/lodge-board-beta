@@ -3,13 +3,15 @@
 namespace App\Http\Pages\Setup\Steps;
 
 use App\Settings\GeneralSettings;
+use App\Traits\ValidateOnUpdate;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class SiteConfig extends Component
 {
-    use WireToast;
+    use WireToast, ValidateOnUpdate;
 
     public $site_name;
     public $site_url;
@@ -20,7 +22,7 @@ class SiteConfig extends Component
 
     protected $rules = [
         'site_name' => ['required', 'string', 'min:3', 'max:250'],
-        'site_url' => ['required', 'string', 'min:3', 'max:250', 'regex:/^(https?:\/\/)?(?![-.])(localhost|[\da-z\.-]+(?<!-)\.[a-z]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/'],
+        'site_url' => ['required', 'string', 'min:3', 'max:250', 'regex:/^(?:(http|https):\/\/)?(?![-.])(localhost|[\da-z\.-]+(?<!-)\.[a-z]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/'],
         'timezone' => ['required', 'string', 'timezone:per_country,US'],
     ];
 
@@ -42,7 +44,7 @@ class SiteConfig extends Component
             'string' => 'That :attribute is invalid.',
             'min' => 'The :attribute must be at least :min characters long.',
             'max' => 'The :attribute cannot exceed :max characters long.',
-            'regex' => 'That :attribute is invalid.',
+            'regex' => 'The :attribute is invalid.',
         ],
         'timezone' => [
             'required' => 'The :attribute is required.',
@@ -63,6 +65,11 @@ class SiteConfig extends Component
      */
     public function load(): void
     {
+        // Check if user is authenticated
+        if (!Auth::check()) {
+            toast()->success('yes')->push();
+        }
+
         $settings = app(GeneralSettings::class);
         $this->site_name = (string) $settings->site_name;
         $this->site_url = (string) $settings->site_url;
@@ -87,22 +94,6 @@ class SiteConfig extends Component
             $this->timezone = "America/Indiana/Indianapolis";
             devlog('SiteConfig test data filled');
         }
-    }
-
-    /**
-     * Runs when a component has been updated/changed.
-     * 
-     * After validation, if a property is invalid then the user updates the property,
-     * reset the property's validation, but do not rerun validation until the user
-     * resubmits the form
-     *
-     * @param string $property
-     * @param string $value
-     * @return void
-     */
-    function updated($property, $value): void
-    {
-        $this->validateOnly($property);
     }
 
     /**

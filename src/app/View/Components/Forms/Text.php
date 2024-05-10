@@ -17,11 +17,13 @@ class Text extends Component
     public $autocomplete;
     public $class;
     public $onfocus;
+    public $required;
+    public $hideAsterisk;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $class = null, string $onfocus = null)
+    public function __construct(string $wiremodel, string $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $class = null, string $onfocus = null, bool $required = false, bool $hideAsterisk = false)
     {
         $this->wiremodel = $wiremodel;
         $this->wiretarget = $wiretarget;
@@ -32,6 +34,8 @@ class Text extends Component
         $this->autocomplete = $autocomplete;
         $this->class = $class;
         $this->onfocus = $onfocus;
+        $this->required = $required;
+        $this->hideAsterisk = $hideAsterisk;
     }
 
     /**

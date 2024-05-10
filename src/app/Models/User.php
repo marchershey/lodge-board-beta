@@ -44,6 +44,17 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucwords(strtolower($value));
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucwords(strtolower($value));
+    }
+
+
     function full_name(): string
     {
         return $this->first_name . " " . $this->last_name;

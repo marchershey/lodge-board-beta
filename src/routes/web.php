@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-require __DIR__ . '/_auth.php';
-require __DIR__ . '/_frontend.php';
-require __DIR__ . '/_host.php';
-require __DIR__ . '/_setup.php';
-require __DIR__ . '/_util.php';
+// require __DIR__ . '/_auth.php';
+// require __DIR__ . '/_frontend.php';
+// require __DIR__ . '/_host.php';
+// require __DIR__ . '/_setup.php';
+// require __DIR__ . '/_util.php';
 
 Route::get('/test', function () {
     $data = timezone_list();

@@ -1,21 +1,23 @@
 @env('local')
 <!-- Development Bar -->
 
-<div class="flex bg-white dark:bg-black dark:text-white" :class="$store.devbar.visible ? '' : 'absolute bottom-0'">
-    <button class="flex-none block" @click="$store.devbar.toggle()">
-        {{-- Close --}}
-        <svg class="w-6 h-6" x-cloak x-show="$store.devbar.visible" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M14 6l-6 6l6 6v-12" />
-        </svg>
-        {{-- Open --}}
-        <svg class="w-6 h-6" x-cloak x-show="!$store.devbar.visible" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M10 18l6 -6l-6 -6v12" />
-        </svg>
-    </button>
-    <div class="flex items-center justify-center w-full tablet-sm:justify-start" x-transition.in x-show="$store.devbar.visible">
-        <div class="flex items-center justify-center h-full space-x-5 text-xs tablet-sm:ml-4">
+<div class="flex items-center bg-white border-t min-h-8 border-1 dark:bg-black" :class="$store.devbar.open ? 'relative' : 'absolute bottom-0'">
+    <div class="absolute inset-y-0 bg-black">
+        <button class="flex-none block w-full h-full text-white bg-primary/50" @click="$store.devbar.toggle()">
+            {{-- Close --}}
+            <svg class="w-6 h-6" x-cloak x-show="$store.devbar.open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M14 6l-6 6l6 6v-12" />
+            </svg>
+            {{-- Open --}}
+            <svg class="w-6 h-6" x-cloak x-show="!$store.devbar.open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M10 18l6 -6l-6 -6v12" />
+            </svg>
+        </button>
+    </div>
+    <div class="flex items-center justify-center w-full p-1" x-transition.in x-show="$store.devbar.open">
+        <div class="flex items-center justify-center space-x-5 text-xs tablet-sm:text-sm">
 
             <!-- Theme Switcher -->
             <div class="flex">

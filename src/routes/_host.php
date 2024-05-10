@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Spatie\LaravelSettings\Settings;
 
 // Route::name('host.')->middleware(['auth', 'host'])->prefix('/host')->group(function () {
-Route::name('host.')->middleware(['auth', 'setup'])->prefix('/host')->group(function () {
+Route::name('host.')->middleware(['auth', 'setup.completed'])->prefix('/host')->group(function () {
     // Host Dashboard
     Route::get('/dashboard', App\Http\Pages\Host\Dashboard\DashboardIndex::class)->name('dashboard');
 

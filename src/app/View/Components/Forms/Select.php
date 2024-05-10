@@ -48,7 +48,7 @@ class Select extends Component
         $this->options = $options;
         $this->label = $label ?? 'Select';
         $this->desc = $desc;
-        $this->placeholder = $placeholder ?? 'Select an option...';
+        $this->placeholder = $placeholder ?? 'Select a ' . $wiremodel . '...';
         $this->showKeyAsSelection = $showKeyAsSelection;
     }
 

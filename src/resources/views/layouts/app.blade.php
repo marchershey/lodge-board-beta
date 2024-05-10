@@ -11,7 +11,7 @@
     <title>{{ $title . ' - ' . config('app.name') }}</title>
 </head>
 
-<body class="flex flex-col h-full overflow-hidden antialiased bg-gray-800 overscroll-none font-default">
+<body class="flex flex-col h-full overflow-hidden antialiased text-gray-600 bg-gray-800 overscroll-none font-default">
     <!-- Toasts -->
     <livewire:toasts />
 

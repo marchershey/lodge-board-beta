@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['guest', 'setup'])->group(function () {
+Route::middleware(['guest', 'setup.completed'])->group(function () {
     Route::get('/login', App\Http\Pages\Auth\Login::class)->name('login');
     Route::get('/register', App\Http\Pages\Auth\Register::class)->name('register');
 });

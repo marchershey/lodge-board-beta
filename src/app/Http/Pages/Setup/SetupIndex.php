@@ -13,7 +13,6 @@ class SetupIndex extends Component
     use WireToast;
 
     public $current_step = null;
-    public $page_desc;
 
     #[Layout('layouts.min', ['title' => 'Setup'])]
     public function render()
@@ -29,25 +28,11 @@ class SetupIndex extends Component
      */
     function load()
     {
-        $this->page_desc = "To get started, you need to create a <span class=\"font-bold text-red-500\">Host</span> account.";
-
         if (app(SetupSettings::class)->completed) {
             return $this->redirectRoute('dashboard');
         }
 
         $this->loadCurrentStep();
-    }
-
-    /**
-     * Updates the page's description
-     *
-     * @param string $string
-     * @return void
-     */
-    #[On('update-page-desc')]
-    function updatePageDesc(string $string)
-    {
-        $this->page_desc = $string;
     }
 
     /**

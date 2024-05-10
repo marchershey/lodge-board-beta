@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between cursor-pointer group" x-data="{ value: @entangle($wiremodel).live }" x-id="['{{ $wiremodel }}-toggle-label']">
+<div class="flex items-center justify-between cursor-pointer group" x-data="{ value: $wire.{{ $wiremodel }}.live }" x-id="['{{ $wiremodel }}-toggle-label']">
     <input name="{{ $wiremodel }}-toggle" type="hidden" :value="value">
     <div class="flex flex-col w-full" @click="$refs.toggle.click(); $refs.toggle.focus()">
         <label class="pb-0 form-label @error($wiremodel) form-label-error @enderror" :id="$id('{{ $wiremodel }}-toggle-label')">

@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-use WireToast;
-
 function settings($type = 'general')
 {
     switch ($type) {
