@@ -92,7 +92,7 @@ class SiteConfig extends Component
     }
 
     /**
-     * Runs when the user presses the continue button. Validates the user's data, 
+     * Runs when the user presses the continue button. Validates the user's data,
      * updates the settings, continues to next step.
      *
      * @return void
