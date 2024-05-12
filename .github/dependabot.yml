@@ -1,0 +1,37 @@
+version: 2
+updates:
+
+  # Maintain dependencies for Composer
+  - package-ecosystem: composer
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    labels:
+      - dependabot
+      - dependencies
+      - dep-composer
+    versioning-strategy: increase
+
+  # Maintain dependencies for npm
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    labels:
+      - dependabot
+      - dependencies
+      - dep-npm
+    versioning-strategy: increase
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    labels:
+      - dependabot
+      - dependencies
+      - dep-github
