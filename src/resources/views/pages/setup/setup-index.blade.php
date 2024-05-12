@@ -15,6 +15,12 @@
 
     <div wire:loading.delay.remove>
         @if ($current_step == 1)
+            <div class="card card-padding card-flex">
+                <button class="button" @click="Toast.success('test')">Test</button>
+            </div>
+        @endif
+
+        {{-- @if ($current_step == 1)
             <div wire:transition.in>
                 <section class="text-gray-600 card card-padding card-flex">
                     <p>
@@ -41,15 +47,6 @@
                         <li><span class="link">Disclaimers & Limitations of Liability</span></li>
                     </ul>
 
-                    {{-- <p>
-                        We also have a few documents you might want to save for later to help make your expierence
-                        using {{ config('app.name') }} a little better.
-                    </p>
-
-                    <ul class="list-disc list-inside">
-                        <li><span class="link">Dispute Resolution Procedures</span></li>
-                    </ul> --}}
-
                     <p>
                         By pressing the <span class="link hover:no-underline hover:cursor-default">Continue</span> button below, you acknowledge that you have read and agree to the terms outlined
                         in the above documents.
@@ -60,7 +57,7 @@
                     </div>
                 </section>
             </div>
-        @endif
+        @endif --}}
 
         @if ($current_step == 2)
             <div wire:transition.in>
