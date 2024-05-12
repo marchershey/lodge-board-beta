@@ -1,5 +1,5 @@
 services:
-    lodge-board-beta:
+    laravel.test:
         container_name: lodge-board-beta
         build:
             context: ./vendor/laravel/sail/runtimes/8.2
@@ -26,6 +26,7 @@ services:
             - mysql
             - mailpit
     mysql:
+        container_name: lodge-board-database
         image: "mysql/mysql-server:8.0"
         ports:
             - "${FORWARD_DB_PORT:-3306}:3306"
@@ -50,6 +51,7 @@ services:
             retries: 3
             timeout: 5s
     mailpit:
+        container_name: lodge-board-mailpit
         image: "axllent/mailpit:latest"
         ports:
             - "${FORWARD_MAILPIT_PORT:-1025}:1025"
