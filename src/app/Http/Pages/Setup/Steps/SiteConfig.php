@@ -16,9 +16,6 @@ class SiteConfig extends Component
     public $site_name;
     public $site_url;
     public $timezone;
-    public $site_active;
-    public $reservation_active;
-    public $registration_active;
 
     protected $rules = [
         'site_name' => ['required', 'string', 'min:3', 'max:250'],
@@ -76,9 +73,7 @@ class SiteConfig extends Component
         $this->timezone = (string) $settings->timezone;
 
         // If env local and empty settings, inject testing data
-        if (!$this->site_name && !$this->site_url && !$this->timezone) {
-            // $this->injectTestData();
-        }
+        $this->injectTestData();
     }
 
     /**
@@ -90,7 +85,7 @@ class SiteConfig extends Component
     {
         if (app()->isLocal()) {
             $this->site_name = "Demo Name (temp)";
-            $this->site_url = "http://demo.com";
+            $this->site_url = url('/');
             $this->timezone = "America/Indiana/Indianapolis";
             devlog('SiteConfig test data filled');
         }

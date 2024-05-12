@@ -1,6 +1,6 @@
 <section class="card card-padding card-flex">
 
-    <p class="text-center">
+    <p>
         First's things first, we need to create a <span class="host">Host</span> account.
         Please note that this will be the account you will be signed into during setup.
     </p>

@@ -62,7 +62,7 @@
         <label class="form-label @error($wiremodel) form-label-error @enderror" for="{{ $wiremodel }}">{{ $label }}</label>
     @endif
 
-    <select class="form-input @error($wiremodel) form-input-error @enderror" id="" name="" wire:model="{{ $wiremodel }}" wire:target="load, submit, {{ $wiretarget }}" wire:loading.attr="disabled">
+    <select class="form-input" id="" name="" wire:model="{{ $wiremodel }}" wire:target="load, submit, {{ $wiretarget }}" wire:loading.attr="disabled">
         <option value="">{{ $placeholder ?? $wiremodel }}...</option>
 
         @foreach ($options as $key => $value)
