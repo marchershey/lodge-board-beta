@@ -1,7 +1,5 @@
 <?php
 
-use App\Settings\GeneralSettings;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +20,5 @@ use Illuminate\Support\Facades\Route;
 // require __DIR__ . '/_util.php';
 
 Route::get('/test', function () {
-    $data = timezone_list();
-
-    return collect($data)->toJson();
+    return "Yay, it worked!";
 });
