@@ -7,9 +7,10 @@ updates:
       interval: daily
     open-pull-requests-limit: 10
     labels:
-      - dependabot
-      - dependencies
-      - dep-composer
+      - '!Chore'
+      - 'dbot'
+      - 'dep'
+      - 'dep: composer'
     versioning-strategy: increase
 
   # Maintain dependencies for npm
@@ -19,9 +20,10 @@ updates:
       interval: daily
     open-pull-requests-limit: 10
     labels:
-      - dependabot
-      - dependencies
-      - dep-npm
+      - '!Chore'
+      - 'dbot'
+      - 'dep'
+      - 'dep: npm'
     versioning-strategy: increase
 
   # Maintain dependencies for GitHub Actions
@@ -31,6 +33,7 @@ updates:
       interval: daily
     open-pull-requests-limit: 10
     labels:
-      - dependabot
-      - dependencies
-      - dep-github
+      - '!Chore'
+      - 'dbot'
+      - 'dep'
+      - 'dep: github'
