@@ -2,6 +2,6 @@
 
 Lodge Board is an open-source vacation rental management solution built with the [TALL stack](https://tallstack.dev/).
 
-[LodgeBoard.com](https://lodgeboard.com), an online option, will also be available for those who do not want to self-host.
+**Don't want to self-host?** I offer a hosted option over at [LodgeBoard.com](https://lodgeboard.com).
 
 #### _To be continued..._
