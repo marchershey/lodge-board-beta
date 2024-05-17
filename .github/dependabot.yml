@@ -1,9 +1,8 @@
 version: 2
 updates:
-
   # Maintain dependencies for Composer
   - package-ecosystem: composer
-    directory: "/"
+    directory: './app'
     schedule:
       interval: daily
     open-pull-requests-limit: 10
@@ -15,7 +14,7 @@ updates:
 
   # Maintain dependencies for npm
   - package-ecosystem: npm
-    directory: "/"
+    directory: './app'
     schedule:
       interval: daily
     open-pull-requests-limit: 10
@@ -26,8 +25,8 @@ updates:
     versioning-strategy: increase
 
   # Maintain dependencies for GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 10
