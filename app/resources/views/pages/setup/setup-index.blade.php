@@ -40,14 +40,15 @@
         @endif
 
         @if ($current_step == 5)
+            {{-- wire:transition will not work with @foreach - https://livewire.laravel.com/docs/wire-transition#limitations --}}
             <div wire:transition.in>
-                <livewire:pages.setup.steps.rental-photos />
+                <livewire:pages.setup.steps.rental-details />
             </div>
         @endif
 
         @if ($current_step == 6)
-            <div wire:transition.in>
-                <livewire:pages.setup.steps.rental-details />
+            <div>
+                <livewire:pages.setup.steps.rental-photos />
             </div>
         @endif
 

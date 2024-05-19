@@ -1,3 +1,9 @@
+@push('meta')
+    <script>
+        alert('test')
+    </script>
+@endpush
+
 <x-layouts.app title="{{ $title }}">
 
     <div class="w-full overflow-y-auto bg-gray-200 dark:bg-gray-800">

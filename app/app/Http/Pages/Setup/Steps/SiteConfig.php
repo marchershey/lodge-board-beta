@@ -62,10 +62,10 @@ class SiteConfig extends Component
      */
     public function load(): void
     {
-        // Check if user is authenticated
-        if (Auth::check()) {
-            toast()->info(auth()->user()->first_name . ', you have been signed in.', 'Signed In')->push();
-        }
+        // // Check if user is authenticated
+        // if (Auth::check()) {
+        //     toast()->info(auth()->user()->first_name . ', you have been signed in.', 'Signed In')->push();
+        // }
 
         $settings = app(GeneralSettings::class);
         $this->site_name = (string) $settings->site_name;

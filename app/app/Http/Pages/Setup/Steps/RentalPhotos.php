@@ -140,6 +140,6 @@ class RentalPhotos extends Component
             RentalPhoto::create($data);
         }
 
-        $this->dispatch('setup-completed');
+        $this->dispatch('next-step');
     }
 }

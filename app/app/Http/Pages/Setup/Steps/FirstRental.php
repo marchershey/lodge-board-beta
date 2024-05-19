@@ -97,6 +97,7 @@ class FirstRental extends Component
             $this->rental_city = "Burnside";
             $this->rental_state = "KY";
             $this->rental_zip = "42519";
+            devlog('SiteConfig test data filled');
         }
     }
 
