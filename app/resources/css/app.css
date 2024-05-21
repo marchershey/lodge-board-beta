@@ -327,6 +327,21 @@
     .button:disabled {
         @apply cursor-not-allowed opacity-50 hover:bg-primary;
     } */
+
+    .frontend-container {
+        @apply mx-auto flex max-w-screen-laptop flex-col space-y-10;
+    }
+    .frontend-section {
+        @apply flex flex-col space-y-5 tablet-sm:p-10;
+    }
+    .frontend-title {
+        @apply text-3xl font-semibold;
+    }
+
+    /* Properties */
+    .frontend-property-grid {
+        @apply grid grid-cols-1 gap-10 tablet-sm:grid-cols-3;
+    }
 }
 
 @layer utilities {
@@ -363,6 +378,19 @@
     .hide-scrollbar {
         -ms-overflow-style: none;
         scrollbar-width: none;
+    }
+
+    .full-screen {
+        height: 100vh;
+        /* Fallback for browsers that do not support Custom Properties */
+        height: calc(var(--vh, 1vh) * 100);
+    }
+
+    .show-mobile {
+        @apply block laptop:hidden;
+    }
+    .hide-mobile {
+        @apply hidden laptop:block;
     }
 
     .flex-center {
