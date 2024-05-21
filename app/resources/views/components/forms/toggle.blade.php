@@ -5,7 +5,7 @@
             {{ $label }}
         </label>
         @if ($desc)
-            <span class="mt-0 form-desc">{!! $desc !!}</span>
+            <span class="mt-1 leading-4 form-desc">{!! $desc !!}</span>
         @endif
         @error($wiremodel)
             <span class="text-xs text-red-500">{{ $errors->first($wiremodel) }}</span>
