@@ -19,10 +19,10 @@ class Select extends Component
     public $placeholder;
     public $class;
 
-    // Since the "options" are a Key/Value pair, when the user makes a selection, 
+    // Since the "options" are a Key/Value pair, when the user makes a selection,
     // we can either display the Key as the selected text, or display the Value
     // as the selected text. By default, the Value of the Key/Value pair is shown
-    // when the user makes their selection. By setting this to true, it will 
+    // when the user makes their selection. By setting this to true, it will
     // show the Key of the Key/Value pair as the selected text. You can also just
     // Add 'showKeyAsSelection' to the element to set at true.
     public $showKeyAsSelection;

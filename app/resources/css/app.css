@@ -159,6 +159,9 @@
     .form-grid > div {
         @apply col-span-full;
     }
+    .form-grid-spacer {
+        @apply col-span-full;
+    }
 
     /* Form Elements */
     .form-label {
@@ -173,6 +176,8 @@
     .form-desc-error {
         @apply !text-red-500;
     }
+
+    /* Form: input */
     .form-input {
         @apply has-border block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-inset placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400/60 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary tablet-sm:text-base;
     }
@@ -180,9 +185,23 @@
         @apply !ring-2 !ring-red-500;
     }
 
+    /* Form: counter */
+    .form-counter {
+        @apply form-input flex overflow-hidden p-0 focus-within:bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary;
+    }
+    .form-counter input {
+        @apply !w-full border-0 bg-transparent focus:ring-0;
+    }
+    .form-counter-buttons {
+        @apply flex p-px;
+    }
+    .form-counter-buttons button {
+        @apply border-t border-transparent px-2 hover:bg-primary hover:text-white hover:ring-1 hover:ring-primary;
+    }
+
     /* Form: select */
     .form-select {
-        @apply form-input;
+        @apply focus-within: form-input;
     }
     .form-select option::disabled {
         @apply text-muted;

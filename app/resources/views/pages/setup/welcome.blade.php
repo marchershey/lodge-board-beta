@@ -1,4 +1,4 @@
-<section class="text-gray-600 card card-padding card-flex">
+<section class="mx-auto card card-padding card-flex tablet-sm:max-w-lg">
     <p>
         <strong class="text-primary">Welcome to {{ config('app.name') }}!</strong> Before we get started with the setup, you'll need to have the following information ready.
     </p>
@@ -28,7 +28,9 @@
         in the above documents.
     </p>
 
-    <div>
-        <button class="button button-full" wire:click="continue">Continue</button>
-    </div>
+    <form class="form-grid" wire:submit.prevent="continue">
+        <div class="form-buttons">
+            <button class="button button-full" type="submit" wire:loading.attr="disabled">Continue</button>
+        </div>
+    </form>
 </section>

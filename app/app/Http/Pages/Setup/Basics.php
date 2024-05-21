@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Pages\Setup\Steps;
+namespace App\Http\Pages\Setup;
 
 use App\Settings\GeneralSettings;
-use App\Traits\ValidateOnUpdate;
+use App\Settings\SetupSettings;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class SiteConfig extends Component
+class Basics extends Component
 {
-    use WireToast, ValidateOnUpdate;
+    use WireToast;
 
     public $site_name;
     public $site_url;
@@ -50,9 +50,11 @@ class SiteConfig extends Component
         ]
     ];
 
+
+    #[Layout('layouts.minimal', ['title' => 'Setup'])]
     public function render(): View
     {
-        return view('pages.setup.steps.site-config');
+        return view('pages.setup.basics');
     }
 
     /**
@@ -62,18 +64,13 @@ class SiteConfig extends Component
      */
     public function load(): void
     {
-        // // Check if user is authenticated
-        // if (Auth::check()) {
-        //     toast()->info(auth()->user()->first_name . ', you have been signed in.', 'Signed In')->push();
-        // }
-
         $settings = app(GeneralSettings::class);
         $this->site_name = (string) $settings->site_name;
         $this->site_url = (string) $settings->site_url;
         $this->timezone = (string) $settings->timezone;
 
         // If env local and empty settings, inject testing data
-        $this->injectTestData();
+        // $this->loadDevData();
     }
 
     /**
@@ -81,13 +78,13 @@ class SiteConfig extends Component
      *
      * @return void
      */
-    public function injectTestData(): void
+    public function loadDevData(): void
     {
         if (app()->isLocal()) {
             $this->site_name = "Demo Name (temp)";
             $this->site_url = url('/');
             $this->timezone = "America/Indiana/Indianapolis";
-            devlog('SiteConfig test data filled');
+            devlog('Basics Test Data filled');
         }
     }
 
@@ -109,6 +106,11 @@ class SiteConfig extends Component
         $settings->timezone = $validated['timezone'];
         $settings->save();
 
-        $this->dispatch('next-step');
+        // Complete Setup
+        app(SetupSettings::class)->completed = true;
+        // app(SetupSettings::class)->current_step = 0;
+        app(SetupSettings::class)->save();
+
+        $this->redirect('/host/dashboard', navigate: true);
     }
 }

@@ -18,7 +18,20 @@ return new class extends Migration
             $table->string('address_city');
             $table->string('address_state');
             $table->integer('address_zip');
+            $table->string('listing_headline');
+            $table->text('listing_description');
+            $table->integer('guest_count');
+            $table->integer('bed_count');
+            $table->integer('bedroom_count');
+            $table->decimal('bathroom_count', 4, 1);
+            $table->string('rate');
+            $table->string('tax_rate');
+            $table->string('calendar_color');
+            $table->integer('min_nights');
+            $table->boolean('active')->default(true);
+            $table->integer('host_id');
             $table->string('slug');
+            // $table->integer('type_id');
             $table->timestamps();
         });
     }

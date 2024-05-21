@@ -14,14 +14,14 @@ class SetupIndex extends Component
 
     public $current_step = null;
 
-    #[Layout('layouts.min', ['title' => 'Setup'])]
+    #[Layout('layouts.minimal', ['title' => 'Setup'])]
     public function render()
     {
         return view('pages.setup.setup-index');
     }
 
     /**
-     * Loads the current setup step, or redirects to dashboard 
+     * Loads the current setup step, or redirects to dashboard
      * if the setup has already been completed
      *
      * @return void
@@ -33,6 +33,23 @@ class SetupIndex extends Component
         }
 
         $this->loadCurrentStep();
+    }
+
+    /**
+     * Sets the view to the current/latest setup step
+     *
+     * Gets the latest setup step the user was on and sets the view to that step
+     *
+     * @return void
+     */
+    function loadCurrentStep(): void
+    {
+        $this->current_step = app(SetupSettings::class)->current_step;
+
+        // If setup was never started, run nextStep() to set first step
+        if ($this->current_step === 0) {
+            $this->nextStep();
+        }
     }
 
     /**
@@ -68,23 +85,6 @@ class SetupIndex extends Component
     {
         app(SetupSettings::class)->current_step = $this->current_step;
         app(SetupSettings::class)->save();
-    }
-
-    /**
-     * Sets the view to the current/latest setup step
-     * 
-     * Gets the latest setup step the user was on and sets the view to that step
-     *
-     * @return void
-     */
-    function loadCurrentStep(): void
-    {
-        $this->current_step = app(SetupSettings::class)->current_step;
-
-        // If setup was never started, run nextStep() to set first step
-        if ($this->current_step === 0) {
-            $this->nextStep();
-        }
     }
 
     /**

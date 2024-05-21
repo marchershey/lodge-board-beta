@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Pages\Setup\Steps;
+namespace App\Http\Pages\Setup;
 
 use App\Models\User;
-use App\Traits\ValidateOnUpdate;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class HostAccount extends Component
 {
-    use WireToast, ValidateOnUpdate;
+    use WireToast;
 
     public $first_name;
     public $last_name;
     public $email;
     public $password;
-    public $password_confirmation;
+    // public $password_confirmation;
 
     protected $rules = [
         'first_name' => ['required', 'string', 'max:250', 'alpha'],
@@ -65,14 +65,37 @@ class HostAccount extends Component
      *
      * @return View
      */
+    #[Layout('layouts.minimal', ['title' => 'Setup'])]
     function render(): View
     {
-        return view('pages.setup.steps.host');
+        return view('pages.setup.host-account');
+    }
+
+    function load(): void
+    {
+        // $this->loadDevData();
+    }
+
+    /**
+     * Injects test data during development, or when the app env is locals
+     *
+     * @return void
+     */
+    public function loadDevData(): void
+    {
+        if (app()->isLocal()) {
+            $this->first_name = "John";
+            $this->last_name = "Smith";
+            $this->email = "jsmith2000@email.com";
+            $this->password = "password";
+            // $this->password_confirmation = "password";
+            devlog('HostAccount Test Data filled');
+        }
     }
 
     /**
      * Runs when a component has been updated/changed.
-     * 
+     *
      * After validation, if a property is invalid then the user updates the property,
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
@@ -105,6 +128,6 @@ class HostAccount extends Component
 
         toast()->success('Your account was successfully created.', 'Welcome ' . ucwords($this->first_name) . '!')->push();
 
-        $this->dispatch('next-step');
+        $this->redirect('/setup/basics', navigate: true);
     }
 }

@@ -34,7 +34,7 @@
         @endif
 
         @if ($current_step == 4)
-            <div wire:transition.in>
+            <div>
                 <livewire:pages.setup.steps.first-rental />
             </div>
         @endif

@@ -57,13 +57,13 @@
 
 </div> --}}
 
-<div x-data="{ value: $wire.{{ $wiremodel }} }" wire:loading.delay.class="pointer-events-none opacity-30" wire:target="load, submit, {{ $wiretarget }}">
+<div wire:loading.class="pointer-events-none opacity-30" wire:target="load, submit, {{ $wiretarget }}">
     @if ($label)
-        <label class="form-label @error($wiremodel) form-label-error @enderror" for="{{ $wiremodel }}">{{ $label }}</label>
+        <label class="form-label" for="{{ $wiremodel }}">{{ $label }}</label>
     @endif
 
-    <select class="form-input" id="" name="" wire:model="{{ $wiremodel }}" wire:target="load, submit, {{ $wiretarget }}" wire:loading.attr="disabled">
-        <option value="">{{ $placeholder ?? $wiremodel }}...</option>
+    <select class="form-input" id="{{ $wiremodel }}" name="{{ $wiremodel }}" wire:key="{{ $wiremodel }}" wire:model.change="{{ $wiremodel }}" wire:target="load, submit, {{ $wiretarget }}" wire:loading.attr="disabled">
+        <option value="">{{ $placeholder ?? $wiremodel }}</option>
 
         @foreach ($options as $key => $value)
             <option value="{{ $key }}">{{ $value }}</option>

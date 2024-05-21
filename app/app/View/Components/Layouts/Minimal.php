@@ -23,6 +23,6 @@ class Minimal extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.min');
+        return view('layouts.minimal');
     }
 }

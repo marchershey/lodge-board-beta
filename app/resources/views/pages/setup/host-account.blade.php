@@ -1,9 +1,12 @@
-<section class="card card-padding card-flex">
+<section class="mx-auto card card-padding card-flex tablet-sm:max-w-lg" wire:init="load">
 
-    <p>
-        First's things first, we need to create a <span class="host">Host</span> account.
-        Please note that this will be the account you will be signed into during setup.
-    </p>
+    <div class="text-center card-header">
+        <h1>Create a Host Account</h1>
+        <p>
+            First's things first, we need to create a <span class="host">Host</span> account.
+            Please note that this will be the account you will be signed into during setup.
+        </p>
+    </div>
 
     <div x-data="{ open: false }">
         <button class="flex items-center justify-center w-full p-3 -m-3 space-x-2 text-sm link" @click="open = !open">
@@ -28,21 +31,20 @@
         </div>
     </div>
 
-    <form class="form-grid" wire:submit.prevent="submit">
+    <form class="form-grid" wire:submit.prevent="submit" x-data="{
+        password: $wire.entangle('password')
+    }">
         <div class="!col-span-6">
             <x-forms.text class="capitalize" wiremodel="first_name" label="Full Name" placeholder="First Name" />
         </div>
         <div class="!col-span-6">
             <x-forms.text class="capitalize" wiremodel="last_name" label="" placeholder="Last Name" hideAsterisk />
         </div>
-        <div class="col-span-full">
-
-        </div>
-        <x-forms.text type="email" wiremodel="email" label="Email Address" desc="You'll need to confirm this email address in a later step." />
+        <x-forms.text type="text" wiremodel="email" label="Email Address" desc="You'll need to confirm this email address in a later step." />
         <x-forms.text type="password" wiremodel="password" label="Password" desc="Passwords must be at least 8 characters long." />
 
         <div class="form-buttons">
-            <button class="button button-full" type="submit">Continue</button>
+            <button class="button button-full" type="submit" wire:loading.attr="disabled" wire:target="load, submit">Continue</button>
         </div>
     </form>
 

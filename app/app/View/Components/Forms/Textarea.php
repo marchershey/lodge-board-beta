@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Text extends Component
+class Textarea extends Component
 {
     public $wiremodel;
     public $wiremodeltype;
@@ -19,11 +19,13 @@ class Text extends Component
     public $onfocus;
     public $required;
     public $hideAsterisk;
+    public int $cols;
+    public int $rows;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $wiremodeltype = "blur", string $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $onfocus = null, bool $required = false, bool $hideAsterisk = false)
+    public function __construct($wiremodel, $wiremodeltype = "blur", $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $onfocus = null, bool $required = false, bool $hideAsterisk = false, int $rows = 4, int $cols = 0)
     {
         $this->wiremodel = $wiremodel;
         $this->wiremodeltype = $wiremodeltype;
@@ -36,6 +38,8 @@ class Text extends Component
         $this->onfocus = $onfocus;
         $this->required = $required;
         $this->hideAsterisk = $hideAsterisk;
+        $this->cols = $cols;
+        $this->rows = $rows;
     }
 
     /**
@@ -43,6 +47,6 @@ class Text extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.forms.text');
+        return view('components.forms.textarea');
     }
 }

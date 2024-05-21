@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Pages\Setup\Steps;
+namespace App\Http\Pages\Setup;
 
 use App\Models\Rental;
 use App\Models\RentalPhoto;
@@ -21,7 +21,7 @@ class RentalPhotos extends Component
     ];
 
     protected $validationAttributes = [
-        // 
+        //
     ];
 
     protected $messages = [
@@ -39,7 +39,7 @@ class RentalPhotos extends Component
 
     public function render()
     {
-        return view('pages.setup.steps.rental-photos');
+        return view('pages.setup.rental-photos');
     }
 
     /**
@@ -55,13 +55,13 @@ class RentalPhotos extends Component
 
     /**
      * Runs when a component has been updated/changed.
-     * 
+     *
      * After validation, if a property is invalid then the user updates the property,
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
      *
      * @param string $property
-     * @param string $value 
+     * @param string $value
      * @return void
      */
     function updated($property, $value): void
@@ -73,7 +73,7 @@ class RentalPhotos extends Component
     /**
      * When the user uploads photos, $temp_photos are cleared and only shows new photos.
      * This takes all photos from $temp_photos and adds them to $photos so when the user
-     * uploads more photos, the previous photos are not cleared. 
+     * uploads more photos, the previous photos are not cleared.
      *
      * @return void
      */
@@ -95,7 +95,7 @@ class RentalPhotos extends Component
         // remove the photo
         unset($this->photos[$key]);
 
-        // reset the array keys to 
+        // reset the array keys to
         $this->photos = array_values($this->photos);
     }
 
@@ -112,7 +112,7 @@ class RentalPhotos extends Component
 
     /**
      * Runs when the user presses the continue button. Validates the images, saves each
-     * photo, grabs the data for each photo and saves that data to the database. 
+     * photo, grabs the data for each photo and saves that data to the database.
      *
      * @return void
      */

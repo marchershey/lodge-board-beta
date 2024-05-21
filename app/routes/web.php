@@ -20,5 +20,6 @@ use Illuminate\Support\Facades\Route;
 // require __DIR__ . '/_util.php';
 
 Route::get('/test', function () {
-    return "Yay, it worked!";
+    return \App\Models\RentalType::pluck('name', 'id');
+    // return "Yay, it worked!";
 });

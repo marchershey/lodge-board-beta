@@ -18,7 +18,7 @@ class EnsureSetupIsCompleted
     public function handle(Request $request, Closure $next): Response
     {
         if (app(SetupSettings::class)->completed === false) {
-            return redirect()->route('setup');
+            return redirect()->route('setup.index');
         }
 
         return $next($request);

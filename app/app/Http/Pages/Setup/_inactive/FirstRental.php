@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Http\Pages\Setup\Steps;
+namespace App\Http\Pages\Setup;
 
 use App\Models\Rental;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 class FirstRental extends Component
 {
-
-    public $rental_name;
-    public $rental_street;
-    public $rental_city;
-    public $rental_state;
-    public $rental_zip;
+    public string $rental_name;
+    // public string $rental_type;
+    public string $rental_street;
+    public string $rental_city;
+    public string $rental_state;
+    public string $rental_zip;
 
     protected $rules = [
         'rental_name' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
+        // 'rental_type' => ['required', 'string', 'numeric'],
         'rental_street' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[a-zA-Z0-9\s\-\#]+$/'],
         'rental_city' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
         'rental_state' => ['required', 'string', 'size:2', 'alpha'],
@@ -24,6 +26,7 @@ class FirstRental extends Component
 
     protected $validationAttributes = [
         'rental_name' => 'Rental Name',
+        // 'rental_type' => 'Rental Type',
         'rental_street' => 'Street Address',
         'rental_city' => 'City',
         'rental_state' => 'State',
@@ -38,6 +41,11 @@ class FirstRental extends Component
             'max' => 'The :attribute is too long. (Max :max characters)',
             'regex' => 'The :attribute is invalid. (Illegal characters)',
         ],
+        // 'rental_type' => [
+        //     'required' => 'The :attribute is required.',
+        //     'integer' => 'Invalid :attribute',
+        //     'numeric' => 'Invalid :attribute',
+        // ],
         'rental_street' => [
             'required' => 'The :attribute is required.',
             'string' => 'The :attribute is invalid. (Stop it, you script kiddy)',
@@ -60,7 +68,7 @@ class FirstRental extends Component
         ],
         'rental_zip' => [
             'required' => 'The :attribute is required.',
-            'string' => 'The :attribute is invalid. (Stop it, you script kiddy)',
+            'int' => 'The :attribute is invalid. (Stop it, you script kiddy)',
             'digits' => 'The :attribute is invalid.',
             'between' => 'The :attribute is invalid.',
             'numeric' => 'The :attribute is invalid.',
@@ -68,9 +76,10 @@ class FirstRental extends Component
         ]
     ];
 
+    #[Layout('layouts.minimal', ['title' => 'Setup'])]
     public function render()
     {
-        return view('pages.setup.steps.first-rental');
+        return view('pages.setup.first-rental');
     }
 
     /**
@@ -81,7 +90,7 @@ class FirstRental extends Component
     public function load()
     {
         // If in local mode, fill test data
-        $this->injectTestData();
+        $this->loadDevData();
     }
 
     /**
@@ -89,10 +98,11 @@ class FirstRental extends Component
      *
      * @return void
      */
-    public function injectTestData(): void
+    function loadDevData(): void
     {
         if (app()->isLocal()) {
             $this->rental_name = "Ohana Burnside";
+            // $this->rental_type = 19; // 19 = House
             $this->rental_street = "23 S Highland Dr";
             $this->rental_city = "Burnside";
             $this->rental_state = "KY";
@@ -103,7 +113,7 @@ class FirstRental extends Component
 
     /**
      * Runs when a component has been updated/changed.
-     * 
+     *
      * After validation, if a property is invalid then the user updates the property,
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
@@ -145,11 +155,13 @@ class FirstRental extends Component
         $rental->address_city = ucwords($this->rental_city);
         $rental->address_state = $this->rental_state;
         $rental->address_zip = $this->rental_zip;
+        // $rental->type_id = $this->rental_type;
+        $rental->host_id = auth()->user()->id;
 
         // Save the rental
         $rental->save();
 
         // Go to the next step
-        $this->dispatch('next-step');
+        $this->redirect('/setup/listing-details', navigate: true);
     }
 }
