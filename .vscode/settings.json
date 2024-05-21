@@ -1,3 +1,3 @@
 {
-  "conventionalCommits.scopes": ["setup", "docker"]
+  "conventionalCommits.scopes": ["setup", "docker", "auth"]
 }
