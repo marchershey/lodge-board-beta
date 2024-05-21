@@ -8,16 +8,16 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
-#[Layout('layouts.min', ['title' => 'Login'])]
+#[Layout('layouts.minimal', ['title' => 'Login'])]
 class Login extends Component
 {
     /**
      * TODO LIST
-     * 
+     *
      * - Add activity tracking
      * - Add throttling / rate limiting
      * - figure out if you want to use "exists" rule on email
-     * 
+     *
      */
 
     use WireToast;
@@ -84,7 +84,7 @@ class Login extends Component
 
     /**
      * Runs when a component has been updated/changed.
-     * 
+     *
      * After validation, if a property is invalid then the user updates the property,
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
@@ -100,14 +100,14 @@ class Login extends Component
 
     /**
      * Submit the Sign In Form
-     * 
+     *
      * Runs when the user presses the "Sign in" button
      * on the login page.
-     * 
+     *
      * - Validate user data
      * - Check user credentials
      * - Redirect to dashboard
-     * 
+     *
      * @throws Throwable
      * @return mixed
      */
@@ -117,7 +117,7 @@ class Login extends Component
         $this->validate();
 
         attempt(function () {
-            // Check user credentials  
+            // Check user credentials
             if (Auth::attempt($this->only(['email', 'password'], $this->remember))) {
                 // Valid Credentials
 

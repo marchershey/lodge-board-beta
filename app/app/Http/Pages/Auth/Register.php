@@ -10,15 +10,15 @@ use Livewire\Component;
 use Throwable;
 use Usernotnull\Toast\Concerns\WireToast;
 
-#[Layout('layouts.min', ['title' => 'Register'])]
+#[Layout('layouts.minimal', ['title' => 'Register'])]
 class Register extends Component
 {
     /**
      * Todo list
-     * 
+     *
      * - Add activity tracking
      * - Add ability to disable form when an error has occured.
-     * 
+     *
      */
 
     use WireToast;
@@ -120,7 +120,7 @@ class Register extends Component
 
     /**
      * Runs when a component has been updated/changed.
-     * 
+     *
      * After validation, if a property is invalid then the user updates the property,
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
@@ -136,10 +136,10 @@ class Register extends Component
 
     /**
      * Submit the Registration Form
-     * 
+     *
      * Runs when the user presses the "Create Account" button
      * on the regiration page.
-     * 
+     *
      * - Validate user data
      * - Create user
      * - TODO: Add user settings
@@ -147,7 +147,7 @@ class Register extends Component
      * - Authenticate user
      * - Dispatch Toast
      * - Redirect to dashboard
-     * 
+     *
      * @throws Throwable
      * @return mixed
      */
