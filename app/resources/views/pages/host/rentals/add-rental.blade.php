@@ -1,30 +1,186 @@
 <x-layouts.host>
 
-    <x-slot:pageTitle>Page Title</x-slot:pageTitle>
-    <x-slot:pageActions>
-        <button class="button button-primary">asdf</button>
-    </x-slot:pageActions>
+    <x-slot:pageTitle>Add New Rental</x-slot:pageTitle>
+    <div class="page-content" wire:init="load">
+        <form class="form-container" wire:submit.prevent="submit">
 
-    <form class="form-container" action="">
+            <x-forms.section>
 
-        <x-forms.section>
-            <x-slot:header>Basic Information</x-slot:header>
-            <x-slot:desc>This is the description</x-slot:desc>
+                {{-- Basic Information --}}
+                <x-slot:header>Basic Information</x-slot:header>
+                <x-slot:desc>The basic information about your property</x-slot:desc>
+                <div class="form-grid">
+                    <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-6">
+                        <x-forms.text class="capitalize" wiremodel="name" label="Rental Name" />
+                    </div>
+                    <div class="tablet-sm:!col-span-8 tablet:!col-span-full laptop:!col-span-8">
+                        <x-forms.text class="capitalize" wiremodel="address.street" label="Street Address" />
+                    </div>
+                    <div class="tablet-sm:!col-span-5 tablet:!col-span-full laptop:!col-span-5">
+                        <x-forms.text class="capitalize" wiremodel="address.city" label="City" />
+                    </div>
+                    <div class="tablet-sm:!col-span-5 tablet:!col-span-full laptop:!col-span-5">
+                        <x-forms.select wiremodel="address.state" label="State" :options="\App\Helpers\GeographyHelper::getStates()" placeholder="Select a state..." />
+                    </div>
+                    <div class="tablet-sm:!col-span-2 tablet:!col-span-full laptop:!col-span-2">
+                        <x-forms.text class="zip-code" type="tel" wiremodel="address.zip" label="Zip" placeholder="Zip" />
+                    </div>
+                </div>
+            </x-forms.section>
 
-            this is a test
-        </x-forms.section>
-        <x-forms.section>
-            <x-slot:header>Basic Information</x-slot:header>
-            <x-slot:desc>This is the description</x-slot:desc>
+            {{-- Listing Information --}}
+            <x-forms.section>
+                <x-slot:header>Listing Information</x-slot:header>
+                <x-slot:desc>The key information that is displayed to guests on the listing page.</x-slot:desc>
 
-            this is a test
-        </x-forms.section>
+                <div class="form-grid">
+                    <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-6">
+                        <x-forms.text class="capitalize" wiremodel="listing_headline" label="Listing Headline" />
+                    </div>
+                    <div class="tablet-sm:!col-span-10 tablet:!col-span-full laptop:!col-span-10">
+                        <x-forms.textarea class="capitalize" maxlength="500" wiremodel="listing_description" label="Listing Description" desc="Max Characters: 500" />
+                    </div>
+                </div>
+            </x-forms.section>
 
-    </form>
+            {{-- Pricing Information --}}
+            <x-forms.section>
+                <x-slot:header>Pricing Information</x-slot:header>
+                <x-slot:desc>The information about the amount to charge per night, as well as taxes and fees.</x-slot:desc>
 
-    <hr>
+                <div class="form-grid">
+                    {{-- Nightly Rate --}}
+                    <div class="!col-span-6 tablet-sm:!col-span-4 tablet:!col-span-6 desktop:!col-span-3">
+                        <x-forms.text class="money" wiremodel="base_rate" label="Nightly Rate" placeholder="0.00">
+                            <x-slot:before class="text-muted">
+                                <svg class="w-4 h-4 icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2">
+                                    </path>
+                                    <path d="M12 3v3m0 12v3"></path>
+                                </svg>
+                            </x-slot:before>
+                            <x-slot:after class="text-muted">USD</x-slot:after>
+                        </x-forms.text>
+                    </div>
+                    {{-- Tax Rate --}}
+                    <div class="!col-span-6 tablet-sm:!col-span-4 tablet:!col-span-6 desktop:!col-span-3">
+                        <x-forms.text class="money" wiremodel="tax_rate" label="Tax Rate" placeholder="0">
+                            <x-slot:after class="text-muted">
+                                <svg class="w-4 h-4 icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <circle cx="17" cy="17" r="1"></circle>
+                                    <circle cx="7" cy="7" r="1"></circle>
+                                    <line x1="6" y1="18" x2="18" y2="6"></line>
+                                </svg>
+                            </x-slot:after>
+                        </x-forms.text>
+                    </div>
+                    <div class="!col-span-full tablet-sm:!col-span-4 tablet:pt-0 tablet:!col-span-full tablet-sm:pt-[25px] desktop:!col-span-6 desktop:pt-[25px] flex justify-end">
+                        <button class="button button-full desktop:w-auto button-gray" type="button" wire:click="addAdditionalFee()">Add additional fees</button>
+                    </div>
 
-    <div class="space-y-10 divide-y divide-gray-900/10">
+                    {{-- Fees --}}
+                    @if ($fees)
+                        @foreach ($fees as $key => $fee)
+                            <hr class="!col-span-full">
+                            <div class="!col-span-full form-grid" wire:key="fee-{{ $key }}">
+                                {{-- Fee Name --}}
+                                <div class="!col-span-6 tablet-sm:!col-span-4 tablet:!col-span-6 desktop:!col-span-4">
+                                    <x-forms.text class="capitalize" wiremodel="fees.{{ $key }}.name" label="Fee Name" />
+                                </div>
+
+                                {{-- Fee Amount --}}
+                                <div class="!col-span-6 tablet-sm:!col-span-3 tablet:!col-span-6 desktop:!col-span-3">
+                                    <x-forms.text class="money" wiremodel="fees.{{ $key }}.amount" label="Fee Amount" placeholder="0.00">
+                                        @if ($fees[$key]['type'] == 'fixed')
+                                            <x-slot:before class="text-muted">
+                                                <svg class="w-4 h-4 icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2">
+                                                    </path>
+                                                    <path d="M12 3v3m0 12v3"></path>
+                                                </svg>
+                                            </x-slot:before>
+                                            <x-slot:after class="text-muted"><span>USD</span></x-slot:after>
+                                        @else
+                                            <x-slot:after class="text-muted">
+                                                <svg class="w-4 h-4 icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <circle cx="17" cy="17" r="1"></circle>
+                                                    <circle cx="7" cy="7" r="1"></circle>
+                                                    <line x1="6" y1="18" x2="18" y2="6"></line>
+                                                </svg>
+                                            </x-slot:after>
+                                        @endif
+                                    </x-forms.text>
+                                </div>
+
+                                {{-- Fee Type Selector --}}
+                                <div class="!col-span-6 tablet-sm:!col-span-4 tablet:pt-0 tablet:!col-span-6 desktop:!col-span-4 flex tablet-sm:justify-center desktop:justify-center tablet:justify-start">
+                                    <div x-data="{
+                                        value: $wire.entangle('fees.{{ $key }}.type').live,
+                                        select(option) { this.value = option },
+                                        selected(option) { return this.value == option }
+                                    }">
+                                        <div class="form-label min-h-[24.5px]">
+                                            Fee Type
+                                        </div>
+                                        <div class="h-[35px] bg-gray-100 rounded-lg flex overflow-hidden has-border">
+                                            <button class="px-4 py-2 text-sm" type="button" :class="{ 'bg-primary text-white': selected('fixed') }" x-on:click="select('fixed')">Fixed</button>
+                                            <button class="px-4 py-2 text-sm" type="button" :class="{ 'bg-primary text-white': selected('percent') }" x-on:click="select('percent')">Percent</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Delete Fee --}}
+                                <div class="!col-span-6 tablet-sm:!col-span-1 tablet-sm:pt-[27px] tablet:!col-span-6 tablet:pt-0 desktop:!col-span-1 desktop:pt-[27px] flex justify-end">
+                                    {{-- Button --}}
+                                    <div class="">
+                                        <button class="h-auto button button-xs button-gray" type="button" wire:click="removeAdditionalFee({{ $key }})">
+                                            <span>
+                                                <svg class="icon tablet-sm:!m-0 tablet:!-ml-1 tablet:!mr-2 desktop:!m-0 icon-tabler icons-tabler-outline icon-tabler-trash" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M4 7l16 0" />
+                                                    <path d="M10 11l0 6" />
+                                                    <path d="M14 11l0 6" />
+                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                </svg>
+                                            </span>
+                                            <span class="mt-1 tablet-sm:hidden tablet:block desktop:hidden ">
+                                                Delete Fee
+                                            </span>
+                                        </button>
+                                    </div>
+                                    {{-- Icon --}}
+                                    <div class="hidden">
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </x-forms.section>
+
+            {{-- Amenities --}}
+            <x-forms.section>
+                <x-slot:header>Amenities</x-slot:header>
+                <x-slot:desc>Add all of the amenities that your property has to offer, such as a pool, tennis table, garage, etc.</x-slot:desc>
+
+                <div>
+                    @foreach ($amenities as $key => $group)
+                        <div>
+                            {{ $group['name'] }}
+                        </div>
+                    @endforeach
+                </div>
+            </x-forms.section>
+
+        </form>
+    </div>
+
+    <div class="hidden space-y-10 divide-y divide-gray-900/10">
         <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
             <div class="px-4 sm:px-0">
                 <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>

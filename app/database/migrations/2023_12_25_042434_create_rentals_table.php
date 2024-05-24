@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('slug');
             // $table->integer('type_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

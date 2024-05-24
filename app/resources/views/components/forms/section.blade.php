@@ -5,6 +5,8 @@
     </div>
 
     <div class="form-section-content">
-        {{ $slot }}
+        <div>
+            {{ $slot }}
+        </div>
     </div>
 </div>

@@ -111,6 +111,8 @@ class Basics extends Component
         // app(SetupSettings::class)->current_step = 0;
         app(SetupSettings::class)->save();
 
+        toast()->success('Setup has been completed.', 'Setup Completed')->pushOnNextPage();
+
         $this->redirect('/host/dashboard', navigate: true);
     }
 }

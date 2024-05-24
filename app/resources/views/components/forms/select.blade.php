@@ -62,13 +62,15 @@
         <label class="form-label" for="{{ $wiremodel }}">{{ $label }}</label>
     @endif
 
-    <select class="form-input" id="{{ $wiremodel }}" name="{{ $wiremodel }}" wire:key="{{ $wiremodel }}" wire:model.change="{{ $wiremodel }}" wire:target="load, submit, {{ $wiretarget }}" wire:loading.attr="disabled">
-        <option value="">{{ $placeholder ?? $wiremodel }}</option>
+    <div class="form-input-container">
+        <select class="form-input" id="{{ $wiremodel }}" name="{{ $wiremodel }}" wire:key="{{ $wiremodel }}" wire:model.change="{{ $wiremodel }}" wire:target="load, submit, {{ $wiretarget }}" wire:loading.attr="disabled">
+            <option value="">{{ $placeholder ?? $wiremodel }}</option>
 
-        @foreach ($options as $key => $value)
-            <option value="{{ $key }}">{{ $value }}</option>
-        @endforeach
-    </select>
+            @foreach ($options as $key => $value)
+                <option value="{{ $key }}">{{ $value }}</option>
+            @endforeach
+        </select>
+    </div>
 
     @if ($desc || $errors->first($wiremodel))
         <span class="form-desc @error($wiremodel) form-desc-error @enderror">

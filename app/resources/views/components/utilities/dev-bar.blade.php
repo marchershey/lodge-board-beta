@@ -1,7 +1,7 @@
 @env('local')
 <!-- Development Bar -->
 
-<div class="flex items-center bg-white border-t min-h-8 border-1 dark:bg-black" :class="$store.devbar.open ? 'relative' : 'absolute bottom-0'">
+<div class="flex items-center bg-white border-t min-h-8 border-1 z-[999] dark:bg-black" :class="$store.devbar.open ? 'relative' : 'absolute bottom-0'">
     <div class="absolute inset-y-0 bg-black">
         <button class="flex-none block w-full h-full text-white bg-primary/50" @click="$store.devbar.toggle()">
             {{-- Close --}}

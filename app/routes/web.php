@@ -19,7 +19,17 @@ use Illuminate\Support\Facades\Route;
 // require __DIR__ . '/_setup.php';
 // require __DIR__ . '/_util.php';
 
-Route::get('/test', function () {
-    return \App\Models\RentalType::pluck('name', 'id');
+Route::get('/showallbanner', function () {
+    return session()->all();
     // return "Yay, it worked!";
+});
+
+Route::get('/addBanner', function () {
+    addBannerNotification('no-rental', 'this is a test banner');
+    return "Banner added...";
+});
+
+Route::get('/flushbanner', function () {
+    session()->forget('banners');
+    return "Banner Flushed...";
 });

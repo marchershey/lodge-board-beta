@@ -7,8 +7,14 @@ use Livewire\Component;
 
 class Banner extends Component
 {
+    public $location;
     public $hasBanners = false;
     public $banners = [];
+
+    public function mount($location)
+    {
+        $this->location = $location;
+    }
 
     public function render()
     {
@@ -19,13 +25,13 @@ class Banner extends Component
 
     public function load(): void
     {
-        $this->banners = BannerModel::all();
+        $this->banners = BannerModel::where('location', $this->location)->get();
         $this->hasBanners = !$this->banners->isEmpty();
     }
 
     public function deleteBanner($id): void
     {
-        BannerModel::destroy($id);
+        BannerModel::find($id)->delete();
         $this->load();
     }
 }

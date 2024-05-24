@@ -23,13 +23,13 @@ Alpine.plugin(AlpineCollapse);
 Alpine.plugin(ToastComponent);
 
 // Dev bar
-import "./devbar";
+import "./_devbar";
 
 // Theme Mode
-import "./themeMode";
+import "./_themeMode";
 
 // Photos
-import "./photos";
+import "./_photos";
 
 // Start Livewire
 Livewire.start();
@@ -37,3 +37,5 @@ Livewire.start();
 window.addEventListener("console", (event) => {
     console.log(event.detail);
 });
+
+import "./_formatter";

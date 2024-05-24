@@ -178,7 +178,7 @@
                 <nav class="flex flex-col flex-1 px-3">
                     <ul class="flex flex-col space-y-2 text-gray-400">
                         <li class="">
-                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.dashboard') }}" wire:navigate>
+                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.dashboard') }}" wire:navigate.hover>
                                 <svg class="w-7 h-7 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
@@ -189,7 +189,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.dashboard') }}" wire:navigate>
+                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.dashboard') }}" wire:navigate.hover>
                                 <svg class="w-7 h-7 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
@@ -203,7 +203,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.rentals.index') }}" wire:navigate>
+                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.rentals.index') }}" wire:navigate.hover>
                                 <svg class="w-7 h-7 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
@@ -213,6 +213,16 @@
                                     <path d="M17 15l0 .01" />
                                 </svg>
                                 <span class="mt-px text-lg font-medium leading-4 group-hover:text-white">Rentals</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.settings.index') }}" wire:navigate.hover>
+                                <svg class="w-7 h-7 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+                                    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                </svg>
+                                <span class="mt-px text-lg font-medium leading-4 group-hover:text-white">Settings</span>
                             </a>
                         </li>
                     </ul>
@@ -226,20 +236,24 @@
             <div class="flex flex-col h-full overflow-y-auto bg-gray-200">
 
                 {{-- Banner --}}
-                <div class="flex-none">
-                    <livewire:components.banner />
+                <div class="sticky top-0 z-10 flex-none">
+                    <livewire:components.banner location="host" />
                 </div>
 
                 {{-- Content Container --}}
                 <div class="page-container">
                     <div class="page-header">
-                        <h1 class="page-title">{{ $pageTitle }}</h1>
-                        <div>
-                            {{ $pageActions }}
+                        <div class="container flex items-center justify-between page-x-padding">
+                            <h1 class="page-title">{{ $pageTitle }}</h1>
+                            <div class="page-actions">
+                                {{ $pageActions }}
+                            </div>
                         </div>
                     </div>
 
-                    {{ $slot }}
+                    <div class="container relative">
+                        {{ $slot }}
+                    </div>
                 </div>
 
                 {{-- Footer --}}

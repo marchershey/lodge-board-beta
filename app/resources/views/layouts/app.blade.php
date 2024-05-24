@@ -16,7 +16,7 @@
     <livewire:toasts />
 
     <!-- Main Content -->
-    <div class="flex flex-auto overflow-hidden overscroll-none">
+    <div class="relative flex flex-auto overflow-hidden overscroll-none">
         {{ $slot }}
     </div>
 

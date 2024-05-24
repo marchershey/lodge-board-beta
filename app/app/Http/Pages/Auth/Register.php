@@ -33,7 +33,7 @@ class Register extends Component
     protected $rules = [
         'first_name' => ['required', 'string', 'max:250'],
         'last_name' => ['required', 'string', 'max:250'],
-        'email' => ['required', 'string', 'email', 'max:250', 'unique:users'],
+        'email' => ['required', 'string', 'email:rfc,strict,spoof,filter,filter_unicode', 'max:250', 'unique:users'],
         'password' => ['required', 'string', 'min:8', 'confirmed'],
         'password_confirmation' => ['required', 'string', 'min:8'],
         'terms' => ['accepted'],

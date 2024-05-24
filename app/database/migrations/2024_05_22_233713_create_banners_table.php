@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
+            $table->string('location');
             $table->string('slug')->nullable();
             $table->string('title')->nullable();
             $table->text('content');
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('link')->nullable();
             $table->boolean('hideCloseButton')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

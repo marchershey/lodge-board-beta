@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             // Rentals
             Rentals\RentalSeeder::class,
             Rentals\RentalTypeSeeder::class,
+            Rentals\AmenitySeeder::class,
         ]);
     }
 }

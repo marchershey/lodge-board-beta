@@ -38,7 +38,7 @@
         @apply !invisible;
     }
     .has-border {
-        @apply ring-1 ring-inset ring-gray-300;
+        @apply border-0 ring-1 ring-inset ring-gray-300;
     }
 }
 
@@ -65,29 +65,35 @@
         @apply -page-x-padding -page-y-padding;
     }
     .page-x-padding {
-        @apply px-3 tablet:px-6 laptop:px-8;
+        @apply px-4 tablet:px-6;
     }
     .-page-x-padding {
-        @apply -mx-3 tablet:-mx-6 laptop:-mx-8;
+        @apply -mx-4 tablet:-mx-6;
     }
     .page-y-padding {
-        @apply py-3 tablet:py-6 laptop:py-8;
+        @apply py-4 tablet:py-6;
     }
     .-page-y-padding {
-        @apply -my-3 tablet:-my-6 laptop:-my-8;
+        @apply -my-4 tablet:-my-6;
     }
 
     .page-container {
-        @apply flex flex-col space-y-2;
+        @apply flex-auto flex-col;
     }
     .page-header {
-        @apply flex items-center justify-between;
+        @apply page-padding mb-8 border-b border-gray-300 bg-white;
     }
     .page-title {
-        @apply text-2xl font-semibold text-gray-800 tablet:font-bold;
+        @apply text-2xl font-bold text-gray-700 tablet:font-bold;
     }
     .page-desc {
         @apply mt-2 text-muted;
+    }
+    .page-actions .button {
+        @apply button-sm -my-1;
+    }
+    .page-content {
+        @apply tablet-sm:page-x-padding flex flex-col space-y-10;
     }
     .page-footer {
         @apply page-padding bg-gray-200 text-xs text-muted;
@@ -101,7 +107,8 @@
         @apply has-border bg-white tablet-sm:rounded-xl;
     }
     .card-padding {
-        @apply px-6 py-8 tablet-sm:px-8;
+        /* @apply px-6 py-8 tablet-sm:px-8; */
+        @apply page-padding;
     }
     .card-flex {
         @apply flex flex-col space-y-8;
@@ -134,19 +141,19 @@
         @apply mb-10 flex flex-col space-y-10;
     }
     .form-section {
-        @apply grid grid-cols-1 gap-x-8 gap-y-4 tablet-sm:grid-cols-3 tablet:grid-cols-1 laptop:grid-cols-3;
+        @apply grid grid-cols-1 gap-x-8 gap-y-4 laptop:grid-cols-3;
     }
     .form-section-details {
-        @apply flex flex-col space-y-1;
+        @apply page-x-padding flex flex-col justify-center space-y-0 tablet-sm:p-0;
     }
     .form-section-header {
-        @apply text-base font-semibold;
+        @apply text-lg font-semibold;
     }
     .form-section-desc {
         @apply text-sm font-normal text-muted;
     }
     .form-section-content {
-        @apply page-padding card col-span-2;
+        @apply page-padding card card-padding col-span-2;
     }
     .form-buttons {
         @apply mt-4;
@@ -178,8 +185,12 @@
     }
 
     /* Form: input */
+    .form-input-container {
+        @apply has-border flex w-full items-baseline rounded-md bg-gray-100 p-0 px-2.5 py-2 text-lg leading-5 ring-inset focus-within:bg-white focus-within:!shadow-none focus-within:!ring-2 focus-within:!ring-inset focus-within:!ring-primary hover:shadow hover:ring-1 hover:ring-gray-400/60;
+    }
     .form-input {
-        @apply has-border block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-inset placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400/60 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary tablet-sm:text-base;
+        @apply w-full border-0 bg-transparent p-0 placeholder:text-muted-light focus-within:placeholder-muted-lighter focus:outline-none focus:ring-0;
+        /* @apply has-border block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-inset placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400/60 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary tablet-sm:text-base; */
     }
     .form-input-error {
         @apply !ring-2 !ring-red-500;
@@ -243,7 +254,7 @@
 
     /* Buttons */
     .button {
-        @apply block cursor-pointer rounded-md bg-primary px-3 py-2 text-center text-base font-medium text-white focus-visible:outline-offset-4;
+        @apply flex h-[35px] cursor-pointer items-center justify-center rounded-md bg-primary px-3 py-2 text-center text-base font-medium text-white focus-visible:outline-offset-4;
     }
     .button:disabled {
         @apply cursor-not-allowed bg-opacity-50;
@@ -252,7 +263,7 @@
         @apply border border-gray-300 bg-gray-100 text-gray-600 ring-gray-300 hover:bg-gray-100 hover:ring-gray-400;
     }
     .button svg {
-        @apply -ml-1;
+        @apply -ml-1 mr-2 h-5 w-5;
     }
     .button-wide {
         @apply !px-6;
@@ -264,7 +275,7 @@
         @apply px-2.5 py-1.5 !text-xs;
     }
     .button-sm {
-        @apply px-3 py-2 !text-xs;
+        @apply px-3 py-2 !text-sm;
     }
     .button-lg {
         @apply px-3.5 py-2.5 text-base;
@@ -378,6 +389,14 @@
     .hide-scrollbar {
         -ms-overflow-style: none;
         scrollbar-width: none;
+    }
+
+    kbd {
+        @apply has-border -my-1 rounded-lg bg-gray-200 px-1.5 py-1 font-mono text-[0.9em] uppercase tracking-wider text-gray-800;
+    }
+
+    .container {
+        @apply mx-auto max-w-7xl;
     }
 
     .full-screen {

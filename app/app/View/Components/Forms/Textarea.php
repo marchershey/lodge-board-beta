@@ -21,11 +21,12 @@ class Textarea extends Component
     public $hideAsterisk;
     public int $cols;
     public int $rows;
+    public int $maxlength;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($wiremodel, $wiremodeltype = "blur", $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $onfocus = null, bool $required = false, bool $hideAsterisk = false, int $rows = 4, int $cols = 0)
+    public function __construct($wiremodel, $wiremodeltype = "blur", $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $onfocus = null, bool $required = false, bool $hideAsterisk = false, int $rows = 4, int $cols = 0, int $maxlength = 0)
     {
         $this->wiremodel = $wiremodel;
         $this->wiremodeltype = $wiremodeltype;
@@ -40,6 +41,7 @@ class Textarea extends Component
         $this->hideAsterisk = $hideAsterisk;
         $this->cols = $cols;
         $this->rows = $rows;
+        $this->maxlength = $maxlength;
     }
 
     /**

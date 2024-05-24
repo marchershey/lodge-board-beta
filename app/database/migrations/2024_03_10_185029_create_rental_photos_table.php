@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('order');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
