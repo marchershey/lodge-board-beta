@@ -25,7 +25,7 @@ Route::get('/showallbanner', function () {
 });
 
 Route::get('/addBanner', function () {
-    addBannerNotification('no-rental', 'this is a test banner');
+    addBannerNotification('no-listing', 'this is a test banner');
     return "Banner added...";
 });
 

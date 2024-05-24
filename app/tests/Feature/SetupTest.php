@@ -31,15 +31,15 @@ uses(RefreshDatabase::class);
 //     $component->assertDontSee('What are Host accounts?');
 //     $component->assertSee('Welcome aboard'); // "What are host accounts" button
 //     $component->call('nextStep');
-//     // First Rental
+//     // First Listing
 //     $component->assertSet('current_step', 4);
 //     $component->assertDontSee('Welcome aboard');
-//     $component->assertSee('First Rental'); // "What are host accounts" button
+//     $component->assertSee('First Listing'); // "What are host accounts" button
 //     $component->call('nextStep');
-//     // Rental Photos
+//     // Listing Photos
 //     $component->assertSet('current_step', 5);
-//     $component->assertDontSee('first rental');
-//     $component->assertSee('Rental Photos'); // "What are host accounts" button
+//     $component->assertDontSee('first listing');
+//     $component->assertSee('Listing Photos'); // "What are host accounts" button
 //     $component->call('nextStep');
 // })->group('setup')->todo();
 

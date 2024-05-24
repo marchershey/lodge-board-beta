@@ -82,10 +82,10 @@
         <div class="fixed z-20 hidden w-auto h-full -mt-1 duration-500 animate-in slide-in-from-left tablet:animate-none tablet:static tablet:flex tablet:flex-none" :class="sidebar ? '!flex' : 'hidden'">
             <div class="flex flex-col pt-1 space-y-5 bg-gray-800 w-80">
 
-                {{-- Rental Selector --}}
+                {{-- Listing Selector --}}
                 <div class="relative inline-block px-3" x-data="{ open: false }">
                     <div>
-                        <button class="w-full p-2 bg-gray-800 border border-gray-800 rounded-lg group hover:bg-gray-700" id="rentals-selector-button" type="button" aria-expanded="false" aria-haspopup="true" x-on:click="open = !open" :class="open ? 'bg-gray-700' : 'bg-gray-800'">
+                        <button class="w-full p-2 bg-gray-800 border border-gray-800 rounded-lg group hover:bg-gray-700" id="listings-selector-button" type="button" aria-expanded="false" aria-haspopup="true" x-on:click="open = !open" :class="open ? 'bg-gray-700' : 'bg-gray-800'">
                             <span class="flex items-center justify-between w-full">
                                 <span class="flex items-center justify-between min-w-0 space-x-3">
                                     <img class="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full" src="https://i.imgur.com/wAy4vKv.png" alt="">
@@ -101,9 +101,9 @@
                         </button>
                     </div>
 
-                    {{-- Rental List --}}
+                    {{-- Listing List --}}
                     <div class="absolute left-0 right-0 z-10 mx-3 mt-3 overflow-hidden origin-top bg-white divide-y divide-gray-200 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu-button" tabindex="-1" x-transition x-on:click.away="open = false" x-show="open" x-cloak>
-                        <a class="flex w-full px-2 py-3 group hover:bg-muted-lightest" id="rentals-selector-button" href="#">
+                        <a class="flex w-full px-2 py-3 group hover:bg-muted-lightest" id="listings-selector-button" href="#">
                             <span class="flex items-center justify-between w-full">
                                 <span class="flex items-center justify-between min-w-0 space-x-3">
                                     <img class="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full ring-1 ring-gray-400" src="https://i.imgur.com/wAy4vKv.png" alt="">
@@ -118,7 +118,7 @@
                                 </svg>
                             </span>
                         </a>
-                        <a class="flex w-full px-2 py-3 group hover:bg-muted-lightest" id="rentals-selector-button" href="#">
+                        <a class="flex w-full px-2 py-3 group hover:bg-muted-lightest" id="listings-selector-button" href="#">
                             <span class="flex items-center justify-between w-full">
                                 <span class="flex items-center justify-between min-w-0 space-x-3">
                                     <img class="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full ring-1 ring-gray-400" src="https://i.imgur.com/wAy4vKv.png" alt="">
@@ -133,7 +133,7 @@
                                 </svg>
                             </span>
                         </a>
-                        <a class="flex w-full px-2 py-3 group hover:bg-muted-lightest" id="rentals-selector-button" href="#">
+                        <a class="flex w-full px-2 py-3 group hover:bg-muted-lightest" id="listings-selector-button" href="#">
                             <span class="flex items-center justify-between w-full">
                                 <span class="flex items-center justify-between min-w-0 space-x-3">
                                     <img class="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full ring-1 ring-gray-400" src="https://i.imgur.com/wAy4vKv.png" alt="">
@@ -148,7 +148,7 @@
                                 </svg>
                             </span>
                         </a>
-                        <a class="flex w-full px-2 py-2 group hover:bg-muted-lightest" id="rentals-selector-button" href="#">
+                        <a class="flex w-full px-2 py-2 group hover:bg-muted-lightest" id="listings-selector-button" href="#">
                             <span class="flex items-center justify-between min-w-0 space-x-3">
 
                                 <div class="flex items-center justify-center w-10 h-10">
@@ -164,8 +164,8 @@
                                 </div>
                                 <span class="flex flex-col flex-1 min-w-0 text-left">
                                     <span class="flex flex-col flex-1 min-w-0 text-left">
-                                        <span class="text-base font-medium leading-5 truncate">Add Rental</span>
-                                        <span class="text-xs truncate text-muted">Add a new rental property...</span>
+                                        <span class="text-base font-medium leading-5 truncate">Add Listing</span>
+                                        <span class="text-xs truncate text-muted">Add a new listing property...</span>
                                     </span>
                                     {{-- <span class="text-sm font-medium leading-5 truncate text-muted group-hover:text-primary">Add New Property</span> --}}
                                 </span>
@@ -203,7 +203,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.rentals.index') }}" wire:navigate.hover>
+                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.listings.index') }}" wire:navigate.hover>
                                 <svg class="w-7 h-7 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
@@ -212,7 +212,7 @@
                                     <path d="M17 11l0 .01" />
                                     <path d="M17 15l0 .01" />
                                 </svg>
-                                <span class="mt-px text-lg font-medium leading-4 group-hover:text-white">Rentals</span>
+                                <span class="mt-px text-lg font-medium leading-4 group-hover:text-white">Listings</span>
                             </a>
                         </li>
                         <li class="">

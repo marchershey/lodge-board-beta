@@ -1,3 +1,3 @@
 # Lodge Board
 
-A rental property management solution.
+A listing property management solution.

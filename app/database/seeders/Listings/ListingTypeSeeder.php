@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders\Rentals;
+namespace Database\Seeders\Listings;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class RentalTypeSeeder extends Seeder
+class ListingTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -46,7 +46,7 @@ class RentalTypeSeeder extends Seeder
         // ];
 
         // foreach ($types as $type) {
-        //     \App\Models\RentalType::create(['name' => $type]);
+        //     \App\Models\ListingType::create(['name' => $type]);
         // }
     }
 }

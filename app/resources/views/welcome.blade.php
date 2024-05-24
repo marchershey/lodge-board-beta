@@ -163,8 +163,8 @@
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center justify-start px-3 py-2 space-x-3 rounded-md group {{ request()->routeIs('host.rentals') ? 'bg-primary text-white' : 'hover:bg-gray-700/50' }}" href="/host/rentals" wire:navigate.hover>
-                                <svg class="w-8 h-8 tablet:w-6 tablet:h-6 {{ request()->routeIs('host.rentals') ? '' : 'text-muted-dark group-hover:text-primary-light' }}" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <a class="flex items-center justify-start px-3 py-2 space-x-3 rounded-md group {{ request()->routeIs('host.listings') ? 'bg-primary text-white' : 'hover:bg-gray-700/50' }}" href="/host/listings" wire:navigate.hover>
+                                <svg class="w-8 h-8 tablet:w-6 tablet:h-6 {{ request()->routeIs('host.listings') ? '' : 'text-muted-dark group-hover:text-primary-light' }}" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path>
                                     <path d="M13 7l0 .01"></path>
@@ -172,7 +172,7 @@
                                     <path d="M17 11l0 .01"></path>
                                     <path d="M17 15l0 .01"></path>
                                 </svg>
-                                <span class="text-lg tablet:text-base {{ request()->routeIs('host.rentals') ? '' : 'text-muted-light group-hover:text-white' }}">Rentals</span>
+                                <span class="text-lg tablet:text-base {{ request()->routeIs('host.listings') ? '' : 'text-muted-light group-hover:text-white' }}">Listings</span>
                             </a>
                         </li>
                         <li>

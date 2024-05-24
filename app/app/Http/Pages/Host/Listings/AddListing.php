@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Pages\Host\Rentals;
+namespace App\Http\Pages\Host\Listings;
 
 use App\Models\Amenity;
 use App\Models\AmenityGroup;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.app', ['title' => 'Add Rental'])]
-class AddRental extends Component
+#[Layout('layouts.app', ['title' => 'Add Listing'])]
+class AddListing extends Component
 {
     // Basic Information
     public string $name;
@@ -37,7 +37,7 @@ class AddRental extends Component
 
     public function render()
     {
-        return view('pages.host.rentals.add-rental');
+        return view('pages.host.listings.add-listing');
     }
 
     public function load(): void

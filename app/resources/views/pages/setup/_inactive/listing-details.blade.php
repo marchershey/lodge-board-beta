@@ -3,13 +3,13 @@
     <div class="text-center card-header">
         <h1>Listing Details</h1>
         <p>
-            Let's show off your rental to the world!
+            Let's show off your listing to the world!
         </p>
     </div>
 
     <form class="form-grid">
-        <x-forms.text class="capitalize" wiremodel="listing.headline" label="Listing Headline" desc="This is the headline or title of your listing that will be visible to guests on the rental's page." />
-        <x-forms.textarea wiremodel="listing.description" label="Listing Description" desc="Within 500 characters, explain what your rental has to offer. " />
+        <x-forms.text class="capitalize" wiremodel="listing.headline" label="Listing Headline" desc="This is the headline or title of your listing that will be visible to guests on the listing's page." />
+        <x-forms.textarea wiremodel="listing.description" label="Listing Description" desc="Within 500 characters, explain what your listing has to offer. " />
 
         <div class="!col-span-6">
             <x-forms.counter wiremodel="guest_count" label="Guest Count" min="1" max="16" />

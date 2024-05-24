@@ -2,16 +2,16 @@
 
 namespace App\Http\Pages\Setup;
 
-use App\Models\Rental;
-use App\Models\RentalPhoto;
+use App\Models\Listing;
+use App\Models\ListingPhoto;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class RentalPhotos extends Component
+class ListingPhotos extends Component
 {
     use WithFileUploads;
 
-    public $rental;
+    public $listing;
     public $temp_photos = [];
     public $photos = [];
 
@@ -39,18 +39,18 @@ class RentalPhotos extends Component
 
     public function render()
     {
-        return view('pages.setup.rental-photos');
+        return view('pages.setup.listing-photos');
     }
 
     /**
-     * Runs on initial page load, sets the first (and only) rental property
+     * Runs on initial page load, sets the first (and only) listing property
      * as the active property
      *
      * @return void
      */
     public function load()
     {
-        $this->rental = Rental::firstOrFail();
+        $this->listing = Listing::firstOrFail();
     }
 
     /**
@@ -121,10 +121,10 @@ class RentalPhotos extends Component
         $this->validate();
 
         foreach ($this->photos as $order => $photo) {
-            $path = $photo->store($this->rental->id, 'photos');
+            $path = $photo->store($this->listing->id, 'photos');
 
             $data = [
-                'url' => '/photos/' . $this->rental->id . '/' . $photo->hashName(),
+                'url' => '/photos/' . $this->listing->id . '/' . $photo->hashName(),
                 'path' => $path,
                 'hashName' => $photo->hashName(),
                 'extension' => $photo->extension(),
@@ -132,12 +132,12 @@ class RentalPhotos extends Component
                 'origExtension' => $photo->getClientOriginalExtension(),
                 'size' => $photo->getSize(),
                 'mime' => $photo->getMimeType(),
-                'rental_id' => $this->rental->id,
+                'listing_id' => $this->listing->id,
                 'user_id' => auth()->user()->id,
                 'order' => $order,
             ];
 
-            RentalPhoto::create($data);
+            ListingPhoto::create($data);
         }
 
         $this->dispatch('next-step');

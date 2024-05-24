@@ -3,12 +3,12 @@
 namespace App\Http\Middleware;
 
 use App\Models\Banner;
-use App\Models\Rental;
+use App\Models\Listing;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ShowHostBannerIfNoRental
+class ShowHostBannerIfNoListing
 {
     /**
      * Handle an incoming request.
@@ -17,14 +17,14 @@ class ShowHostBannerIfNoRental
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if there is no rental
-        if (count(Rental::all()) == 0) {
+        // Check if there is no listing
+        if (count(Listing::all()) == 0) {
             // Check if banner already exists
-            if (!Banner::where('slug', 'no-rental')->exists()) {
+            if (!Banner::where('slug', 'no-listing')->exists()) {
                 Banner::create([
-                    'slug' => 'no-rental',
-                    'title' => 'No Rental Property Found',
-                    'content' => '<strong>You need to add a rental!</strong> Click here to add one.',
+                    'slug' => 'no-listing',
+                    'title' => 'No Listing Found',
+                    'content' => '<strong>You need to add a listing!</strong> Click here to add one.',
                     'type' => 'warning',
                     'link' => route('login'),
                     'location' => 'host',
@@ -32,8 +32,8 @@ class ShowHostBannerIfNoRental
                 ]);
             }
         } else {
-            // Since there is a rental, remove the banner
-            Banner::where('slug', 'no-rental')->delete();
+            // Since there is a listing, remove the banner
+            Banner::where('slug', 'no-listing')->delete();
         }
 
         return $next($request);

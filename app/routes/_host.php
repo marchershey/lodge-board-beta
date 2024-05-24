@@ -7,10 +7,10 @@ Route::name('host.')->middleware(['auth', 'setup.completed'])->prefix('/host')->
     // Host Dashboard
     Route::name('dashboard')->get('/dashboard', App\Http\Pages\Host\Dashboard\DashboardIndex::class);
 
-    // Host Rentals
-    Route::name('rentals.')->prefix('/rentals')->group(function () {
-        Route::name('index')->get('/', App\Http\Pages\Host\Rentals\RentalsIndex::class);
-        Route::name('create')->get('/new', App\Http\Pages\Host\Rentals\AddRental::class);
+    // Host Listings
+    Route::name('listings.')->prefix('/listings')->group(function () {
+        Route::name('index')->get('/', App\Http\Pages\Host\Listings\ListingsIndex::class);
+        Route::name('create')->get('/new', App\Http\Pages\Host\Listings\AddListing::class);
     });
 
     Route::name('settings.')->prefix('/settings')->group(function () {

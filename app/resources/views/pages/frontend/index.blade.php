@@ -24,7 +24,7 @@
 
         {{-- Logo --}}
         <div class="flex-none">
-            <span class="text-xl font-bold uppercase">Serrate Rentals</span>
+            <span class="text-xl font-bold uppercase">Serrate Listings</span>
         </div>
 
         {{-- Navigation --}}

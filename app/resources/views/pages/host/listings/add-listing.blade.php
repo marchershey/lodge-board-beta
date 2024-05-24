@@ -1,6 +1,6 @@
 <x-layouts.host>
 
-    <x-slot:pageTitle>Add New Rental</x-slot:pageTitle>
+    <x-slot:pageTitle>Add New Listing</x-slot:pageTitle>
     <div class="page-content" wire:init="load">
         <form class="form-container" wire:submit.prevent="submit">
 
@@ -11,7 +11,7 @@
                 <x-slot:desc>The basic information about your property</x-slot:desc>
                 <div class="form-grid">
                     <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-6">
-                        <x-forms.text class="capitalize" wiremodel="name" label="Rental Name" />
+                        <x-forms.text class="capitalize" wiremodel="name" label="Listing Name" />
                     </div>
                     <div class="tablet-sm:!col-span-8 tablet:!col-span-full laptop:!col-span-8">
                         <x-forms.text class="capitalize" wiremodel="address.street" label="Street Address" />
