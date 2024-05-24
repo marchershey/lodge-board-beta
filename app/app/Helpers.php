@@ -3,6 +3,21 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+function addBannerNotification($id = null, $content = null, $type = "info", $expire = null,)
+{
+    session()->push('banners', [
+        'id' => $id ?? rand(),
+        'type' => $type,
+        'content' => $content,
+        'expiration' => $expire ?? now()->addDay(),
+    ]);
+}
+
+function removeBannerNotification($id)
+{
+    session()->forget('banner.' . $id);
+}
+
 function settings($type = 'general')
 {
     switch ($type) {
@@ -34,25 +49,25 @@ function devlog($action)
 
 /**
  * I was researching a few new Laravel practices and came across this neat little "attempt()"
- * helper function that Koel was utilizing. I thought it would be very helpful keeping 
- * my error handling uniform. So here's their credit on this idea. 
- * 
+ * helper function that Koel was utilizing. I thought it would be very helpful keeping
+ * my error handling uniform. So here's their credit on this idea.
+ *
  * Credit: https://github.com/koel/koel/blob/master/app/Helpers.php
- * 
- * P.S. The attempt(), attemptIf(), & attemptUnless(). 
- * 
+ *
+ * P.S. The attempt(), attemptIf(), & attemptUnless().
+ *
  * @throws Throwable
  * @return null;
  */
 function attempt(callable $callback, ...$args): mixed
 {
-    // // Generate attemp ID: 
+    // // Generate attemp ID:
     // $id = "(" . rand(1000, 9999) . ") ";
 
     // Log::info($id . 'Starting new attempt...');
 
-    // // First, get the information of the user who is starting this attempt function. 
-    // $user = collect(Auth::user())->toArray(); // "collect()" to satifiy vscode. 
+    // // First, get the information of the user who is starting this attempt function.
+    // $user = collect(Auth::user())->toArray(); // "collect()" to satifiy vscode.
     // Log::info($id . 'User information:');
     // Log::info($user);
 
@@ -115,7 +130,7 @@ function attempt(callable $callback, ...$args): mixed
 
 /**
  * Global Validate Function
- * 
+ *
  */
 // function validate($that, bool $showError = false): mixed
 // {
@@ -124,7 +139,7 @@ function attempt(callable $callback, ...$args): mixed
 //             if (count($validator->errors()) > 0) {
 //                 $error = $validator->errors()->first();
 //                 ($showError) ? toast()->danger($error, 'Validation Error')->push() : toast()->danger
-                
+
 //             }
 //         });
 //     })->validate();

@@ -22,7 +22,7 @@
             </div>
 
             {{-- Logo --}}
-            <div class="flex items-center tablet:w-64 tablet:justify-center">
+            <div class="flex items-center tablet:min-w-80 tablet:justify-center">
                 <a href="{{ route('host.dashboard') }}" wire:navigate>
                     <x-logo bgDark textSize="text-xl tablet-sm:text-2xl" iconSize="w-4 h-4" />
                 </a>
@@ -73,9 +73,9 @@
     </div>
 
     {{-- Container --}}
-    <div class="relative flex w-full h-full overflow-hidden">
+    <div class="relative flex w-full h-full overflow-hidden bg-gray-800">
 
-        {{-- Sidebar Overlay --}}
+        {{-- Mobile Sidebar Overlay --}}
         <div class="absolute inset-0 z-10 animate-in fade-in bg-gray-800/60 tablet:hidden" x-show="sidebar" x-cloak x-on:click="sidebar = false"></div>
 
         {{-- Sidebar --}}
@@ -152,7 +152,7 @@
                             <span class="flex items-center justify-between min-w-0 space-x-3">
 
                                 <div class="flex items-center justify-center w-10 h-10">
-                                    <div class="flex items-center justify-center w-10 h-10 p-2 bg-gray-100 rounded-full group-hover:bg-primary ring-1 ring-gray-300 group-hover:ring-primary-dark">
+                                    <div class="flex items-center justify-center w-10 h-10 p-2 bg-gray-100 rounded-full group-hover:bg-primary ring-1 ring-gray-300 group-hover:ring-primary group-hover:shadow-lg">
                                         <svg class="text-gray-400 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M19 12h2l-9 -9l-9 9h2v7a2 2 0 0 0 2 2h5.5" />
@@ -163,7 +163,11 @@
                                     </div>
                                 </div>
                                 <span class="flex flex-col flex-1 min-w-0 text-left">
-                                    <span class="text-sm font-medium leading-5 truncate text-muted group-hover:text-primary">Add New Property</span>
+                                    <span class="flex flex-col flex-1 min-w-0 text-left">
+                                        <span class="text-base font-medium leading-5 truncate">Add Rental</span>
+                                        <span class="text-xs truncate text-muted">Add a new rental property...</span>
+                                    </span>
+                                    {{-- <span class="text-sm font-medium leading-5 truncate text-muted group-hover:text-primary">Add New Property</span> --}}
                                 </span>
                             </span>
                         </a>
@@ -174,7 +178,7 @@
                 <nav class="flex flex-col flex-1 px-3">
                     <ul class="flex flex-col space-y-2 text-gray-400">
                         <li class="">
-                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.dashboard') }}">
+                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.dashboard') }}" wire:navigate>
                                 <svg class="w-7 h-7 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
@@ -185,7 +189,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.dashboard') }}">
+                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.dashboard') }}" wire:navigate>
                                 <svg class="w-7 h-7 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
@@ -199,7 +203,7 @@
                             </a>
                         </li>
                         <li class="">
-                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.dashboard') }}">
+                            <a class="flex items-center p-2 space-x-4 bg-gray-800 rounded-lg hover:bg-gray-700 group" href="{{ route('host.rentals.index') }}" wire:navigate>
                                 <svg class="w-7 h-7 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
@@ -217,10 +221,31 @@
             </div>
         </div>
 
-        {{-- Page Content --}}
-        <div class="w-full h-full overflow-hidden bg-gray-200 rounded-none tablet:rounded-tl-lg">
-            <div class="h-full min-h-full overflow-y-auto">
-                {{ $slot }}
+        {{-- Content --}}
+        <div class="w-full h-full overflow-hidden bg-gray-800 rounded-none tablet:rounded-tl-2xl">
+            <div class="flex flex-col h-full overflow-y-auto bg-gray-200">
+
+                {{-- Banner --}}
+                <div class="flex-none">
+                    <livewire:components.banner />
+                </div>
+
+                {{-- Content Container --}}
+                <div class="page-container">
+                    <div class="page-header">
+                        <h1 class="page-title">{{ $pageTitle }}</h1>
+                        <div>
+                            {{ $pageActions }}
+                        </div>
+                    </div>
+
+                    {{ $slot }}
+                </div>
+
+                {{-- Footer --}}
+                <div class="flex-none">
+                    <x-layouts.footer />
+                </div>
             </div>
         </div>
     </div>
