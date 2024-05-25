@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ListingPhoto extends Model
+class PropertyPhoto extends Model
 {
     use HasFactory;
 
@@ -19,7 +19,7 @@ class ListingPhoto extends Model
         'origExtension',
         'size',
         'mime',
-        'listing_id',
+        'property_id',
         'user_id',
         'order',
     ];

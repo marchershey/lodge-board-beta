@@ -7,11 +7,11 @@ Route::name('host.')->middleware(['auth', 'setup.completed'])->prefix('/host')->
     // Host Dashboard
     Route::name('dashboard')->get('/dashboard', App\Http\Pages\Host\Dashboard\DashboardIndex::class);
 
-    // Host Listings
-    Route::name('listings.')->prefix('/listings')->group(function () {
-        Route::name('index')->get('/', App\Http\Pages\Host\Listings\ListingsIndex::class);
-        Route::name('create')->get('/add-listing', App\Http\Pages\Host\Listings\AddListing::class);
-        // Route::name('create-old')->get('/add-listing-old', App\Http\Pages\Host\Listings\AddListingOld::class);
+    // Host Properties
+    Route::name('properties.')->prefix('/properties')->group(function () {
+        Route::name('index')->get('/', App\Http\Pages\Host\Properties\PropertiesIndex::class);
+        Route::name('create')->get('/add-property', App\Http\Pages\Host\Properties\AddProperty::class);
+        // Route::name('create-old')->get('/add-property-old', App\Http\Pages\Host\Properties\AddPropertyOld::class);
     });
 
     Route::name('settings.')->prefix('/settings')->group(function () {

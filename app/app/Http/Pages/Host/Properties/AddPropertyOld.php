@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Pages\Host\Listings;
+namespace App\Http\Pages\Host\Properties;
 
 use App\Models\Amenity;
 use App\Models\AmenityGroup;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.app', ['title' => 'Add Listing'])]
-class AddListingOld extends Component
+#[Layout('layouts.app', ['title' => 'Add Property'])]
+class AddPropertyOld extends Component
 {
     // Basic Information
     public string $name;
     public array $address = [];
 
-    // Listing Information
-    public string $listing_headline;
-    public string $listing_description = '';
+    // Property Information
+    public string $property_headline;
+    public string $property_description = '';
 
     // Pricing Information
     public float $base_rate;
@@ -37,7 +37,7 @@ class AddListingOld extends Component
 
     public function render()
     {
-        return view('pages.host.listings.add-listing-old');
+        return view('pages.host.properties.add-property-old');
     }
 
     public function load(): void

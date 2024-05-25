@@ -1,15 +1,15 @@
 <section class="mx-auto card card-padding card-flex tablet-sm:max-w-lg" wire:init="load">
 
     <div class="text-center card-header">
-        <h1>Listing Details</h1>
+        <h1>Property Details</h1>
         <p>
-            Let's show off your listing to the world!
+            Let's show off your property to the world!
         </p>
     </div>
 
     <form class="form-grid">
-        <x-forms.text class="capitalize" wiremodel="listing.headline" label="Listing Headline" desc="This is the headline or title of your listing that will be visible to guests on the listing's page." />
-        <x-forms.textarea wiremodel="listing.description" label="Listing Description" desc="Within 500 characters, explain what your listing has to offer. " />
+        <x-forms.text class="capitalize" wiremodel="property.headline" label="Property Headline" desc="This is the headline or title of your property that will be visible to guests on the property's page." />
+        <x-forms.textarea wiremodel="property.description" label="Property Description" desc="Within 500 characters, explain what your property has to offer. " />
 
         <div class="!col-span-6">
             <x-forms.counter wiremodel="guest_count" label="Guest Count" min="1" max="16" />

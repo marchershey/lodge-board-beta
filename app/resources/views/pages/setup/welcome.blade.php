@@ -6,7 +6,7 @@
     <ul class="font-semibold list-disc list-inside">
         <li>Admin account details</li>
         <li>Business name, website URL, & default timezone</li>
-        <li>Details of at least one listing property (such as name, address, and a few photos)</li>
+        <li>Details of at least one property property (such as name, address, and a few photos)</li>
     </ul>
 
     <p>

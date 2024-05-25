@@ -1,7 +1,7 @@
 <section class="mx-auto card card-padding card-flex tablet-sm:max-w-lg" x-data="{ value: $wire.entangle('site_url') }" wire:init="load">
 
     <div class="text-center card-header">
-        <h1>Adding a Listing!</h1>
+        <h1>Adding a Property!</h1>
         <p>
             In the following steps, we'll ask you several questions about your
         </p>

@@ -1,7 +1,7 @@
 <section class="card card-padding card-flex" wire:init="load" x-data="photosuploader">
 
     <p>
-        Looks great! Now add some photos to show off your listing.
+        Looks great! Now add some photos to show off your property.
     </p>
 
     {{-- Show the "select photos" button only if no photos are uploaded --}}
@@ -70,7 +70,7 @@
     {{-- <div class="hidden" wire:init="load" wire:loading.class="opacity-50 pointer-events-none" wire:target="submit">
         <form class="card card-padding card-flex" wire:submit.prevent="submit">
             <div class="card-header">
-                <h1>Listing Photos</h1>
+                <h1>Property Photos</h1>
                 <p>Next thing, add a few photos to show off the property.</p>
             </div>
             <div class="card-flex" x-data="photosuploader" x-on:livewire-upload-start="uploading = true" x-on:livewire-upload-finish="uploading = false, progress = 0, $wire.dispatch('init-sortable')" x-on:livewire-upload-error="uploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress, console.log($event.detail)">

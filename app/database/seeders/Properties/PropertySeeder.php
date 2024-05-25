@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders\Listings;
+namespace Database\Seeders\Properties;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ListingSeeder extends Seeder
+class PropertySeeder extends Seeder
 {
     /**
      * Run the database seeds.

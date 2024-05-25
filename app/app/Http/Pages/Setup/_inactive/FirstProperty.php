@@ -2,71 +2,71 @@
 
 namespace App\Http\Pages\Setup;
 
-use App\Models\Listing;
+use App\Models\Property;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-class FirstListing extends Component
+class FirstProperty extends Component
 {
-    public string $listing_name;
-    // public string $listing_type;
-    public string $listing_street;
-    public string $listing_city;
-    public string $listing_state;
-    public string $listing_zip;
+    public string $property_name;
+    // public string $property_type;
+    public string $property_street;
+    public string $property_city;
+    public string $property_state;
+    public string $property_zip;
 
     protected $rules = [
-        'listing_name' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
-        // 'listing_type' => ['required', 'string', 'numeric'],
-        'listing_street' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[a-zA-Z0-9\s\-\#]+$/'],
-        'listing_city' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
-        'listing_state' => ['required', 'string', 'size:2', 'alpha'],
-        'listing_zip' => ['required', 'string', 'digits:5', 'between:501,99734', 'numeric'],
+        'property_name' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
+        // 'property_type' => ['required', 'string', 'numeric'],
+        'property_street' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[a-zA-Z0-9\s\-\#]+$/'],
+        'property_city' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
+        'property_state' => ['required', 'string', 'size:2', 'alpha'],
+        'property_zip' => ['required', 'string', 'digits:5', 'between:501,99734', 'numeric'],
     ];
 
     protected $validationAttributes = [
-        'listing_name' => 'Listing Name',
-        // 'listing_type' => 'Listing Type',
-        'listing_street' => 'Street Address',
-        'listing_city' => 'City',
-        'listing_state' => 'State',
-        'listing_zip' => 'Zip Code',
+        'property_name' => 'Property Name',
+        // 'property_type' => 'Property Type',
+        'property_street' => 'Street Address',
+        'property_city' => 'City',
+        'property_state' => 'State',
+        'property_zip' => 'Zip Code',
     ];
 
     protected $messages = [
-        'listing_name' => [
+        'property_name' => [
             'required' => 'The :attribute is required.',
             'string' => 'The :attribute is invalid. (Stop it, you script kiddy)',
             'min' => 'The :attribute is too short. (Min :min characters)',
             'max' => 'The :attribute is too long. (Max :max characters)',
             'regex' => 'The :attribute is invalid. (Illegal characters)',
         ],
-        // 'listing_type' => [
+        // 'property_type' => [
         //     'required' => 'The :attribute is required.',
         //     'integer' => 'Invalid :attribute',
         //     'numeric' => 'Invalid :attribute',
         // ],
-        'listing_street' => [
+        'property_street' => [
             'required' => 'The :attribute is required.',
             'string' => 'The :attribute is invalid. (Stop it, you script kiddy)',
             'min' => 'The :attribute is too short. (Min :min characters)',
             'max' => 'The :attribute is too long. (Max :max characters)',
             'regex' => 'The :attribute is invalid. (Illegal characters)',
         ],
-        'listing_city' => [
+        'property_city' => [
             'required' => 'The :attribute is required.',
             'string' => 'The :attribute is invalid. (Stop it, you script kiddy)',
             'min' => 'The :attribute is too short. (Min :min characters)',
             'max' => 'The :attribute is too long. (Max :max characters)',
             'regex' => 'The :attribute is invalid. (Illegal characters)',
         ],
-        'listing_state' => [
+        'property_state' => [
             'required' => 'The :attribute is required.',
             'string' => 'The :attribute is invalid. (Stop it, you script kiddy)',
             'size' => 'The :attribute is invalid. (Stop it, you script kiddy)',
             'alpha' => 'The :attribute is invalid. (Stop it, you script kiddy)',
         ],
-        'listing_zip' => [
+        'property_zip' => [
             'required' => 'The :attribute is required.',
             'int' => 'The :attribute is invalid. (Stop it, you script kiddy)',
             'digits' => 'The :attribute is invalid.',
@@ -79,7 +79,7 @@ class FirstListing extends Component
     #[Layout('layouts.minimal', ['title' => 'Setup'])]
     public function render()
     {
-        return view('pages.setup.first-listing');
+        return view('pages.setup.first-property');
     }
 
     /**
@@ -101,12 +101,12 @@ class FirstListing extends Component
     function loadDevData(): void
     {
         if (app()->isLocal()) {
-            $this->listing_name = "Ohana Burnside";
-            // $this->listing_type = 19; // 19 = House
-            $this->listing_street = "23 S Highland Dr";
-            $this->listing_city = "Burnside";
-            $this->listing_state = "KY";
-            $this->listing_zip = "42519";
+            $this->property_name = "Ohana Burnside";
+            // $this->property_type = 19; // 19 = House
+            $this->property_street = "23 S Highland Dr";
+            $this->property_city = "Burnside";
+            $this->property_state = "KY";
+            $this->property_zip = "42519";
             devlog('SiteConfig test data filled');
         }
     }
@@ -129,39 +129,39 @@ class FirstListing extends Component
 
     /**
      * Runs when the user presses the continue button. Validates the form data, checks
-     * if there is an existing listing property in the database, if so it sets that as
-     * the active listing, if not it creates a new one. Then it either adds or edits
-     * the listing data and saves it. Then continues to the next step.
+     * if there is an existing property property in the database, if so it sets that as
+     * the active property, if not it creates a new one. Then it either adds or edits
+     * the property data and saves it. Then continues to the next step.
      *
      * @return void
      */
     public function submit(): void
     {
-        // Validate the listing information
+        // Validate the property information
         $this->validate();
 
-        // Check if a listing already exists
-        if (Listing::count() > 0) {
-            // A listing exists, so set that as active listing
-            $listing = Listing::first();
+        // Check if a property already exists
+        if (Property::count() > 0) {
+            // A property exists, so set that as active property
+            $property = Property::first();
         } else {
-            // No listings exists, create a new one.
-            $listing = new Listing();
+            // No properties exists, create a new one.
+            $property = new Property();
         }
 
-        // Update the listing's information
-        $listing->name = ucwords($this->listing_name);
-        $listing->address_street = ucwords($this->listing_street);
-        $listing->address_city = ucwords($this->listing_city);
-        $listing->address_state = $this->listing_state;
-        $listing->address_zip = $this->listing_zip;
-        // $listing->type_id = $this->listing_type;
-        $listing->host_id = auth()->user()->id;
+        // Update the property's information
+        $property->name = ucwords($this->property_name);
+        $property->address_street = ucwords($this->property_street);
+        $property->address_city = ucwords($this->property_city);
+        $property->address_state = $this->property_state;
+        $property->address_zip = $this->property_zip;
+        // $property->type_id = $this->property_type;
+        $property->host_id = auth()->user()->id;
 
-        // Save the listing
-        $listing->save();
+        // Save the property
+        $property->save();
 
         // Go to the next step
-        $this->redirect('/setup/listing-details', navigate: true);
+        $this->redirect('/setup/property-details', navigate: true);
     }
 }

@@ -2,16 +2,16 @@
 
 namespace App\Http\Pages\Setup;
 
-use App\Models\Listing;
-use App\Models\ListingPhoto;
+use App\Models\Property;
+use App\Models\PropertyPhoto;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class ListingPhotos extends Component
+class PropertyPhotos extends Component
 {
     use WithFileUploads;
 
-    public $listing;
+    public $property;
     public $temp_photos = [];
     public $photos = [];
 
@@ -39,18 +39,18 @@ class ListingPhotos extends Component
 
     public function render()
     {
-        return view('pages.setup.listing-photos');
+        return view('pages.setup.property-photos');
     }
 
     /**
-     * Runs on initial page load, sets the first (and only) listing property
+     * Runs on initial page load, sets the first (and only) property property
      * as the active property
      *
      * @return void
      */
     public function load()
     {
-        $this->listing = Listing::firstOrFail();
+        $this->property = Property::firstOrFail();
     }
 
     /**
@@ -121,10 +121,10 @@ class ListingPhotos extends Component
         $this->validate();
 
         foreach ($this->photos as $order => $photo) {
-            $path = $photo->store($this->listing->id, 'photos');
+            $path = $photo->store($this->property->id, 'photos');
 
             $data = [
-                'url' => '/photos/' . $this->listing->id . '/' . $photo->hashName(),
+                'url' => '/photos/' . $this->property->id . '/' . $photo->hashName(),
                 'path' => $path,
                 'hashName' => $photo->hashName(),
                 'extension' => $photo->extension(),
@@ -132,12 +132,12 @@ class ListingPhotos extends Component
                 'origExtension' => $photo->getClientOriginalExtension(),
                 'size' => $photo->getSize(),
                 'mime' => $photo->getMimeType(),
-                'listing_id' => $this->listing->id,
+                'property_id' => $this->property->id,
                 'user_id' => auth()->user()->id,
                 'order' => $order,
             ];
 
-            ListingPhoto::create($data);
+            PropertyPhoto::create($data);
         }
 
         $this->dispatch('next-step');

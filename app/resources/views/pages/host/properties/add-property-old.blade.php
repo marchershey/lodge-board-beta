@@ -1,6 +1,6 @@
 <x-layouts.host>
 
-    <x-slot:pageTitle>Add New Listing</x-slot:pageTitle>
+    <x-slot:pageTitle>Add New Property</x-slot:pageTitle>
     <div class="page-content" wire:init="load">
         <form class="form-container" wire:submit.prevent="submit">
 
@@ -11,7 +11,7 @@
                 <x-slot:desc>The basic information about your property</x-slot:desc>
                 <div class="form-grid">
                     <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-6">
-                        <x-forms.text class="capitalize" wiremodel="name" label="Listing Name" />
+                        <x-forms.text class="capitalize" wiremodel="name" label="Property Name" />
                     </div>
                     <div class="tablet-sm:!col-span-8 tablet:!col-span-full laptop:!col-span-8">
                         <x-forms.text class="capitalize" wiremodel="address.street" label="Street Address" />
@@ -28,17 +28,17 @@
                 </div>
             </x-forms.section>
 
-            {{-- Listing Information --}}
+            {{-- Property Information --}}
             <x-forms.section>
-                <x-slot:header>Listing Information</x-slot:header>
-                <x-slot:desc>The key information that is displayed to guests on the listing page.</x-slot:desc>
+                <x-slot:header>Property Information</x-slot:header>
+                <x-slot:desc>The key information that is displayed to guests on the property page.</x-slot:desc>
 
                 <div class="form-grid">
                     <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-6">
-                        <x-forms.text class="capitalize" wiremodel="listing_headline" label="Listing Headline" />
+                        <x-forms.text class="capitalize" wiremodel="propertyyyyyyyyyyy_headline" label="Property Headline" />
                     </div>
                     <div class="tablet-sm:!col-span-10 tablet:!col-span-full laptop:!col-span-10">
-                        <x-forms.textarea class="capitalize" maxlength="500" wiremodel="listing_description" label="Listing Description" desc="Max Characters: 500" />
+                        <x-forms.textarea class="capitalize" maxlength="500" wiremodel="property_description" label="Property Description" desc="Max Characters: 500" />
                     </div>
                 </div>
             </x-forms.section>

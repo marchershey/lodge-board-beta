@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\Listings;
+namespace Database\Seeders\Properties;
 
 use App\Models\Amenity;
 use App\Models\AmenityGroup;

@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders\Listings;
+namespace Database\Seeders\Properties;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ListingTypeSeeder extends Seeder
+class PropertyTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -46,7 +46,7 @@ class ListingTypeSeeder extends Seeder
         // ];
 
         // foreach ($types as $type) {
-        //     \App\Models\ListingType::create(['name' => $type]);
+        //     \App\Models\PropertyType::create(['name' => $type]);
         // }
     }
 }

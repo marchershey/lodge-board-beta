@@ -35,20 +35,20 @@
 
         @if ($current_step == 4)
             <div>
-                <livewire:pages.setup.steps.first-listing />
+                <livewire:pages.setup.steps.first-property />
             </div>
         @endif
 
         @if ($current_step == 5)
             {{-- wire:transition will not work with @foreach - https://livewire.laravel.com/docs/wire-transition#limitations --}}
             <div wire:transition.in>
-                <livewire:pages.setup.steps.listing-details />
+                <livewire:pages.setup.steps.property-details />
             </div>
         @endif
 
         @if ($current_step == 6)
             <div>
-                <livewire:pages.setup.steps.listing-photos />
+                <livewire:pages.setup.steps.property-photos />
             </div>
         @endif
 

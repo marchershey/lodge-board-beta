@@ -23,7 +23,7 @@
                 <span class="font-bold text-red-500">Host accounts are Admin accounts.</span>
                 They are granted full administrative access. They have the ability to modify
                 site-wide settings, manage staff & guest accounts (which includes billing information),
-                and make changes to reservations/listings, etc.
+                and make changes to reservations/properties, etc.
                 <span class="font-bold">Host Accounts should be reserved for team members requiring full access.</span>
                 Any team members that only need certain persmissions should be given <span class="staff">Staff</span>
                 accounts, as they can be given specific permissions.
