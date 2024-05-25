@@ -117,10 +117,13 @@
         @apply px-6 py-6 tablet-sm:px-8;
     } */
     .card-header {
-        /* @apply -pb-4; */
+        @apply flex flex-col space-y-2;
+    }
+    .card-header span {
+        @apply text-base font-semibold text-primary;
     }
     .card-header h1 {
-        @apply text-xl font-medium;
+        @apply text-xl font-semibold;
     }
     .card-header p {
         @apply text-base text-muted;
@@ -261,6 +264,9 @@
     }
     .button-gray {
         @apply border border-gray-300 bg-gray-100 text-gray-600 ring-gray-300 hover:bg-gray-100 hover:ring-gray-400;
+    }
+    .button-link {
+        @apply bg-transparent text-primary;
     }
     .button svg {
         @apply -ml-1 mr-2 h-5 w-5;
