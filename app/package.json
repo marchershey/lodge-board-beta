@@ -20,7 +20,7 @@
         "prettier-plugin-tailwindcss": "0.5.14",
         "tailwindcss": "3.4.3",
         "tailwindcss-animate": "1.0.7",
-        "vite": "5.2.11"
+        "vite": "5.3.4"
     },
     "dependencies": {
         "@alpinejs/collapse": "3.13.10",
