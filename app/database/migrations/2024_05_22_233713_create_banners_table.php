@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('location');
             $table->string('slug')->nullable();
             $table->string('title')->nullable();
-            $table->text('content');
+            $table->text('description');
             $table->string('type')->default('info');
             $table->string('link')->nullable();
             $table->boolean('hideCloseButton')->default(false);

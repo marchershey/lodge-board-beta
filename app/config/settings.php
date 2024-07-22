@@ -1,5 +1,6 @@
 <?php
 
+use App\Settings\DevSettings;
 use App\Settings\GeneralSettings;
 use App\Settings\SetupSettings;
 
@@ -12,6 +13,7 @@ return [
     'settings' => [
         GeneralSettings::class,
         SetupSettings::class,
+        DevSettings::class,
     ],
 
     /**
@@ -71,7 +73,7 @@ return [
         DateTimeInterface::class => Spatie\LaravelSettings\SettingsCasts\DateTimeInterfaceCast::class,
         DateTimeZone::class => Spatie\LaravelSettings\SettingsCasts\DateTimeZoneCast::class,
         //        Spatie\DataTransferObject\DataTransferObject::class => Spatie\LaravelSettings\SettingsCasts\DtoCast::class,
-        Spatie\LaravelData\Data::class => Spatie\LaravelSettings\SettingsCasts\DataCast::class,
+        // Spatie\LaravelData\Data::class => Spatie\LaravelSettings\SettingsCasts\DataCast::class,
     ],
 
     /**

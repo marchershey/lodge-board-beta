@@ -3,13 +3,14 @@
 namespace App\Http\Components;
 
 use App\Models\Banner as BannerModel;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class Banner extends Component
 {
     public $location;
-    public $hasBanners = false;
     public $banners = [];
+    public $hasBanners = false;
 
     public function mount($location)
     {
@@ -18,15 +19,41 @@ class Banner extends Component
 
     public function render()
     {
-        $this->load();
+        $banners = BannerModel::where('location', $this->location)->get();
+        foreach ($banners as $key => $banner) {
+            switch ($banner['type']) {
+                case 'info':
+                    $banners[$key]['style'] = [
+                        'title' => 'text-white',
+                        'desc' => 'text-blue-300',
+                        'bg' => 'bg-blue-600 border-blue-600',
+                        'icon' => 'text-blue-300',
+                        'close' => 'text-blue-300',
+                    ];
+                    break;
+                case 'warning':
+                    $banners[$key]['style'] = [
+                        'title' => 'text-amber-900',
+                        'desc' => 'text-amber-700',
+                        'bg' => 'bg-amber-100 border-amber-300',
+                        'icon' => 'text-amber-400',
+                        'close' => 'text-amber-400',
+                    ];
+                    break;
+                case 'error':
+                    $banners[$key]['style'] = [
+                        'title' => 'text-white',
+                        'desc' => 'text-red-300',
+                        'bg' => 'bg-red-500 border-red-600',
+                        'icon' => 'text-red-300',
+                        'close' => 'text-red-300',
+                    ];
+                    break;
+            }
+        }
 
+        $this->banners = $banners->toArray();
         return view('components.banner');
-    }
-
-    public function load(): void
-    {
-        $this->banners = BannerModel::where('location', $this->location)->get();
-        $this->hasBanners = !$this->banners->isEmpty();
     }
 
     public function deleteBanner($id): void

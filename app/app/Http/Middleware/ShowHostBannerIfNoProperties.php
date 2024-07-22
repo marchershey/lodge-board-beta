@@ -23,10 +23,10 @@ class ShowHostBannerIfNoProperties
             if (!Banner::where('slug', 'no-property')->exists()) {
                 Banner::create([
                     'slug' => 'no-property',
-                    'title' => 'No Property Found',
-                    'content' => '<strong>You need to add a property!</strong> Click here to add one.',
+                    'title' => 'You haven\'t added any properties yet!',
+                    'description' => 'You can tap this banner to add one.',
                     'type' => 'warning',
-                    'link' => route('login'),
+                    'link' => route('host.properties.new-property'),
                     'location' => 'host',
                     'hideCloseButton' => true,
                 ]);

@@ -5,11 +5,7 @@ const colors = require("tailwindcss/colors");
 
 export default {
     darkMode: "class",
-    content: [
-        "./resources/views/**/*.blade.php",
-        "./resources/js/**/*.js",
-        "./app/View/Components/**/*.php",
-    ],
+    content: ["./resources/**/*.blade.php", "./app/**/*.php"],
     safelist: ["alert-type-info", "alert-type-error"],
     theme: {
         extend: {
