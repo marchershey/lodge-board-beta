@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 // Route::name('host.')->middleware(['auth', 'host'])->prefix('/host')->group(function () {
 Route::name('host')->middleware(['auth', 'setup.completed'])->prefix('/host')->group(function () {
+    Route::redirect('/', '/host/dashboard');
+
     // Host Dashboard
     Route::name('.dashboard')->get('/dashboard', App\Http\Pages\Host\Dashboard\DashboardIndex::class);
 
@@ -12,9 +14,11 @@ Route::name('host')->middleware(['auth', 'setup.completed'])->prefix('/host')->g
         Route::name('.index')->get('/', App\Http\Pages\Host\Properties\PropertiesIndex::class);
 
         // New Property
-        Route::name('.new-property')->prefix('/new-property')->group(function () {
-            Route::get('/', App\Http\Pages\Host\Properties\NewProperty\NewPropertyOverview::class);
-            Route::name('.basics')->get('/the-basics/{property}', App\Http\Pages\Host\Properties\NewProperty\NewPropertyBasics::class);
+        Route::name('.new-property')->prefix('/new')->group(function () {
+            Route::name('.overview')->get('/overview', App\Http\Pages\Host\Properties\NewProperty\NewPropertyOverview::class);
+            Route::name('.basics')->get('/{property}/the-basics', App\Http\Pages\Host\Properties\NewProperty\NewPropertyBasics::class);
+
+            Route::redirect('/', route('host.properties.new-property.overview'));
         });
 
 

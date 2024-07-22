@@ -1,8 +1,9 @@
 <div class="max-w-5xl mx-auto tablet-sm:page-padding" wire:transition.in>
     <div class="flex flex-col items-center space-y-5 tablet-sm:flex-row tablet-sm:space-x-6">
         <div class="flex flex-col flex-1 text-center page-padding tablet-sm:text-left">
-            <h1 class="text-3xl font-semibold text-gray-800 tablet:text-4xl">Let's add that property!</h1>
-            <p class="text-base text-muted tablet:text-lg">Turn your property into an unforgettable stay!</p>
+            <span class="text-base font-bold uppercase text-primary">Overview</span>
+            <h1 class="text-3xl font-semibold text-gray-700">Let's add that property!</h1>
+            <p class="text-base text-muted tablet:text-base">Turn your property into an unforgettable stay!</p>
         </div>
         <div class="flex flex-col space-y-3">
             <form class="w-full tablet-sm:max-w-lg card card-padding card-flex !space-y-10" wire:submit.prevent="start">

@@ -6,7 +6,7 @@ use App\Models\Property;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.minimal', ['title' => 'Add a new property'])]
+#[Layout('layouts.minimal', ['title' => 'New Property'])]
 class NewPropertyOverview extends Component
 {
     public function render()

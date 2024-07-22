@@ -39,3 +39,12 @@ window.addEventListener("console", (event) => {
 });
 
 import "./_formatter";
+
+window.addEventListener(
+    "popstate",
+    (event) => {
+        // The popstate event is fired each time when the current history entry changes.
+        location.reload();
+    },
+    false,
+);

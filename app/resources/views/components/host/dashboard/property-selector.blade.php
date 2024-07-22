@@ -1,42 +1,42 @@
-<div wire:init="load">
-
-    <div class="relative mx-3" x-data="{ selectorOpen: true }" x-on:click.away="selectorOpen = false">
-        @if ($property)
-            <div>
-                <button class="flex items-center w-full p-2 space-x-3 rounded-lg hover:bg-gray-700" x-on:click="selectorOpen = !selectorOpen" :class="selectorOpen && '!bg-gray-700'">
-                    <span class="bg-cover rounded-full w-9 h-9" style="background-image: url(https://i.imgur.com/wAy4vKv.png)"></span>
-                    <span class="flex flex-col flex-1 text-left">
-                        <span class="font-semibold text-white">Ohana Burnside</span>
-                        <span class="text-xs tracking-wider text-muted">Burnside, KY</span>
-                    </span>
-                    <span>
-                        <svg class="flex-shrink-0 w-5 h-5 text-muted group-hover:text-white" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                </button>
-            </div>
-            <div class="absolute w-full p-2 mt-1 bg-white rounded-lg" x-show="selectorOpen" x-cloak>
-                <div class="">
-                    @foreach ($properties as $property)
-                        <div>
-                            asdf
-                        </div>
-                    @endforeach
+@persist('property-selector')
+    <div wire:init="load">
+        <div class="relative mx-3" x-data="{ selectorOpen: true }" x-on:click.away="selectorOpen = false">
+            @if ($property)
+                <div>
+                    <button class="flex items-center w-full p-2 space-x-3 rounded-lg hover:bg-gray-700" x-on:click="selectorOpen = !selectorOpen" :class="selectorOpen && '!bg-gray-700'">
+                        <span class="bg-cover rounded-full w-9 h-9" style="background-image: url(https://i.imgur.com/wAy4vKv.png)"></span>
+                        <span class="flex flex-col flex-1 text-left">
+                            <span class="font-semibold text-white">Ohana Burnside</span>
+                            <span class="text-xs tracking-wider text-muted">Burnside, KY</span>
+                        </span>
+                        <span>
+                            <svg class="flex-shrink-0 w-5 h-5 text-muted group-hover:text-white" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                    </button>
                 </div>
-            </div>
-        @else
-            <div class="flex items-center p-2 mx-3 space-x-3 cursor-wait animate-pulse">
-                <div class="flex-shrink-0 bg-gray-700 rounded-full w-9 h-9"></div>
-                <div class="flex-col w-full space-y-1 h-[31px] mt-[4px]">
-                    <div class="w-2/3 h-4 bg-gray-700 rounded-full"></div>
-                    <div class="w-1/3 h-3 bg-gray-700 rounded-full"></div>
+                <div class="absolute w-full p-2 mt-1 bg-white rounded-lg" x-show="selectorOpen" x-cloak>
+                    <div class="">
+                        @foreach ($properties as $property)
+                            <div>
+                                asdf
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        @endif
-    </div>
+            @else
+                <div class="flex items-center p-2 mx-3 space-x-3 cursor-wait animate-pulse">
+                    <div class="flex-shrink-0 bg-gray-700 rounded-full w-9 h-9"></div>
+                    <div class="flex-col w-full space-y-1 h-[31px] mt-[4px]">
+                        <div class="w-2/3 h-4 bg-gray-700 rounded-full"></div>
+                        <div class="w-1/3 h-3 bg-gray-700 rounded-full"></div>
+                    </div>
+                </div>
+            @endif
+        </div>
 
-    {{-- <div class="relative hidden px-3" x-data="{ open: false }">
+        {{-- <div class="relative hidden px-3" x-data="{ open: false }">
         <div>
             <button class="w-full p-2 bg-gray-800 border border-gray-800 rounded-lg group hover:bg-gray-700" id="properties-selector-button" type="button" aria-expanded="false" aria-haspopup="true" x-on:click="open = !open" :class="open ? 'bg-gray-700' : 'bg-gray-800'">
                 <span class="flex items-center justify-between w-full">
@@ -124,4 +124,5 @@
             </a>
         </div>
     </div> --}}
-</div>
+    </div>
+@endpersist

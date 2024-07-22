@@ -11,6 +11,10 @@ class Property extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'in_progress',
+    ];
+
     /**
      * Automatically generate a unique slug for the property.
      */
@@ -25,7 +29,7 @@ class Property extends Model
              * ! No longer works due to creating model before having property name.
              * TODO: Need to figure out a way to do this after property has been created
              */
-            $property->slug = self::generateSlug($property->name);
+            // $property->slug = self::generateSlug($property->name);
         });
     }
 
@@ -71,8 +75,10 @@ class Property extends Model
      */
     public static function startNewProperty(): Property
     {
-        $property = self::where('in_progress', true)->where('name', null)->first();
+        return self::firstOrCreate([
+            'in_progress' => true,
+        ]);
 
-        return ($property) ? $property : self::create();
+        // return ($property) ? $property : self::create();
     }
 }

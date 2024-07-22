@@ -1,44 +1,33 @@
-<div class="max-w-5xl mx-auto tablet-sm:page-padding" wire:transition.in>
+<div class="max-w-5xl mx-auto tablet-sm:page-padding">
     <div class="flex flex-col items-center space-y-5 tablet-sm:flex-row tablet-sm:space-x-6">
-        <div class="flex flex-col flex-1 page-padding">
-            <span class="text-lg font-semibold text-primary">Step 1</span>
-            <h1 class="text-2xl font-semibold text-gray-800 tablet:text-3xl">The Basics</h1>
-            <p class="text-base text-muted tablet:text-base">Share basic details like name, location, guest capacity, and what makes your property special.</p>
+        <div class="flex flex-col flex-1 max-w-sm text-center tablet-sm:max-w-full page-padding tablet-sm:text-left">
+            <span class="text-base font-bold uppercase text-primary">Step 1</span>
+            <h1 class="text-3xl font-semibold text-gray-800">The Basics</h1>
+            <p class="text-sm text-muted tablet:text-base">Share basic details like name, location, guest capacity, and what makes your property special.</p>
         </div>
-        <div class="flex flex-col space-y-3">
-            <form class="w-full tablet-sm:max-w-lg card card-padding card-flex !space-y-10" wire:submit.prevent="start">
-                <div class="flex flex-col space-y-8">
-                    <div class="grid grid-cols-12">
-                        <div class="col-span-2 whitespace-nowrap">
-                            <span class="text-lg font-semibold text-primary">Step 1</span>
-                        </div>
-                        <div class="flex flex-col col-span-10">
-                            <span class="text-lg font-semibold">The Basics</span>
-                            <span class="text-sm text-muted">Share basic details like name, location, guest capacity, and what makes your property special.</span>
-                        </div>
+        <div class="flex flex-col w-full space-y-3 tablet-sm:w-auto">
+            <form class="tablet-sm:max-w-lg card card-padding card-flex !space-y-10" wire:submit.prevent="start">
+
+                <div class="form-grid">
+                    <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-6">
+                        <x-forms.text class="capitalize" wiremodel="name" label="Property Name" />
                     </div>
-                    <div class="grid grid-cols-12">
-                        <div class="col-span-2 whitespace-nowrap">
-                            <span class="text-lg font-semibold text-primary">Step 2</span>
-                        </div>
-                        <div class='flex flex-col col-span-10'>
-                            <span class="text-lg font-semibold">Showcase the place</span>
-                            <span class="text-sm text-muted">Upload high-quality photos that capture the essence of your property. We recommend including at least 5 photos to give guests a clear idea of what to expect.</span>
-                        </div>
+                    <div class="tablet-sm:!col-span-8 tablet:!col-span-full laptop:!col-span-8">
+                        <x-forms.text class="capitalize" wiremodel="address.street" label="Street Address" />
                     </div>
-                    <div class="grid grid-cols-12">
-                        <div class="col-span-2 whitespace-nowrap">
-                            <span class="text-lg font-semibold text-primary">Step 3</span>
-                        </div>
-                        <div class='flex flex-col col-span-10'>
-                            <span class="text-lg font-semibold">Set your availability and price</span>
-                            <span class="text-sm text-muted">Choose the dates you'd like to rent your property and establish a competitive nightly rate.</span>
-                        </div>
+                    <div class="tablet-sm:!col-span-5 tablet:!col-span-full laptop:!col-span-5">
+                        <x-forms.text class="capitalize" wiremodel="address.city" label="City" />
+                    </div>
+                    <div class="tablet-sm:!col-span-5 tablet:!col-span-full laptop:!col-span-5">
+                        <x-forms.select wiremodel="address.state" label="State" :options="\App\Helpers\GeographyHelper::getStates()" placeholder="Select a state..." />
+                    </div>
+                    <div class="tablet-sm:!col-span-2 tablet:!col-span-full laptop:!col-span-2">
+                        <x-forms.text class="zip-code" type="tel" wiremodel="address.zip" label="Zip" placeholder="Zip" />
                     </div>
                 </div>
                 <div class="flex justify-between">
-                    <button class="text-muted button button-link" type="button" wire:click="end">Save & Exit</button>
-                    <button class="button button-wide" type="submit">Get Started</button>
+                    <button class="button button-link text-muted-darker" type="button" wire:click="end">Save & Exit</button>
+                    <button class="button button-wide" type="submit">Continue</button>
                 </div>
             </form>
             <div class="text-xs italic text-center text-muted">
