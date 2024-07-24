@@ -21,7 +21,7 @@
         "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "v1.23.1",
         "laravel/pint": "v1.15.3",
-        "laravel/sail": "v1.29.1",
+        "laravel/sail": "v1.31.0",
         "laravel/telescope": "v5.0.4",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "v8.1.1",
