@@ -9,9 +9,11 @@
             <form class="tablet-sm:max-w-lg card card-padding card-flex !space-y-10" wire:submit.prevent="start">
 
                 <div class="form-grid">
-                    <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-6">
-                        <x-forms.text class="capitalize" wiremodel="name" label="Property Name" />
+                    <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-9">
+                        <x-forms.text class="capitalize" wiremodel="name" label="Property Name" desc="Introduce your property to guests with a memorable name." />
                     </div>
+                    <div></div>
+                    <div></div>
                     <div class="tablet-sm:!col-span-8 tablet:!col-span-full laptop:!col-span-8">
                         <x-forms.text class="capitalize" wiremodel="address.street" label="Street Address" />
                     </div>

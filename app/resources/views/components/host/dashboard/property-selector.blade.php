@@ -1,6 +1,6 @@
 @persist('property-selector')
     <div wire:init="load">
-        <div class="relative mx-3" x-data="{ selectorOpen: true }" x-on:click.away="selectorOpen = false">
+        <div class="relative mx-3" x-data="{ selectorOpen: false }" x-on:click.away="selectorOpen = false">
             @if ($property)
                 <div>
                     <button class="flex items-center w-full p-2 space-x-3 rounded-lg hover:bg-gray-700" x-on:click="selectorOpen = !selectorOpen" :class="selectorOpen && '!bg-gray-700'">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             @else
-                <div class="flex items-center p-2 mx-3 space-x-3 cursor-wait animate-pulse">
+                <div class="flex items-center p-2 space-x-3 cursor-wait animate-pulse">
                     <div class="flex-shrink-0 bg-gray-700 rounded-full w-9 h-9"></div>
                     <div class="flex-col w-full space-y-1 h-[31px] mt-[4px]">
                         <div class="w-2/3 h-4 bg-gray-700 rounded-full"></div>
