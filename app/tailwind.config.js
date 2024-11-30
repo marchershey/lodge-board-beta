@@ -4,8 +4,13 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 export default {
-    darkMode: "class",
-    content: ["./resources/**/*.blade.php", "./app/**/*.php"],
+    darkMode: "selector",
+    content: [
+        "./resources/**/*.blade.php",
+        "./app/**/*.php",
+        "./vendor/livewire/flux-pro/stubs/**/*.blade.php",
+        "./vendor/livewire/flux/stubs/**/*.blade.php",
+    ],
     safelist: ["alert-type-info", "alert-type-error"],
     theme: {
         extend: {
@@ -40,8 +45,11 @@ export default {
                 desktop: "1280px", // => @media (min-width: 1280px) { ... }
             },
             fontFamily: {
-                default: ["Inter Tight", ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', 'sans-serif'],
             },
+            // fontFamily: {
+            //     default: ["Inter Tight", ...defaultTheme.fontFamily.sans],
+            // },
             fontWeight: {
                 thin: "100",
                 extralight: "200",
@@ -80,7 +88,7 @@ export default {
         // aspectRatio: false,
     },
     plugins: [
-        require("@tailwindcss/forms"),
+        // require("@tailwindcss/forms"), // DISABLED DUE TO FLUX
         require("@tailwindcss/typography"),
         require("tailwindcss-animate"),
         require("@tailwindcss/aspect-ratio"),

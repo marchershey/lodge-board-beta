@@ -8,7 +8,7 @@ use Livewire\Component;
 class Welcome extends Component
 {
 
-    #[Layout('layouts.minimal', ['title' => 'Setup'])]
+    #[Layout('layouts.minimal', ['title' => 'Setup', 'header' => false])]
     public function render()
     {
         return view('pages.setup.welcome');

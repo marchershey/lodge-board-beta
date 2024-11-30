@@ -8,7 +8,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
-#[Layout('layouts.minimal', ['title' => 'Login'])]
+#[Layout('layouts.minimal', ['title' => 'Login', 'header' => false])]
 class Login extends Component
 {
     /**
@@ -43,10 +43,10 @@ class Login extends Component
         'email.string' => 'The email address you entered is invalid.',
         // 'email.email' => 'The email address you entered is invalid.',
         'email.email' => [
-            'rfc' => 'The email address is not valid according to the RFC 5322 standard.',
-            'strict' => 'The email address is not valid according to the strict RFC 5322 standard.',
-            'dns' => 'The email address is not associated with a valid domain.',
-            'spoof' => 'The email address is a spoofed email address.',
+            'rfc' => 'Your email address is not valid. (RFC)',
+            'strict' => 'Your email address is not valid. (SRFC)',
+            'dns' => 'Your email address is not associated with a valid domain.',
+            'spoof' => 'Your email address is a spoofed email address.',
         ],
         'email.max' => 'Your email address is too long. Max 250 characters.',
         // 'email.exists' => 'We couldn\'t find an account with this email address.',

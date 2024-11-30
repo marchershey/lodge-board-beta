@@ -10,7 +10,7 @@ use Livewire\Component;
 use Throwable;
 use Usernotnull\Toast\Concerns\WireToast;
 
-#[Layout('layouts.minimal', ['title' => 'Register'])]
+#[Layout('layouts.minimal', ['title' => 'Register', 'header' => false])]
 class Register extends Component
 {
     /**
@@ -151,8 +151,9 @@ class Register extends Component
      * @throws Throwable
      * @return mixed
      */
-    function submit(): mixed
+    function submit(): void
     {
+
         // Validate user data
         $this->validate();
 
@@ -172,6 +173,6 @@ class Register extends Component
         toast()->success('Your account has been successfully created.', 'Account Created')->pushOnNextPage();
 
         // Redirect to dashboard
-        return $this->redirect('/dashboard', navigate: true);
+        $this->redirect('/dashboard', navigate: true);
     }
 }

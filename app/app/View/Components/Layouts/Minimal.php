@@ -8,14 +8,16 @@ use Illuminate\View\Component;
 
 class Minimal extends Component
 {
-    public $title;
+    public string $title;
+    public bool $header;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $title)
+    public function __construct(string $title, bool $header = true)
     {
         $this->title = $title;
+        $this->header = $header;
     }
 
     /**

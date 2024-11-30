@@ -13,6 +13,8 @@
         "laravel/framework": "v11.34.2",
         "laravel/sanctum": "v4.0.5",
         "laravel/tinker": "v2.10.0",
+        "livewire/flux": "^1.0",
+        "livewire/flux-pro": "^1.0",
         "livewire/livewire": "v3.5.15",
         "spatie/laravel-settings": "3.4.0",
         "usernotnull/tall-toasts": "v2.1.0"
@@ -75,5 +77,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "flux-pro": {
+            "type": "composer",
+            "url": "https://composer.fluxui.dev"
+        }
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Pages\Setup;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
@@ -22,7 +23,7 @@ class HostAccount extends Component
     protected $rules = [
         'first_name' => ['required', 'string', 'max:250', 'alpha'],
         'last_name' => ['required', 'string', 'max:250'],
-        'email' => ['required', 'string', 'email', 'max:250', 'unique:users'],
+        'email' => ['required', 'string', 'email', 'max:250'],
         'password' => ['required', 'string', 'min:8'],
     ];
 
@@ -65,7 +66,7 @@ class HostAccount extends Component
      *
      * @return View
      */
-    #[Layout('layouts.minimal', ['title' => 'Setup'])]
+    #[Layout('layouts.minimal', ['title' => 'Setup', 'header' => false])]
     function render(): View
     {
         return view('pages.setup.host-account');
@@ -73,7 +74,7 @@ class HostAccount extends Component
 
     function load(): void
     {
-        // $this->loadDevData();
+        $this->loadDevData();
     }
 
     /**
@@ -86,7 +87,7 @@ class HostAccount extends Component
         if (app()->isLocal()) {
             $this->first_name = "John";
             $this->last_name = "Smith";
-            $this->email = "jsmith2000@email.com";
+            $this->email = "host@email.com";
             $this->password = "password";
             // $this->password_confirmation = "password";
             devlog('HostAccount Test Data filled');
@@ -114,9 +115,18 @@ class HostAccount extends Component
         // Validate user data
         $this->validate();
 
+
+
         attempt(function () {
-            // Create user
-            $user = User::create($this->only(['first_name', 'last_name', 'email', 'password']));
+
+
+            // Create or update user
+            // This is in case the user hits the back button, or doesn't finish the setup
+            // and comes back. User #1 should be the host, and this helps keep it that way.
+            $user = User::updateOrCreate(
+                ['email' => $this->email],
+                $this->only(['first_name', 'last_name', 'password'])
+            );
 
             // TODO
             // Insert user settings
@@ -125,6 +135,35 @@ class HostAccount extends Component
             // Authenticate user
             Auth::login($user);
         });
+
+
+
+        // Check if email already exists
+        // if (DB::table('users')->where('email', $this->email)->exists()) {
+        //     // Email already exists in the database for some reason
+        //     if (!Auth::attempt([
+        //         'email' => $this->email,
+        //         'password' => $this->password,
+        //     ])) {
+        //         $this->addError('email', 'An account with this email address already exists, which you gave the incorrect password to.');
+        //         $this->addError('password', 'The password is incorrect for the existing email.');
+        //         return;
+        //     }
+        // } else {
+        //     // Email does exist
+        //     // Create user
+        //     $user = User::create($this->only(['first_name', 'last_name', 'email', 'password']));
+
+        //     // TODO
+        //     // Insert user settings
+        //     // Dispatch NewUserCreated/NewHostCreated Job
+
+        //     // Authenticate user
+        //     Auth::login($user);
+        // }
+
+
+
 
         $this->redirect('/setup/basics', navigate: true);
     }

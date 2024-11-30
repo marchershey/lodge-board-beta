@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"); */
 
 @tailwind base;
 @tailwind components;
@@ -175,13 +175,13 @@
 
     /* Form Elements */
     .form-label {
-        @apply block cursor-pointer pb-2 text-base font-medium leading-5 tracking-wider text-gray-800;
+        @apply block cursor-pointer pb-2 text-base font-medium leading-5 text-gray-800;
     }
     .form-label-error {
         @apply !text-red-500;
     }
     .form-desc {
-        @apply mt-2 block text-xs leading-5 tracking-wider text-muted;
+        @apply mt-2 block text-xs leading-5 text-muted;
     }
     .form-desc-error {
         @apply !text-red-500;

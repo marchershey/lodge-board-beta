@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    <link href="https://fonts.gstatic.com" rel="preconnect">
+    @fluxStyles
+    {{-- <link href="https://fonts.gstatic.com" rel="preconnect"> --}}
+    <link href="https://fonts.bunny.net" rel="preconnect">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800,900&display=swap" rel="stylesheet" />
 
     <title>{{ $title . ' - ' . config('app.name') }}</title>
 </head>
 
-<body class="flex h-full flex-col overflow-hidden overscroll-none bg-gray-800 font-default tracking-wide text-gray-600 antialiased transition-all duration-500">
+<body class="font-default flex h-full flex-col overflow-hidden overscroll-none bg-gray-800 text-gray-600 antialiased transition-all duration-500">
     <!-- Toasts -->
     @livewire('toasts')
 
@@ -24,6 +27,7 @@
 
     <!-- Livewire Script Config -->
     @livewireScriptConfig
+    @fluxScripts
 
     <!-- Custom Scripts -->
     @stack('scripts')

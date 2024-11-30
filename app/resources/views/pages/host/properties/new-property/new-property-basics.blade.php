@@ -1,12 +1,12 @@
-<div class="max-w-5xl mx-auto tablet-sm:page-padding">
+<div class="tablet-sm:page-padding mx-auto max-w-5xl">
     <div class="flex flex-col items-center space-y-5 tablet-sm:flex-row tablet-sm:space-x-6">
-        <div class="flex flex-col flex-1 max-w-sm text-center tablet-sm:max-w-full page-padding tablet-sm:text-left">
+        <div class="page-padding flex max-w-sm flex-1 flex-col text-center tablet-sm:max-w-full tablet-sm:text-left">
             <span class="text-base font-bold uppercase text-primary">Step 1</span>
             <h1 class="text-3xl font-semibold text-gray-800">The Basics</h1>
             <p class="text-sm text-muted tablet:text-base">Share basic details like name, location, guest capacity, and what makes your property special.</p>
         </div>
-        <div class="flex flex-col w-full space-y-3 tablet-sm:w-auto">
-            <form class="tablet-sm:max-w-lg card card-padding card-flex !space-y-10" wire:submit.prevent="save">
+        <div class="flex w-full flex-col space-y-3 tablet-sm:w-auto">
+            <form class="card card-padding card-flex !space-y-10 tablet-sm:max-w-lg" wire:submit.prevent="save">
 
                 <div class="form-grid">
                     <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-9">
@@ -32,7 +32,7 @@
                     <button class="button button-wide" type="submit">Continue</button>
                 </div>
             </form>
-            <div class="text-xs italic text-center text-muted">
+            <div class="text-center text-xs italic text-muted">
                 At any time you can hit the "Save and Exit" button to come back and finish later.
             </div>
         </div>

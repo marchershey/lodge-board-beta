@@ -51,7 +51,7 @@ class Basics extends Component
     ];
 
 
-    #[Layout('layouts.minimal', ['title' => 'Setup'])]
+    #[Layout('layouts.minimal', ['title' => 'Setup', 'header' => false])]
     public function render(): View
     {
         return view('pages.setup.basics');
