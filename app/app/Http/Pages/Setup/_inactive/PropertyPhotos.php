@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Pages\Setup;
+namespace App\Http\Pages\Setup\_inactive;
 
 use App\Models\Property;
 use App\Models\PropertyPhoto;
@@ -107,7 +107,7 @@ class PropertyPhotos extends Component
      */
     function updatePhotoOrder(array $data): void
     {
-        $this->photos = array_map(fn ($item) => $this->photos[$item['value']], $data);
+        $this->photos = array_map(fn($item) => $this->photos[$item['value']], $data);
     }
 
     /**

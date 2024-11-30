@@ -6,26 +6,26 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@alpinejs/focus": "3.14.1",
+        "@alpinejs/focus": "3.14.5",
         "@nextapps-be/livewire-sortablejs": "0.4.1",
         "@tailwindcss/aspect-ratio": "0.4.2",
-        "@tailwindcss/forms": "0.5.7",
-        "@tailwindcss/typography": "0.5.13",
-        "autoprefixer": "10.4.19",
-        "axios": "1.7.2",
-        "laravel-vite-plugin": "1.0.5",
+        "@tailwindcss/forms": "0.5.9",
+        "@tailwindcss/typography": "0.5.15",
+        "autoprefixer": "10.4.20",
+        "axios": "1.7.8",
+        "laravel-vite-plugin": "1.0.6",
         "livewire-sortable": "1.0.0",
-        "postcss": "8.4.39",
-        "prettier": "3.3.3",
-        "prettier-plugin-tailwindcss": "0.6.5",
-        "tailwindcss": "3.4.6",
+        "postcss": "8.4.49",
+        "prettier": "3.4.1",
+        "prettier-plugin-tailwindcss": "0.6.9",
+        "tailwindcss": "3.4.15",
         "tailwindcss-animate": "1.0.7",
-        "vite": "5.3.4"
+        "vite": "6.0.1"
     },
     "dependencies": {
-        "@alpinejs/collapse": "3.14.1",
-        "@alpinejs/persist": "^3.14.1",
-        "@alpinejs/ui": "3.14.1-beta.0",
+        "@alpinejs/collapse": "3.14.5",
+        "@alpinejs/persist": "^3.14.5",
+        "@alpinejs/ui": "3.14.5",
         "@shopify/draggable": "1.1.3",
         "cleave.js": "^1.6.0"
     }

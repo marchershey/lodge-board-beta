@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Pages\Setup;
+namespace App\Http\Pages\Setup\_inactive;
 
 use App\Models\Property;
 use Livewire\Attributes\Layout;
