@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full scroll-smooth overscroll-none" lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="themeMode">
+<html class="h-full overscroll-none scroll-smooth" lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="themeMode">
 
 <head>
     <meta charset="utf-8">
@@ -11,9 +11,9 @@
     <title>{{ $title . ' - ' . config('app.name') }}</title>
 </head>
 
-<body class="flex flex-col h-full overflow-hidden antialiased tracking-wide text-gray-600 transition-all duration-500 bg-gray-800 overscroll-none font-default">
+<body class="flex h-full flex-col overflow-hidden overscroll-none bg-gray-800 font-default tracking-wide text-gray-600 antialiased transition-all duration-500">
     <!-- Toasts -->
-    <livewire:toasts />
+    @livewire('toasts')
 
     <!-- Main Content -->
     <div class="relative flex flex-auto overflow-hidden overscroll-none">
