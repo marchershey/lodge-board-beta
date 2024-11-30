@@ -6,25 +6,25 @@
             <p class="text-sm text-muted tablet:text-base">Share basic details like name, location, guest capacity, and what makes your property special.</p>
         </div>
         <div class="flex flex-col w-full space-y-3 tablet-sm:w-auto">
-            <form class="tablet-sm:max-w-lg card card-padding card-flex !space-y-10" wire:submit.prevent="start">
+            <form class="tablet-sm:max-w-lg card card-padding card-flex !space-y-10" wire:submit.prevent="save">
 
                 <div class="form-grid">
                     <div class="tablet-sm:!col-span-6 tablet:!col-span-full laptop:!col-span-9">
-                        <x-forms.text class="capitalize" wiremodel="name" label="Property Name" desc="Introduce your property to guests with a memorable name." />
+                        <x-forms.text class="capitalize" wiremodel="details.name" label="Property Name" desc="Introduce your property to guests with a memorable name." />
                     </div>
                     <div></div>
                     <div></div>
                     <div class="tablet-sm:!col-span-8 tablet:!col-span-full laptop:!col-span-8">
-                        <x-forms.text class="capitalize" wiremodel="address.street" label="Street Address" />
+                        <x-forms.text class="capitalize" wiremodel="details.address.street" label="Street Address" />
                     </div>
                     <div class="tablet-sm:!col-span-5 tablet:!col-span-full laptop:!col-span-5">
-                        <x-forms.text class="capitalize" wiremodel="address.city" label="City" />
+                        <x-forms.text class="capitalize" wiremodel="details.address.city" label="City" />
                     </div>
                     <div class="tablet-sm:!col-span-5 tablet:!col-span-full laptop:!col-span-5">
-                        <x-forms.select wiremodel="address.state" label="State" :options="\App\Helpers\GeographyHelper::getStates()" placeholder="Select a state..." />
+                        <x-forms.select wiremodel="details.address.state" label="State" :options="\App\Helpers\GeographyHelper::getStates()" placeholder="Select a state..." />
                     </div>
                     <div class="tablet-sm:!col-span-2 tablet:!col-span-full laptop:!col-span-2">
-                        <x-forms.text class="zip-code" type="tel" wiremodel="address.zip" label="Zip" placeholder="Zip" />
+                        <x-forms.text class="zip-code" type="tel" wiremodel="details.address.zip" label="Zip" placeholder="Zip" />
                     </div>
                 </div>
                 <div class="flex justify-between">

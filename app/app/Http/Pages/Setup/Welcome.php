@@ -16,6 +16,6 @@ class Welcome extends Component
 
     function continue()
     {
-        $this->redirect('/setup/host-account', navigate: true);
+        $this->redirect(route('setup.host-account'), navigate: true);
     }
 }

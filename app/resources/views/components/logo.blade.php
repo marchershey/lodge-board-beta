@@ -1,8 +1,7 @@
 @php
     $lodgeTextColor = $bgThemeSwitch ? ($bgDark ? 'text-white dark:text-gray-700' : 'text-gray-700 dark:text-white') : ($bgDark ? 'text-white' : 'text-gray-700');
 @endphp
-
-<div class="flex items-center justify-center w-full space-x-2">
+<div class="flex items-center justify-center w-full space-x-2 whitespace-nowrap">
     @if (!$hideIcon)
         <div class="p-1 text-white rounded-full bg-primary">
             <svg class="{{ $iconSize }} ml-0.5" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

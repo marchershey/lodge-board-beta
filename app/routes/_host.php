@@ -17,7 +17,6 @@ Route::name('host')->middleware(['auth', 'setup.completed'])->prefix('/host')->g
         Route::name('.new-property')->prefix('/new')->group(function () {
             Route::name('.overview')->get('/overview', App\Http\Pages\Host\Properties\NewProperty\NewPropertyOverview::class);
             Route::name('.basics')->get('/{property}/the-basics', App\Http\Pages\Host\Properties\NewProperty\NewPropertyBasics::class);
-
             Route::redirect('/', route('host.properties.new-property.overview'));
         });
 

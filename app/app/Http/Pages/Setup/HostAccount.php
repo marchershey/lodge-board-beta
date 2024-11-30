@@ -126,8 +126,6 @@ class HostAccount extends Component
             Auth::login($user);
         });
 
-        toast()->success('Your account was successfully created.', 'Welcome ' . ucwords($this->first_name) . '!')->push();
-
         $this->redirect('/setup/basics', navigate: true);
     }
 }

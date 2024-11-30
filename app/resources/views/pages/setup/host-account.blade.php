@@ -20,13 +20,15 @@
         </button>
         <div x-show="open" x-collapse x-cloak>
             <div class="mt-4 alert alert-general">
-                <span class="font-bold text-red-500">Host accounts are Admin accounts.</span>
-                They are granted full administrative access. They have the ability to modify
-                site-wide settings, manage staff & guest accounts (which includes billing information),
-                and make changes to reservations/properties, etc.
-                <span class="font-bold">Host Accounts should be reserved for team members requiring full access.</span>
+                <div class="mb-1 text-center">
+                    <span class="font-bold text-red-500">Host accounts are Admin accounts!</span>
+                </div>
+                <span class="host">Host</span> accounts are granted full access. They have the ability to modify
+                site-wide settings, manage staff & guest accounts (which includes billing information), and make changes to
+                reservations/properties, etc. <span class="font-bold">Host Accounts should be reserved for team members requiring full access.</span>
                 Any team members that only need certain persmissions should be given <span class="staff">Staff</span>
-                accounts, as they can be given specific permissions.
+                accounts, as they can be given specific permissions. You will have the ability to set up
+                <span class="staff">Staff</span> accounts later.
             </div>
         </div>
     </div>

@@ -17,7 +17,6 @@ class NewPropertyOverview extends Component
     public function start()
     {
         $property = Property::startNewProperty();
-
         $this->redirect(route('host.properties.new-property.basics', $property), navigate: true);
     }
 }
