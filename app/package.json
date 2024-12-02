@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "@alpinejs/collapse": "3.14.5",
+        "@alpinejs/mask": "^3.14.5",
         "@alpinejs/persist": "^3.14.5",
         "@alpinejs/ui": "3.14.5",
         "@shopify/draggable": "1.1.3",

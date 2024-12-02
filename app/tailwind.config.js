@@ -44,6 +44,9 @@ export default {
                 laptop: "1024px", // => @media (min-width: 1024px) { ... }
                 desktop: "1280px", // => @media (min-width: 1280px) { ... }
             },
+            width: {
+                '128': '32rem',
+            },
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],
             },

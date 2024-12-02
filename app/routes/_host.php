@@ -12,13 +12,14 @@ Route::name('host')->middleware(['auth', 'setup.completed'])->prefix('/host')->g
     // Host Properties
     Route::name('.properties')->prefix('/properties')->group(function () {
         Route::name('.index')->get('/', App\Http\Pages\Host\Properties\PropertiesIndex::class);
+        Route::name('.new')->get('/new', App\Http\Pages\Host\Properties\NewProperty::class);
 
         // New Property
-        Route::name('.new-property')->prefix('/new')->group(function () {
-            Route::name('.overview')->get('/overview', App\Http\Pages\Host\Properties\NewProperty\NewPropertyOverview::class);
-            Route::name('.basics')->get('/{property}/the-basics', App\Http\Pages\Host\Properties\NewProperty\NewPropertyBasics::class);
-            Route::redirect('/', route('host.properties.new-property.overview'));
-        });
+        // Route::name('.new-property')->prefix('/new')->group(function () {
+        //     Route::name('.overview')->get('/overview', App\Http\Pages\Host\Properties\NewProperty\NewPropertyOverview::class);
+        //     Route::name('.basics')->get('/{property}/the-basics', App\Http\Pages\Host\Properties\NewProperty\NewPropertyBasics::class);
+        //     Route::redirect('/', route('host.properties.new-property.overview'));
+        // });
 
 
 

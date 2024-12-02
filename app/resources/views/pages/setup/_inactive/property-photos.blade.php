@@ -8,19 +8,19 @@
     @if (!$photos)
         <label class="button-full button" for="photos-input">
             <span>Select Photos...</span>
-            <input class="hidden photos-input" id="photos-input" type="file" x-on:change="photosCount = $event.target.files.length" wire:model="temp_photos" accept="image/jpg, image/jpeg, image/png, image/webp" multiple>
+            <input class="photos-input hidden" id="photos-input" type="file" x-on:change="photosCount = $event.target.files.length" wire:model="temp_photos" accept="image/jpg, image/jpeg, image/png, image/webp" multiple>
         </label>
     @endif
 
     @if ($photos)
-        <div class="relative grid grid-cols-2 gap-4 select-none" wire:sortable="updatePhotoOrder" wire:sortable.options="{ animation: 150, dragoverBubble: true }" wire:loading.delay.class="pointer-events-none" wire:target="updatePhotoOrder">
+        <div class="relative grid select-none grid-cols-2 gap-4" wire:sortable="updatePhotoOrder" wire:sortable.options="{ animation: 150, dragoverBubble: true }" wire:loading.delay.class="pointer-events-none" wire:target="updatePhotoOrder">
             @foreach ($photos as $photo_key => $photo)
-                <div class="relative first:col-span-full group" wire:loading.remove wire:target="deletePhoto({{ $photo_key }})" wire:key="photo-{{ $photo_key }}" wire:sortable.item="{{ $photo_key }}">
-                    <div class="block w-full h-full overflow-hidden bg-gray-100 rounded-lg shadow-lg cursor-grab aspect-w-10 aspect-h-7">
+                <div class="group relative first:col-span-full" wire:loading.remove wire:target="deletePhoto({{ $photo_key }})" wire:key="photo-{{ $photo_key }}" wire:sortable.item="{{ $photo_key }}">
+                    <div class="aspect-h-7 aspect-w-10 block h-full w-full cursor-grab overflow-hidden rounded-lg bg-gray-100 shadow-lg">
                         <img class="object-cover" src="{{ $photo->temporaryUrl() }}" alt="" wire:sortable.handle>
                     </div>
-                    <button class="absolute cursor-pointer group-hover:visible invisible p-1 bg-white rounded-full -top-1.5 -right-2" type="button" wire:confirm="Are you sure you want to delete this post?" wire:click="deletePhoto({{ $photo_key }})">
-                        <svg class="w-4 h-4 text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <button class="invisible absolute -right-2 -top-1.5 cursor-pointer rounded-full bg-white p-1 group-hover:visible" type="button" wire:confirm="Are you sure you want to delete this post?" wire:click="deletePhoto({{ $photo_key }})">
+                        <svg class="h-4 w-4 text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M18 6l-12 12" />
                             <path d="M6 6l12 12" />
@@ -30,12 +30,12 @@
             @endforeach
 
             <template x-for="i in photosCount">
-                <div class="w-full h-full bg-gray-100 border rounded-lg aspect-w-10 aspect-h-7 animate-pulse" x-show="uploading"></div>
+                <div class="aspect-h-7 aspect-w-10 h-full w-full animate-pulse rounded-lg border bg-gray-100" x-show="uploading"></div>
             </template>
 
-            <label class="block w-full h-full duration-300 transform border rounded-lg cursor-pointer bg-gray-200/50 aspect-w-10 aspect-h-7 group text-muted hover:shadow-lg" for="photos-input">
-                <div class="w-full h-full space-y-1 flex-col-center">
-                    <svg class="w-12 h-12 group-hover:text-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <label class="group aspect-h-7 aspect-w-10 block h-full w-full transform cursor-pointer rounded-lg border bg-gray-200/50 text-muted duration-300 hover:shadow-lg" for="photos-input">
+                <div class="flex-col-center h-full w-full space-y-1">
+                    <svg class="h-12 w-12 group-hover:text-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M15 8h.01" />
                         <path d="M12.5 21h-6.5a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6.5" />
@@ -44,15 +44,15 @@
                         <path d="M19 22v-6" />
                         <path d="M22 19l-3 -3l-3 3" />
                     </svg>
-                    <span class="text-xs group-hover:text-primary-darker">Add more photos</span>
+                    <span class="group-hover:text-primary-darker text-xs">Add more photos</span>
                 </div>
-                <input class="hidden photos-input" id="photos-input" type="file" x-on:change="photosCount = $event.target.files.length" wire:model="temp_photos" accept="image/jpg, image/jpeg, image/png, image/webp" multiple>
+                <input class="photos-input hidden" id="photos-input" type="file" x-on:change="photosCount = $event.target.files.length" wire:model="temp_photos" accept="image/jpg, image/jpeg, image/png, image/webp" multiple>
 
             </label>
         </div>
 
-        <div class="p-4 bg-gray-100 border rounded-lg">
-            <p class="text-base italic font-bold text-primary">Note:</p>
+        <div class="rounded-lg border bg-gray-100 p-4">
+            <p class="text-base font-bold italic text-primary">Note:</p>
             <p class="text-sm leading-4"><span class="font-medium">The first photo is your header photo.</span> You can also reorder the photos by dragging them in your preferred order.</p>
         </div>
     @endif

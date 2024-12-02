@@ -26,7 +26,7 @@ class ShowHostBannerIfNoProperties
                     'title' => 'You haven\'t added any properties yet!',
                     'description' => 'You can tap this banner to add one.',
                     'type' => 'warning',
-                    'link' => route('host.properties.new-property'),
+                    'link' => route('host.properties.new'),
                     'location' => 'host',
                     'hideCloseButton' => true,
                 ]);

@@ -34,29 +34,34 @@ function formatMoney(element) {
         rawValueTrimPrefix: true,
     });
 }
-document.querySelectorAll(".phone").forEach((element) => {
-    formatPhone(element);
-});
-document.querySelectorAll(".date").forEach((element) => {
-    formatDate(element);
-});
-document.querySelectorAll(".money").forEach((element) => {
+
+document.querySelectorAll('[money="money"]').forEach((element) => {
     formatMoney(element);
 });
-document.querySelectorAll(".zip-code").forEach((element) => {
-    formatZipCode(element);
-});
-window.addEventListener("maskAllElements", (event) => {
-    document.querySelectorAll(".phone").forEach((element) => {
-        formatPhone(element);
-    });
-    document.querySelectorAll(".date").forEach((element) => {
-        formatDate(element);
-    });
-    document.querySelectorAll(".money").forEach((element) => {
-        formatMoney(element);
-    });
-    document.querySelectorAll(".zip-code").forEach((element) => {
-        formatZipCode(element);
-    });
-});
+
+// document.querySelectorAll(".phone").forEach((element) => {
+//     formatPhone(element);
+// });
+// document.querySelectorAll(".date").forEach((element) => {
+//     formatDate(element);
+// });
+// document.querySelectorAll(".money").forEach((element) => {
+//     formatMoney(element);
+// });
+// document.querySelectorAll(".zip-code").forEach((element) => {
+//     formatZipCode(element);
+// });
+// window.addEventListener("maskAllElements", (event) => {
+//     document.querySelectorAll(".phone").forEach((element) => {
+//         formatPhone(element);
+//     });
+//     document.querySelectorAll(".date").forEach((element) => {
+//         formatDate(element);
+//     });
+//     document.querySelectorAll(".money").forEach((element) => {
+//         formatMoney(element);
+//     });
+//     document.querySelectorAll(".zip-code").forEach((element) => {
+//         formatZipCode(element);
+//     });
+// });

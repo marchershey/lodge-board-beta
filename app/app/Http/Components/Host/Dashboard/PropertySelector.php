@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class PropertySelector extends Component
 {
-    public bool $loaded = false;
+    public bool $loading = true;
     public $properties;
     public $property; // Active property
 
@@ -19,10 +19,13 @@ class PropertySelector extends Component
 
     function load(): void
     {
-        // Load Active Property
-        $this->property = ['test' => 'test'];
-
         // Load All Properties
-        $this->properties = Property::all();
+        $this->properties = Property::all()->toArray();
+
+        // Load Active Property
+        $this->property = [];
+
+        // Disable Lo
+        $this->loading = false;
     }
 }

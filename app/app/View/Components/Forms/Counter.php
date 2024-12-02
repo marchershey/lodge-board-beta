@@ -9,28 +9,29 @@ use Illuminate\View\Component;
 class Counter extends Component
 {
 
-    public $wiremodel;
-    public $wiretarget;
-    public $label;
-    public $desc;
-    public $step;
-    public $min;
-    public $max;
-    public $required;
+    // public $wiremodel;
+    // public $wiretarget;
+    // public $label;
+    // public $desc;
+    // public $step;
+    // public $min;
+    // public $max;
+    // public $required;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $wiretarget = null, string $label = null, string $desc = "", float $step = 1, int $min = 0, int $max = 99, bool $required = false)
+    // public function __construct(string $wiremodel, string $wiretarget = null, string $label = null, string $desc = "", float $step = 1, int $min = 0, int $max = 99, bool $required = false)
+    public function __construct()
     {
-        $this->wiremodel = $wiremodel;
-        $this->wiretarget = $wiretarget;
-        $this->label = $label;
-        $this->desc = $desc;
-        $this->step = $step;
-        $this->min = $min;
-        $this->max = $max;
-        $this->required = $required;
+        // $this->wiremodel = $wiremodel;
+        // $this->wiretarget = $wiretarget;
+        // $this->label = $label;
+        // $this->desc = $desc;
+        // $this->step = $step;
+        // $this->min = $min;
+        // $this->max = $max;
+        // $this->required = $required;
     }
 
     /**

@@ -89,8 +89,8 @@
     .page-desc {
         @apply mt-2 text-muted;
     }
-    .page-actions .button {
-        @apply button-sm -my-1;
+    .page-actions > a[data-flux-button] {
+        @apply -my-4;
     }
     .page-content {
         @apply tablet-sm:page-x-padding flex flex-col space-y-10;
@@ -423,5 +423,14 @@
     }
     .flex-col-center {
         @apply flex flex-col items-center justify-center;
+    }
+    .capitalize input {
+        text-transform: capitalize;
+    }
+
+    /* Label space */
+    /* This is for buttons that need to be next to inputs, but the input have labels */
+    .label-space {
+        @apply !mt-[31px];
     }
 }

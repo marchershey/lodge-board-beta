@@ -10,7 +10,9 @@ import {
 import AlpineUI from "@alpinejs/ui";
 import AlpineFocus from "@alpinejs/focus";
 import AlpineCollapse from "@alpinejs/collapse";
-import AlpinePersist from "@alpinejs/persist";
+import mask from '@alpinejs/mask'
+
+// import AlpinePersist from "@alpinejs/persist";
 
 // Tall Toasts
 import ToastComponent from "../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts";
@@ -19,6 +21,7 @@ import ToastComponent from "../../vendor/usernotnull/tall-toasts/resources/js/ta
 Alpine.plugin(AlpineUI);
 Alpine.plugin(AlpineFocus);
 Alpine.plugin(AlpineCollapse);
+Alpine.plugin(mask)
 // Alpine.plugin(AlpinePersist);
 Alpine.plugin(ToastComponent);
 

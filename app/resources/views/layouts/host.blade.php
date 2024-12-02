@@ -83,7 +83,9 @@
             <div class="flex w-80 flex-col space-y-3 bg-gray-800 pt-1">
 
                 {{-- Property Selector --}}
-                @livewire('components.host.dashboard.property-selector')
+                <div>
+                    @livewire('components.host.dashboard.property-selector')
+                </div>
 
                 {{-- Navigation --}}
                 <nav class="flex flex-1 flex-col px-3">
@@ -152,7 +154,7 @@
                 </div>
 
                 {{-- Content Container --}}
-                <div class="page-container">
+                <div class="page-container flex">
                     <div class="page-header">
                         <div class="page-x-padding flex items-center justify-between">
                             <h1 class="page-title">{{ $pageTitle }}</h1>
@@ -162,7 +164,7 @@
                         </div>
                     </div>
 
-                    <div class="relative">
+                    <div class="relative flex-1">
                         {{ $slot }}
                     </div>
                 </div>

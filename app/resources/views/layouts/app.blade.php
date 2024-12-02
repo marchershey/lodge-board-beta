@@ -17,6 +17,9 @@
 <body class="font-default flex h-full flex-col overflow-hidden overscroll-none bg-gray-800 text-gray-600 antialiased transition-all duration-500">
     <!-- Toasts -->
     @livewire('toasts')
+    @persist('toast')
+        <flux:toast />
+    @endpersist
 
     <!-- Main Content -->
     <div class="relative flex flex-auto overflow-hidden overscroll-none">

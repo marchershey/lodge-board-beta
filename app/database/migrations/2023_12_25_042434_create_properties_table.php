@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id()->from(1000);
+            // Basics
             $table->string('name')->nullable();
-            $table->string('address_street')->nullable();
+            $table->string('address_street_1')->nullable();
+            $table->string('address_street_2')->nullable();
             $table->string('address_city')->nullable();
             $table->string('address_state')->nullable();
             $table->integer('address_zip')->nullable();
+            $table->string('address_country')->nullable();
+
+            // Listing
             $table->string('property_headline')->nullable();
             $table->text('property_description')->nullable();
             $table->integer('guest_count')->nullable();
