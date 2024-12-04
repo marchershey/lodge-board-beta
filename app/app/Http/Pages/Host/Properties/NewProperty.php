@@ -59,8 +59,8 @@ class NewProperty extends Component
             'property.photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6000'],
             'temp_photos' => [],
             'temp_photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6000'],
-            // 'property.options' => [''],
-            'property.options.visibility' => [''],
+            'property.options.visibility' => ['required'],
+            'property.options.'
         ];
     }
 

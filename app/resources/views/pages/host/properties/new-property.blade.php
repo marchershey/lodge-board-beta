@@ -41,7 +41,7 @@
                     <flux:fieldset>
                         <flux:input class="max-w-sm capitalize" wire:model="property.listing.headline" label="Listing Headline" placeholder="An amazing summer getaway!" />
                         <flux:editor wire:model.live.debounce="property.listing.description" toolbar="heading | bold italic underline strike | bullet ordered blockquote | link | align ~ undo redo" label="Listing Description" />
-                        <div class="text-right text-xs text-muted">
+                        <div class="text-xs text-right text-muted">
                             @if ($property['listing']['description'])
                                 <span :class="{ 'text-yellow-500': $wire.property.listing.description.length > 1900, '!text-green-600': $wire.property.listing.description.length == 2000, '!text-red-500': $wire.property.listing.description.length > 2000 }" x-text="$wire.property.listing.description.length">0</span> / 2,000
                             @else
@@ -98,9 +98,9 @@
                                 <flux:subheading>Select all of the amenities that your property includes</flux:subheading>
                             </div>
 
-                            <flux:checkbox.group class="columns-2 space-y-6" wire:model="pending_amenities">
+                            <flux:checkbox.group class="space-y-6 columns-2" wire:model="pending_amenities">
                                 @foreach ($amenities as $group)
-                                    <div class="break-inside-avoid space-y-2" wire:key="amenities-group-{{ $group->id }}">
+                                    <div class="space-y-2 break-inside-avoid" wire:key="amenities-group-{{ $group->id }}">
                                         <div>{{ $group->name }}</div>
                                         <div class="space-y-1">
                                             @foreach ($group->amenities as $amenity)
@@ -132,17 +132,17 @@
                         <flux:input class="col-span-6" wire:model="property.rates.tax" iconTrailing="percent" label="Tax Rate" mask="99" placeholder="00" />
                     </div>
                     <div class="col-span-full tablet-sm:col-span-3 tablet-sm:col-start-10 tablet:col-span-4 tablet:col-start-9">
-                        <flux:button class="tablet-sm:label-space w-full" wire:click="addFee" icon="plus">Add fee</flux:button>
+                        <flux:button class="w-full tablet-sm:label-space" wire:click="addFee" icon="plus">Add fee</flux:button>
                     </div>
 
                     @if (isset($property['rates']['fees']))
                         @foreach ($property['rates']['fees'] as $key => $fee)
                             <flux:separator class="col-span-full" />
-                            <div class="col-span-full grid grid-cols-12 gap-4" wire:key="fee-{{ $key }}" wire:target="removeFee({{ $key }})">
+                            <div class="grid grid-cols-12 gap-4 col-span-full" wire:key="fee-{{ $key }}" wire:target="removeFee({{ $key }})">
                                 <div class="col-span-6 tablet-sm:col-span-4 tablet:col-span-6 desktop:col-span-4">
                                     <flux:input wire:model="property.rates.fees.{{ $key }}.name" label="Fee name" placeholder="Cleaning fee" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
                                 </div>
-                                <div class="col-span-6 tablet-sm:col-span-3 tablet:col-span-6 desktop:col-span-3" wire:loading.class="pointer-events-none opacity-50" wire:target="property.rates.fees.{{ $key }}.type">
+                                <div class="col-span-6 tablet-sm:col-span-3 tablet:col-span-6 desktop:col-span-3" wire:loading.class="opacity-50 pointer-events-none" wire:target="property.rates.fees.{{ $key }}.type">
                                     @if ($property['rates']['fees'][$key]['type'] == 'fixed')
                                         <flux:input class="" wire:model="property.rates.fees.{{ $key }}.amount" label="Fee amount" badge="$" icon="dollar-sign" x-mask:dynamic="$money($input)" placeholder="00.00" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
                                     @else
@@ -155,13 +155,13 @@
                                         <flux:radio value="percent" icon="percent" tooltip="Percentage fee" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
                                     </flux:radio.group>
                                 </div>
-                                <div class="label-space col-span-6 flex items-center justify-end tablet-sm:col-span-1 tablet:col-span-6 desktop:col-span-1">
+                                <div class="flex items-center justify-end col-span-6 label-space tablet-sm:col-span-1 tablet:col-span-6 desktop:col-span-1">
                                     <flux:button variant="subtle" wire:target="removeFee({{ $key }})" wire:click="removeFee({{ $key }})">
                                         <flux:icon.x class="size-5" />
                                         <span class="tablet-sm:hidden tablet:block desktop:hidden">Remove fee</span>
                                     </flux:button>
                                     {{-- <flux:button class="label-space tablet-sm:hidden tablet:flex desktop:hidden" wire:target="removeFee({{ $key }})" wire:click="removeFee({{ $key }})" icon="trash-2" variant="filled">Delete fee</flux:button>
-                                <flux:button class="label-space hidden tablet-sm:flex tablet:hidden desktop:flex" wire:target="removeFee({{ $key }})" wire:click="removeFee({{ $key }})" icon="x" variant="subtle"></flux:button> --}}
+                                <flux:button class="hidden label-space tablet-sm:flex tablet:hidden desktop:flex" wire:target="removeFee({{ $key }})" wire:click="removeFee({{ $key }})" icon="x" variant="subtle"></flux:button> --}}
                                 </div>
                             </div>
                         @endforeach
@@ -195,7 +195,7 @@
                         </div>
 
                         <div class="flex flex-col space-y-2" x-show="uploading">
-                            <div class="mt-5 flex justify-between">
+                            <div class="flex justify-between mt-5">
                                 <div class="flex items-center space-x-2">
                                     <flux:icon.loading class="size-5 text-muted"></flux:icon.loading>
                                     <flux:heading>Uploading photos...</flux:heading>
@@ -213,30 +213,23 @@
                     </div>
 
                     @if (isset($property['photos']) && $property['photos'] != null)
-                        <div class="relative grid select-none grid-cols-4 gap-4" wire:sortable="updatePhotoOrder" wire:sortable.options="{ animation: 150, dragoverBubble: true }" wire:loading.delay.class="pointer-events-none" wire:target="updatePhotoOrder">
+                        <div class="relative grid grid-cols-4 gap-4 select-none" wire:sortable="updatePhotoOrder" wire:sortable.options="{ animation: 150, dragoverBubble: true }" wire:loading.delay.class="pointer-events-none" wire:target="updatePhotoOrder">
                             @foreach ($property['photos'] as $photo_key => $photo)
-                                <div class="group relative first:col-span-2 first:row-span-2" wire:loading.class="opacity-10" wire:target="deletePhoto({{ $photo_key }})" wire:key="photo-{{ $photo_key }}" wire:sortable.item="{{ $photo_key }}">
-                                    <div class="aspect-h-7 aspect-w-10 block h-full w-full cursor-grab overflow-hidden rounded-lg bg-gray-100 shadow-lg ring-1 ring-inset ring-black/20">
+                                <div class="relative rounded-lg group hover:scale-105 first:col-span-2 first:row-span-2 @if ($loop->index == 2) ring ring-red-500 ring-offset-2 @endif" wire:loading.remove wire:target="deletePhoto({{ $photo_key }})" wire:key="photo-{{ $photo_key }}" wire:sortable.item="{{ $photo_key }}">
+                                    <div class="block w-full h-full overflow-hidden bg-gray-100 rounded-lg shadow-lg aspect-h-7 aspect-w-10 cursor-grab ring-1 ring-inset ring-black/20">
                                         <img class="object-cover" src="{{ $photo->temporaryUrl() }}" alt="" wire:sortable.handle>
                                     </div>
                                     <button class="invisible absolute -right-2 -top-1.5 cursor-pointer rounded-full bg-white p-1 group-hover:visible" type="button" wire:confirm="Are you sure you want to delete this post?" wire:click="deletePhoto({{ $photo_key }})">
-                                        <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg class="w-5 h-5 text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M18 6l-12 12" />
                                             <path d="M6 6l12 12" />
                                         </svg>
                                     </button>
-                                    <div>
-                                        Error ({{ $photo_key }}):
-                                        @error('property.photos.' . $photo_key)
-                                            there was an error
-                                        @enderror
-                                        <flux:error name="property.photos.{{ $photo_key }}" />
-                                    </div>
                                 </div>
                             @endforeach
                         </div>
-                        <flux:accordion class="alert-general alert p-5" transition>
+                        <flux:accordion class="p-5 alert-general alert" transition>
                             <flux:accordion.item class="border-b-0">
                                 <flux:accordion.heading>
                                     <div class="flex space-x-3">
@@ -272,7 +265,7 @@
 
                     <flux:separator />
 
-                    <div class="flex w-full items-center justify-between">
+                    <div class="flex items-center justify-between w-full">
                         <flux:modal.trigger name="reset-modal">
                             <flux:button class="!text-red-500" variant="subtle">Reset</flux:button>
                         </flux:modal.trigger>
