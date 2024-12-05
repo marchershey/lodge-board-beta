@@ -18,12 +18,15 @@ class NewProperty extends Component
     // Property
     public $property = [
         'listing' => [
-            'description' => '',
-            'guests' => null,
-            'bedrooms' => null,
-            'beds' => null,
-            'bathrooms' => null
+            'guests' => 0,
+            'bedrooms' => 0,
+            'beds' => 0,
+            'bathrooms' => 0
         ],
+        'options' => [
+            'duration-min' => 0,
+            'duration-max' => 0,
+        ]
     ];
     public $amenities = [];
     public $pending_amenities = [];
@@ -38,14 +41,16 @@ class NewProperty extends Component
             'property.address.line_2' => ['nullable', 'string', 'max:250'],
             'property.address.city' => ['required', 'string', 'max:250'],
             'property.address.state' => ['required', 'string', 'alpha', 'size:2'],
-            'property.address.zip' => ['required', 'string', 'numeric', 'digits:5', 'regex:/^\d{5}$/'],
+            'property.address.postal' => ['required', 'string', 'numeric', 'digits:5', 'regex:/^\d{5}$/'],
             'property.address.country' => ['required', 'string', 'alpha', 'size:2'],
             'property.listing.headline' => ['required', 'string', 'max:250'],
-            'property.listing.description' => ['required', 'string', 'max:2000'],
-            'property.listing.guests' => ['required', 'numeric', 'min:1', 'max:99'],
-            'property.listing.bedrooms' => ['required', 'numeric', 'min:1', 'max:99'],
-            'property.listing.beds' => ['required', 'numeric', 'min:1', 'max:99'],
-            'property.listing.bathrooms' => ['required', 'numeric', 'min:1', 'max:99'],
+            'property.listing.description' => ['nullable', 'string', 'max:3000'],
+
+            'property.listing.guests' => ['required', 'numeric', 'min:1', 'max:16'],
+            'property.listing.beds' => ['required', 'numeric', 'min:0', 'max:99'],
+            'property.listing.bedrooms' => ['required', 'numeric', 'min:0', 'max:99'],
+            'property.listing.bathrooms' => ['required', 'numeric', 'min:0', 'max:99'],
+
             'property.listing.amenities' => ['required'],
             'property.listing.amenities.*' => [],
             'property.rates.base' => ['required', 'numeric'],
@@ -55,36 +60,56 @@ class NewProperty extends Component
             'property.rates.fees.*.name' => ['required', 'string', 'max:250'],
             'property.rates.fees.*.amount' => ['required', 'numeric'],
             'property.rates.fees.*.type' => ['required', 'string'],
-            'property.photos' => [],
-            'property.photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6000'],
-            'temp_photos' => [],
-            'temp_photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6000'],
+            'property.photos' => ['required'],
+            'property.photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6144'],
+            'temp_photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6144'],
             'property.options.visibility' => ['required'],
-            'property.options.'
+            'property.options.min-nights' => ['required', 'numeric', 'min:1', 'max:30'],
+            'property.options.max-nights' => ['required', 'numeric', 'min:1', 'max:30'],
         ];
     }
 
-    protected function messages()
-    {
-        return [
-            'property.rates.base.required' => 'Base rate required',
-            'property' => [
-                'name' => [
-                    'required' => 'rquired'
-                ],
-                'rates' => [
-                    'base' => [
-                        'required' => 'test',
-                    ]
-                ]
-            ],
-        ];
-    }
+    // protected function messages()
+    // {
+    //     return [
+    //         'property.rates.base.required' => 'Base rate required',
+    //         'property.rates.tax.required' => 'Tax rate required',
+    //     ];
+    // }
 
     protected function validationAttributes()
     {
         return [
-            '' => '',
+            'property.name' => 'Property Name',
+            'property.address.line_1' => 'Address Line 1',
+            'property.address.line_2' => 'Address Line 2',
+            'property.address.city' => 'City',
+            'property.address.state' => 'State',
+            'property.address.postal' => 'ZIP Code',
+            'property.address.country' => 'Country',
+            'property.listing.headline' => 'Listing Headline',
+            'property.listing.description' => 'Listing Description',
+
+            'property.listing.guests' => 'number of guests',
+            'property.listing.beds' => 'number of beds',
+            'property.listing.bedrooms' => 'number of bedrooms',
+            'property.listing.bathrooms' => 'number of bathrooms',
+
+            'property.listing.amenities' => 'amenities',
+            'property.listing.amenities.*' => 'amenity',
+            'property.rates.base' => 'base rate',
+            'property.rates.tax' => 'tax rate',
+            'property.rates.fees' => 'fees',
+            'property.rates.fees.*' => 'fee',
+            'property.rates.fees.*.name' => 'fee name',
+            'property.rates.fees.*.amount' => 'fee amount',
+            'property.rates.fees.*.type' => 'fee type',
+            'property.photos' => 'photos',
+            'property.photos.*' => 'photo',
+            'temp_photos.*' => 'photo',
+            'property.options.visibility' => 'visibility',
+            'property.options.min-nights' => 'minimum nights',
+            'property.options.max-nights' => 'maximum nights',
         ];
     }
 
@@ -102,6 +127,7 @@ class NewProperty extends Component
 
     public function load(): void
     {
+        // Set defaults
         $this->property = [
             'name' => '',
             'address' => [
@@ -115,9 +141,9 @@ class NewProperty extends Component
             'listing' => [
                 'headline' => '',
                 'description' => '',
-                'guests' => 0,
-                'bedrooms' => 0,
+                'guests' => 1,
                 'beds' => 0,
+                'bedrooms' => 0,
                 'bathrooms' => 0,
                 'amenities' => [],
             ],
@@ -128,6 +154,8 @@ class NewProperty extends Component
             ],
             'photos' => [],
             'options' => [
+                'duration-min' => 1,
+                'duration-max' => 14,
                 'visibility' => 'private',
             ],
         ];
@@ -200,13 +228,7 @@ class NewProperty extends Component
 
     /**
      * Photos
-     */
-    public function updatingTempPhotos($a, $b): void
-    {
-        toast()->debug($a)->push();
-        toast()->debug($b)->push();
-    }
-    /**
+     *
      * When the user uploads photos, $temp_photos are cleared and only shows new photos.
      * This takes all photos from $temp_photos and adds them to $photos so when the user
      * uploads more photos, the previous photos are not cleared.
@@ -215,7 +237,8 @@ class NewProperty extends Component
      */
     function updatedTempPhotos(): void
     {
-        // $this->validateOnly('temp_photos.*');
+        $this->validateOnly('temp_photos.*');
+
         foreach ($this->temp_photos as $temp_photo) {
             $this->property['photos'][] = $temp_photo;
         }

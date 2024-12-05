@@ -40,15 +40,24 @@
                 <div class="space-y-10">
                     <flux:fieldset>
                         <flux:input class="max-w-sm capitalize" wire:model="property.listing.headline" label="Listing Headline" placeholder="An amazing summer getaway!" />
-                        <flux:editor wire:model.live.debounce="property.listing.description" toolbar="heading | bold italic underline strike | bullet ordered blockquote | link | align ~ undo redo" label="Listing Description" />
-                        <div class="text-xs text-right text-muted">
-                            @if ($property['listing']['description'])
-                                <span :class="{ 'text-yellow-500': $wire.property.listing.description.length > 1900, '!text-green-600': $wire.property.listing.description.length == 2000, '!text-red-500': $wire.property.listing.description.length > 2000 }" x-text="$wire.property.listing.description.length">0</span> / 2,000
-                            @else
-                                <span>0 / 2,000</span>
-                            @endif
-
-                            <span>(Including HTML)</span>
+                        <flux:editor wire:model.live.debounce="property.listing.description" toolbar="heading | bold italic underline | bullet ordered blockquote | link | align ~ undo redo" label="Listing Description" />
+                        <div class="flex items-center justify-between text-right text-xs text-muted">
+                            <div>
+                                @if (isset($property['listing']['description']) && $property['listing']['description'])
+                                    <span :class="{ 'text-yellow-500': $wire.property.listing.description.length > 2900, '!text-green-600': $wire.property.listing.description.length == 3000, '!text-red-500': $wire.property.listing.description.length > 3000 }" x-text="$wire.property.listing.description.length">0</span> / 3,000
+                                @else
+                                    <span>0 / 2,000</span>
+                                @endif
+                                <span>(includes HTML)</span>
+                            </div>
+                            <flux:tooltip content="You can use Markdown Syntax as well!">
+                                <div class="flex cursor-help items-center space-x-2">
+                                    <span>
+                                        Try markdown syntax
+                                    </span>
+                                    <flux:icon.circle-help class="size-4" />
+                                </div>
+                            </flux:tooltip>
                         </div>
                     </flux:fieldset>
 
@@ -56,14 +65,14 @@
                     {{-- <div class="max-w-sm"> --}}
                     {{-- <x-forms.counter label="test" wire:model="property.name" /> --}}
                     <div class="grid grid-cols-2 gap-x-4 gap-y-6 tablet-sm:grid-cols-4 tablet:grid-cols-2 desktop:grid-cols-4">
-                        <flux:counter label="Guest count" subtext="guests" wire:model="property.listing.guests" />
-                        <flux:counter label="Bedroom count" subtext="bedrooms" wire:model="property.listing.bedrooms" />
-                        <flux:counter label="Bed count" subtext="beds" wire:model="property.listing.beds" />
-                        <flux:counter label="Bathroom count" subtext="baths" wire:model="property.listing.bathrooms" step="0.5" />
+                        <flux:counter label="Guest count" subtext="guests" wire:model="property.listing.guests" min="1" max="16" />
+                        <flux:counter label="Bed count" subtext="beds" wire:model="property.listing.beds" min="0" max="99" />
+                        <flux:counter label="Bedroom count" subtext="bedrooms" wire:model="property.listing.bedrooms" min="0" max="99" />
+                        <flux:counter label="Bathroom count" subtext="baths" wire:model="property.listing.bathrooms" step="0.5" min="0" max="99" />
                         <div class="col-span-full">
                             <flux:error name="property.listing.guests" />
-                            <flux:error name="property.listing.bedrooms" />
                             <flux:error name="property.listing.beds" />
+                            <flux:error name="property.listing.bedrooms" />
                             <flux:error name="property.listing.bathrooms" />
                         </div>
                     </div>
@@ -98,9 +107,9 @@
                                 <flux:subheading>Select all of the amenities that your property includes</flux:subheading>
                             </div>
 
-                            <flux:checkbox.group class="space-y-6 columns-2" wire:model="pending_amenities">
+                            <flux:checkbox.group class="columns-2 space-y-6" wire:model="pending_amenities">
                                 @foreach ($amenities as $group)
-                                    <div class="space-y-2 break-inside-avoid" wire:key="amenities-group-{{ $group->id }}">
+                                    <div class="break-inside-avoid space-y-2" wire:key="amenities-group-{{ $group->id }}">
                                         <div>{{ $group->name }}</div>
                                         <div class="space-y-1">
                                             @foreach ($group->amenities as $amenity)
@@ -126,36 +135,57 @@
                 <div class="grid grid-cols-12 gap-4">
 
                     <div class="col-span-6 tablet-sm:col-span-3">
-                        <flux:input class="col-span-6" wire:model="property.rates.base" icon="dollar-sign" label="Nightly Rate" placeholder="00.00" x-mask:dynamic="$money($input)" />
+                        <flux:input class="col-span-6" wire:model="property.rates.base" icon="dollar-sign" label="Base Rate" badge="per night" placeholder="00.00" x-mask:dynamic="$money($input)" />
                     </div>
                     <div class="col-span-6 tablet-sm:col-span-3">
                         <flux:input class="col-span-6" wire:model="property.rates.tax" iconTrailing="percent" label="Tax Rate" mask="99" placeholder="00" />
                     </div>
                     <div class="col-span-full tablet-sm:col-span-3 tablet-sm:col-start-10 tablet:col-span-4 tablet:col-start-9">
-                        <flux:button class="w-full tablet-sm:label-space" wire:click="addFee" icon="plus">Add fee</flux:button>
+                        <flux:button class="tablet-sm:label-space w-full" wire:click="addFee" icon="plus">Add fee</flux:button>
                     </div>
 
                     @if (isset($property['rates']['fees']))
                         @foreach ($property['rates']['fees'] as $key => $fee)
                             <flux:separator class="col-span-full" />
-                            <div class="grid grid-cols-12 gap-4 col-span-full" wire:key="fee-{{ $key }}" wire:target="removeFee({{ $key }})">
+                            <div class="col-span-full grid grid-cols-12 gap-4" wire:key="fee-{{ $key }}" wire:target="removeFee({{ $key }})">
                                 <div class="col-span-6 tablet-sm:col-span-4 tablet:col-span-6 desktop:col-span-4">
                                     <flux:input wire:model="property.rates.fees.{{ $key }}.name" label="Fee name" placeholder="Cleaning fee" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
                                 </div>
                                 <div class="col-span-6 tablet-sm:col-span-3 tablet:col-span-6 desktop:col-span-3" wire:loading.class="opacity-50 pointer-events-none" wire:target="property.rates.fees.{{ $key }}.type">
                                     @if ($property['rates']['fees'][$key]['type'] == 'fixed')
-                                        <flux:input class="" wire:model="property.rates.fees.{{ $key }}.amount" label="Fee amount" badge="$" icon="dollar-sign" x-mask:dynamic="$money($input)" placeholder="00.00" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
+                                        <flux:input class="" wire:model="property.rates.fees.{{ $key }}.amount" label="Fee amount" icon="dollar-sign" x-mask:dynamic="$money($input)" placeholder="00.00" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
                                     @else
-                                        <flux:input class="" wire:model="property.rates.fees.{{ $key }}.amount" label="Fee amount" badge="%" iconTrailing="percent" mask="99" placeholder="00" wire:loading.attr="disabled" wire:target="removeFee({{ $key }}), property.rates.fees.{{ $key }}.type" />
+                                        <flux:input class="" wire:model="property.rates.fees.{{ $key }}.amount" label="Fee amount" iconTrailing="percent" mask="99" placeholder="00" wire:loading.attr="disabled" wire:target="removeFee({{ $key }}), property.rates.fees.{{ $key }}.type" />
                                     @endif
                                 </div>
                                 <div class="col-span-6 tablet-sm:col-span-4 tablet:col-span-6 desktop:col-span-4 desktop:justify-center">
-                                    <flux:radio.group wire:model.live="property.rates.fees.{{ $key }}.type" label="Fee type" variant="segmented" tooltip="test">
-                                        <flux:radio value="fixed" icon="dollar-sign" tooltip="Fixed fee" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
-                                        <flux:radio value="percent" icon="percent" tooltip="Percentage fee" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
-                                    </flux:radio.group>
+                                    <flux:field>
+                                        <flux:label>Fee type</flux:label>
+                                        <flux:tooltip class="inline-block" content='Choose a flat fee or a fee based on a percentage of the total cost'>
+                                            <flux:icon.circle-help class="size-4 text-muted" />
+                                        </flux:tooltip>
+
+                                        <flux:radio.group wire:model.live="property.rates.fees.{{ $key }}.type" variant="segmented">
+                                            <flux:radio value="fixed" icon="dollar-sign" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
+                                            <flux:radio value="variable" icon="percent" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
+                                        </flux:radio.group>
+
+                                        <flux:error name="email" />
+                                    </flux:field>
+                                    {{-- <flux:field>
+                                        <flux:label class="flex items-center space-x-2">
+                                            <span>Fee type</span>
+                                            <flux:tooltip content='Choose a flat fee or a fee based on a percentage of the total cost'>
+                                                <flux:icon.circle-help class="size-4 text-muted" />
+                                            </flux:tooltip>
+                                        </flux:label>
+                                        <flux:radio.group wire:model.live="property.rates.fees.{{ $key }}.type" variant="segmented" size="lg">
+                                            <flux:radio value="fixed" icon="dollar-sign" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
+                                            <flux:radio value="variable" icon="percent" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
+                                        </flux:radio.group>
+                                    </flux:field> --}}
                                 </div>
-                                <div class="flex items-center justify-end col-span-6 label-space tablet-sm:col-span-1 tablet:col-span-6 desktop:col-span-1">
+                                <div class="label-space col-span-6 flex items-center justify-end tablet-sm:col-span-1 tablet:col-span-6 desktop:col-span-1">
                                     <flux:button variant="subtle" wire:target="removeFee({{ $key }})" wire:click="removeFee({{ $key }})">
                                         <flux:icon.x class="size-5" />
                                         <span class="tablet-sm:hidden tablet:block desktop:hidden">Remove fee</span>
@@ -175,27 +205,19 @@
                 <div class="space-y-10" x-data="photosuploader">
 
                     <div class="space-y-2">
-                        <flux:input type="file" wire:model.live="temp_photos" label="Add photos" accept="image/jpg, image/jpeg, image/png, image/webp" multiple x-on:livewire-upload-start="uploading = true" x-on:livewire-upload-finish="uploading = false, progress = 0, $wire.dispatch('init-sortable')" x-on:livewire-upload-error="uploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress" />
+                        <div>
+                            <flux:heading size="lg">Add Photos</flux:heading>
+                        </div>
+                        <flux:input type="file" wire:model.live="temp_photos" accept="image/jpg, image/jpeg, image/png, image/webp" multiple x-on:livewire-upload-start="uploading = true" x-on:livewire-upload-finish="uploading = false, progress = 0, $wire.dispatch('init-sortable')" x-on:livewire-upload-error="uploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress" />
 
                         <div>
-                            <span>property.photos</span>
                             <flux:error name="property.photos" />
-                        </div>
-                        <div>
-                            <span>property.photos.*</span>
                             <flux:error name="property.photos.*" />
-                        </div>
-                        <div>
-                            <span>temp_photos</span>
-                            <flux:error name="temp_photos" />
-                        </div>
-                        <div>
-                            <span>temp_photos.*</span>
                             <flux:error name="temp_photos.*" />
                         </div>
 
                         <div class="flex flex-col space-y-2" x-show="uploading">
-                            <div class="flex justify-between mt-5">
+                            <div class="mt-5 flex justify-between">
                                 <div class="flex items-center space-x-2">
                                     <flux:icon.loading class="size-5 text-muted"></flux:icon.loading>
                                     <flux:heading>Uploading photos...</flux:heading>
@@ -213,14 +235,14 @@
                     </div>
 
                     @if (isset($property['photos']) && $property['photos'] != null)
-                        <div class="relative grid grid-cols-4 gap-4 select-none" wire:sortable="updatePhotoOrder" wire:sortable.options="{ animation: 150, dragoverBubble: true }" wire:loading.delay.class="pointer-events-none" wire:target="updatePhotoOrder">
+                        <div class="relative grid select-none grid-cols-4 gap-4" wire:sortable="updatePhotoOrder" wire:sortable.options="{ animation: 150, dragoverBubble: true }" wire:loading.delay.class="pointer-events-none" wire:target="updatePhotoOrder">
                             @foreach ($property['photos'] as $photo_key => $photo)
-                                <div class="relative rounded-lg group hover:scale-105 first:col-span-2 first:row-span-2 @if ($loop->index == 2) ring ring-red-500 ring-offset-2 @endif" wire:loading.remove wire:target="deletePhoto({{ $photo_key }})" wire:key="photo-{{ $photo_key }}" wire:sortable.item="{{ $photo_key }}">
-                                    <div class="block w-full h-full overflow-hidden bg-gray-100 rounded-lg shadow-lg aspect-h-7 aspect-w-10 cursor-grab ring-1 ring-inset ring-black/20">
+                                <div class="group relative rounded-lg first:col-span-2 first:row-span-2 hover:scale-105" wire:loading.class="opacity-50" wire:target="deletePhoto({{ $photo_key }})" wire:key="photo-{{ $photo_key }}" wire:sortable.item="{{ $photo_key }}">
+                                    <div class="aspect-h-7 aspect-w-10 block h-full w-full cursor-grab overflow-hidden rounded-lg bg-gray-100 shadow-lg ring-1 ring-inset ring-black/20">
                                         <img class="object-cover" src="{{ $photo->temporaryUrl() }}" alt="" wire:sortable.handle>
                                     </div>
                                     <button class="invisible absolute -right-2 -top-1.5 cursor-pointer rounded-full bg-white p-1 group-hover:visible" type="button" wire:confirm="Are you sure you want to delete this post?" wire:click="deletePhoto({{ $photo_key }})">
-                                        <svg class="w-5 h-5 text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M18 6l-12 12" />
                                             <path d="M6 6l12 12" />
@@ -229,7 +251,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        <flux:accordion class="p-5 alert-general alert" transition>
+                        <flux:accordion class="alert-general alert p-5" transition>
                             <flux:accordion.item class="border-b-0">
                                 <flux:accordion.heading>
                                     <div class="flex space-x-3">
@@ -254,18 +276,34 @@
                 <x-slot:desc>Customize your experience by changing the following options</x-slot:desc>
 
                 <div class="space-y-10">
-                    <flux:fieldset>
-                        <flux:legend>Listing Visiblity</flux:legend>
+                    <flux:fieldset class="space-y-4">
+                        <div>
+                            <flux:heading size="lg">Stay Duration</flux:heading>
+                            <flux:subheading>Set minimum and maximum night requirements for your bookings</flux:subheading>
+                        </div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <flux:counter label="Minimum nights" subtext="nights" wire:model="property.options.duration-min" min="1" max="30" default="1" />
+                            <flux:counter label="Maximum nights" subtext="nights" wire:model="property.options.duration-max" min="1" max="30" default="14" />
+                        </div>
+                    </flux:fieldset>
+
+                    <flux:separator />
+
+                    <flux:fieldset class="space-y-4">
+                        <div>
+                            <flux:heading size="lg">Listing Visiblity</flux:heading>
+                            <flux:subheading>Adjust the visibility settings for this listing.</flux:subheading>
+                        </div>
                         <flux:radio.group wire:model="property.options.visibility">
-                            <flux:radio value="private" label="Private" description="Private listings can only be viewed by hosts. The listing will be hidden from the front page. Requires hosts to manually book reservations." />
-                            <flux:radio value="hidden" label="Hidden" description="Hidden listings can only be seen by guests who have the link. The listing will be hidden from the front page. Allows guests to book reservations, if they have the direct link." />
-                            <flux:radio value="public" label="Public" description="Public listings will be visible on the front page. Allows guests to book reservations." />
+                            <flux:radio value="private" label="Private" description="Only Hosts can view the listing. Requires Hosts to manually book reservations." />
+                            <flux:radio value="unlisted" label="Unlisted" description="The listing is not publicly searchable or viewable on the front page, but can be accessed via a direct link." />
+                            <flux:radio value="public" label="Public" description="The listing is publicly searchable and visible to everyone." />
                         </flux:radio.group>
                     </flux:fieldset>
 
                     <flux:separator />
 
-                    <div class="flex items-center justify-between w-full">
+                    <div class="flex w-full items-center justify-between">
                         <flux:modal.trigger name="reset-modal">
                             <flux:button class="!text-red-500" variant="subtle">Reset</flux:button>
                         </flux:modal.trigger>
