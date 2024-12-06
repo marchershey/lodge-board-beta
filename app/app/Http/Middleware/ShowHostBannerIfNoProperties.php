@@ -18,7 +18,7 @@ class ShowHostBannerIfNoProperties
     public function handle(Request $request, Closure $next): Response
     {
         // Check if there is no property
-        if (count(Property::where('in_progress', false)->get()) == 0) {
+        if (count(Property::all()) == 0) {
             // Check if banner already exists
             if (!Banner::where('slug', 'no-property')->exists()) {
                 Banner::create([

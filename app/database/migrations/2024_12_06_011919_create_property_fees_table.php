@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property_types', function (Blueprint $table) {
+        Schema::create('property_fees', function (Blueprint $table) {
             $table->id();
+            $table->integer('key');
+            $table->integer('property_id');
             $table->string('name');
+            $table->integer('amount');
+            $table->boolean('fixed');
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('property_types');
+        Schema::dropIfExists('property_fees');
     }
 };

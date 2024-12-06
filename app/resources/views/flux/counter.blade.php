@@ -10,7 +10,7 @@
 ])
 
 <div class="select-none" x-data="{
-    value: $wire.entangle('{{ $model }}'),
+    value: $wire.entangle('{{ $model }}').live,
     default: {{ $default }},
     step: {{ $step }},
     min: {{ $min }},

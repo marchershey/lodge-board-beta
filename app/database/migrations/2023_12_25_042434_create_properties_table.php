@@ -14,30 +14,33 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id()->from(1000);
             // Basics
-            $table->string('name')->nullable();
-            $table->string('address_street_1')->nullable();
-            $table->string('address_street_2')->nullable();
-            $table->string('address_city')->nullable();
-            $table->string('address_state')->nullable();
-            $table->integer('address_zip')->nullable();
-            $table->string('address_country')->nullable();
-
+            $table->string('name');
+            $table->string('address_line1');
+            $table->string('address_line2');
+            $table->string('address_city');
+            $table->string('address_state');
+            $table->integer('address_postal');
+            $table->string('address_country');
             // Listing
-            $table->string('property_headline')->nullable();
-            $table->text('property_description')->nullable();
-            $table->integer('guest_count')->nullable();
-            $table->integer('bed_count')->nullable();
-            $table->integer('bedroom_count')->nullable();
-            $table->decimal('bathroom_count', 4, 1)->nullable();
-            $table->string('rate')->nullable();
-            $table->string('tax_rate')->nullable();
-            $table->string('calendar_color')->nullable();
-            $table->integer('min_nights')->nullable();
-            $table->boolean('active')->default(true)->nullable();
-            $table->integer('host_id')->nullable();
-            $table->string('slug')->nullable();
-            $table->boolean('in_progress')->default(true);
-            // $table->integer('type_id');
+            $table->integer('type_id');
+            $table->string('listing_headline');
+            $table->text('listing_description');
+            $table->integer('guest_count');
+            $table->integer('bed_count');
+            $table->integer('bedroom_count');
+            $table->decimal('bathroom_count', 4, 1);
+            // Pricing
+            $table->integer('base_rate');
+            $table->integer('tax_rate');
+            // Options
+            $table->integer('duration_min');
+            $table->integer('duration_max');
+            $table->string('visibility');
+            $table->string('slug');
+            $table->string('calendar_color');
+
+
+            $table->integer('host_id');
             $table->timestamps();
             $table->softDeletes();
         });

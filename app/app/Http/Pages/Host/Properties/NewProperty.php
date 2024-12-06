@@ -2,8 +2,10 @@
 
 namespace App\Http\Pages\Host\Properties;
 
+use App\Livewire\Forms\HostPropertyForm;
 use App\Models\Amenity;
 use App\Models\AmenityGroup;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -15,23 +17,27 @@ class NewProperty extends Component
 {
     use WireToast, WithFileUploads;
 
+    public HostPropertyForm $form;
+    public Collection $all_amenities;
+    public $selected_amenities;
+
     // Property
-    public $property = [
-        'listing' => [
-            'guests' => 0,
-            'bedrooms' => 0,
-            'beds' => 0,
-            'bathrooms' => 0
-        ],
-        'options' => [
-            'duration-min' => 0,
-            'duration-max' => 0,
-        ]
-    ];
-    public $amenities = [];
-    public $pending_amenities = [];
-    public $fees = [];
-    public $temp_photos = [];
+    // public $property = [
+    //     'listing' => [
+    //         'guests' => 0,
+    //         'bedrooms' => 0,
+    //         'beds' => 0,
+    //         'bathrooms' => 0
+    //     ],
+    //     'options' => [
+    //         'duration-min' => 0,
+    //         'duration-max' => 0,
+    //     ]
+    // ];
+    // public $amenities = [];
+    // public $pending_amenities = [];
+    // public $fees = [];
+    // public $temp_photos = [];
 
     protected function rules()
     {
@@ -43,16 +49,17 @@ class NewProperty extends Component
             'property.address.state' => ['required', 'string', 'alpha', 'size:2'],
             'property.address.postal' => ['required', 'string', 'numeric', 'digits:5', 'regex:/^\d{5}$/'],
             'property.address.country' => ['required', 'string', 'alpha', 'size:2'],
+            // Listing
+            'property.listing.type' => ['required'],
             'property.listing.headline' => ['required', 'string', 'max:250'],
             'property.listing.description' => ['nullable', 'string', 'max:3000'],
-
             'property.listing.guests' => ['required', 'numeric', 'min:1', 'max:16'],
             'property.listing.beds' => ['required', 'numeric', 'min:0', 'max:99'],
             'property.listing.bedrooms' => ['required', 'numeric', 'min:0', 'max:99'],
             'property.listing.bathrooms' => ['required', 'numeric', 'min:0', 'max:99'],
-
             'property.listing.amenities' => ['required'],
             'property.listing.amenities.*' => [],
+            // Pricing
             'property.rates.base' => ['required', 'numeric'],
             'property.rates.tax' => ['required', 'numeric'],
             'property.rates.fees' => [''],
@@ -66,6 +73,8 @@ class NewProperty extends Component
             'property.options.visibility' => ['required'],
             'property.options.min-nights' => ['required', 'numeric', 'min:1', 'max:30'],
             'property.options.max-nights' => ['required', 'numeric', 'min:1', 'max:30'],
+            'property.options.slug' => ['required'],
+            'property.options.color' => ['required'],
         ];
     }
 
@@ -77,41 +86,41 @@ class NewProperty extends Component
     //     ];
     // }
 
-    protected function validationAttributes()
-    {
-        return [
-            'property.name' => 'Property Name',
-            'property.address.line_1' => 'Address Line 1',
-            'property.address.line_2' => 'Address Line 2',
-            'property.address.city' => 'City',
-            'property.address.state' => 'State',
-            'property.address.postal' => 'ZIP Code',
-            'property.address.country' => 'Country',
-            'property.listing.headline' => 'Listing Headline',
-            'property.listing.description' => 'Listing Description',
+    // protected function validationAttributes()
+    // {
+    //     return [
+    //         'property.name' => 'Property Name',
+    //         'property.address.line_1' => 'Address Line 1',
+    //         'property.address.line_2' => 'Address Line 2',
+    //         'property.address.city' => 'City',
+    //         'property.address.state' => 'State',
+    //         'property.address.postal' => 'ZIP Code',
+    //         'property.address.country' => 'Country',
+    //         'property.listing.headline' => 'Listing Headline',
+    //         'property.listing.description' => 'Listing Description',
 
-            'property.listing.guests' => 'number of guests',
-            'property.listing.beds' => 'number of beds',
-            'property.listing.bedrooms' => 'number of bedrooms',
-            'property.listing.bathrooms' => 'number of bathrooms',
+    //         'property.listing.guests' => 'number of guests',
+    //         'property.listing.beds' => 'number of beds',
+    //         'property.listing.bedrooms' => 'number of bedrooms',
+    //         'property.listing.bathrooms' => 'number of bathrooms',
 
-            'property.listing.amenities' => 'amenities',
-            'property.listing.amenities.*' => 'amenity',
-            'property.rates.base' => 'base rate',
-            'property.rates.tax' => 'tax rate',
-            'property.rates.fees' => 'fees',
-            'property.rates.fees.*' => 'fee',
-            'property.rates.fees.*.name' => 'fee name',
-            'property.rates.fees.*.amount' => 'fee amount',
-            'property.rates.fees.*.type' => 'fee type',
-            'property.photos' => 'photos',
-            'property.photos.*' => 'photo',
-            'temp_photos.*' => 'photo',
-            'property.options.visibility' => 'visibility',
-            'property.options.min-nights' => 'minimum nights',
-            'property.options.max-nights' => 'maximum nights',
-        ];
-    }
+    //         'property.listing.amenities' => 'amenities',
+    //         'property.listing.amenities.*' => 'amenity',
+    //         'property.rates.base' => 'base rate',
+    //         'property.rates.tax' => 'tax rate',
+    //         'property.rates.fees' => 'fees',
+    //         'property.rates.fees.*' => 'fee',
+    //         'property.rates.fees.*.name' => 'fee name',
+    //         'property.rates.fees.*.amount' => 'fee amount',
+    //         'property.rates.fees.*.type' => 'fee type',
+    //         'property.photos' => 'photos',
+    //         'property.photos.*' => 'photo',
+    //         'temp_photos.*' => 'photo',
+    //         'property.options.visibility' => 'visibility',
+    //         'property.options.min-nights' => 'minimum nights',
+    //         'property.options.max-nights' => 'maximum nights',
+    //     ];
+    // }
 
 
     public function mount(): void
@@ -127,38 +136,39 @@ class NewProperty extends Component
 
     public function load(): void
     {
-        // Set defaults
-        $this->property = [
-            'name' => '',
-            'address' => [
-                'street_1' => '',
-                'street_2' => '',
-                'city' => '',
-                'state' => '',
-                'postal' => '',
-                'country' => '',
-            ],
-            'listing' => [
-                'headline' => '',
-                'description' => '',
-                'guests' => 1,
-                'beds' => 0,
-                'bedrooms' => 0,
-                'bathrooms' => 0,
-                'amenities' => [],
-            ],
-            'rates' => [
-                'base' => '',
-                'tax' => '',
-                'fees' => [],
-            ],
-            'photos' => [],
-            'options' => [
-                'duration-min' => 1,
-                'duration-max' => 14,
-                'visibility' => 'private',
-            ],
-        ];
+
+        $this->loadAmenities();
+        // $this->property = [
+        //     'name' => '',
+        //     'address' => [
+        //         'street_1' => '',
+        //         'street_2' => '',
+        //         'city' => '',
+        //         'state' => '',
+        //         'postal' => '',
+        //         'country' => '',
+        //     ],
+        //     'listing' => [
+        //         'headline' => '',
+        //         'description' => '',
+        //         'guests' => 1,
+        //         'beds' => 0,
+        //         'bedrooms' => 0,
+        //         'bathrooms' => 0,
+        //         'amenities' => [],
+        //     ],
+        //     'rates' => [
+        //         'base' => '',
+        //         'tax' => '',
+        //         'fees' => [],
+        //     ],
+        //     'photos' => [],
+        //     'options' => [
+        //         'duration-min' => 1,
+        //         'duration-max' => 14,
+        //         'visibility' => 'private',
+        //     ],
+        // ];
     }
 
     public function reload(): void
@@ -172,17 +182,22 @@ class NewProperty extends Component
     /**
      * Amenities
      */
+    public function loadAmenities(): void
+    {
+        $this->all_amenities = AmenityGroup::with('amenities')->get();
+        $this->form->amenities = [];
+    }
     public function openAmenitiesModal(): void
     {
         // Loading the amenities if not already
-        if (!$this->amenities) {
-            $this->amenities = AmenityGroup::all();
+        if (!$this->all_amenities) {
+            $this->loadAmenities();
         }
 
-        $this->pending_amenities = [];
+        $this->selected_amenities = [];
 
-        foreach ($this->property['listing']['amenities'] as $amenity_id => $amenity) {
-            $this->pending_amenities[] = $amenity_id;
+        foreach ($this->form->amenities as $amenity) {
+            $this->selected_amenities[] = $amenity->id;
         }
 
         $this->modal('amenities-modal')->show();
@@ -190,22 +205,23 @@ class NewProperty extends Component
 
     public function updateAmenities(): void
     {
-        // clear existing amenities
-        $this->property['listing']['amenities'] = [];
+        $this->form->reset('amenities');
 
-        // Add amenities
-        foreach ($this->pending_amenities as $pending_amenity_id) {
-            $amenity = Amenity::find($pending_amenity_id);
-            $this->property['listing']['amenities'][$amenity['id']] = $amenity;
-        }
+        $selected_amenities = $this->selected_amenities;
+        $this->form->amenities = $this->all_amenities->flatMap(function ($amenity_group) use ($selected_amenities) {
+            return $amenity_group->amenities->filter(function ($amenity) use ($selected_amenities) {
+                return in_array($amenity->id, $selected_amenities);
+            });
+        });
 
         $this->modal('amenities-modal')->close();
     }
 
     public function removeAmenity($amenity_id): void
     {
-        // Unset the amenity
-        unset($this->property['listing']['amenities'][$amenity_id]);
+        $this->form->amenities = $this->form->amenities->filter(function ($amenity) use ($amenity_id) {
+            return $amenity->id != $amenity_id;
+        });
     }
 
     /**
@@ -278,6 +294,7 @@ class NewProperty extends Component
      */
     public function submit(): void
     {
+        dd($this->form);
         $this->validate();
 
         dd($this->property);

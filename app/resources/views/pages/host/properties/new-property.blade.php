@@ -12,19 +12,21 @@
                 <x-slot:header>Basic Information</x-slot:header>
                 <x-slot:desc>The basic information about your property</x-slot:desc>
                 <div class="space-y-10">
-                    <flux:input class="max-w-sm capitalize" wire:model="property.name" label="Property Name" placeholder="Sunset Cabin" description="This will be used to help guests identify this property." />
+                    <flux:input class="max-w-sm capitalize" wire:model.blur="form.name" label="Property Name" placeholder="Sunset Cabin" description="This will be used to help guests identify this property." required />
                     <flux:fieldset class="space-y-4">
-                        <flux:input class="max-w-sm capitalize" wire:model="property.address.line_1" label="Street Address" placeholder="123 Main St" />
-                        <flux:input class="max-w-sm capitalize" wire:model="property.address.line_2" placeholder="Address line 2 (optional)" />
+                        <flux:input class="max-w-sm capitalize" wire:model.blur="form.address_line1" label="Street Address" placeholder="123 Main St" required />
+                        <flux:input class="max-w-sm capitalize" wire:model.blur="form.address_line2" placeholder="Address line 2 (optional)" />
+                        <flux:error name="form.address_line2" />
                         <div class="grid grid-cols-2 gap-x-4 gap-y-4">
-                            <flux:input class="capitalize" wire:model="property.address.city" label="City" placeholder="San Francisco" />
-                            <flux:select wire:model="property.address.state" label="State" variant="listbox" searchable placeholder="Choose state...">
+                            <flux:input class="capitalize" wire:model.blur="form.address_city" label="City" placeholder="San Francisco" />
+
+                            <flux:select wire:model.change="form.address_state" label="State" variant="listbox" searchable placeholder="Choose state...">
                                 @foreach (\App\Helpers\GeographyHelper::getStates() as $key => $value)
                                     <flux:option value="{{ $key }}" wire:key="state-{{ $key }}">{{ $value }}</flux:option>
                                 @endforeach
                             </flux:select>
-                            <flux:input mask="$99.99" wire:model="property.address.postal" label="Postal / Zip code" placeholder="12345" />
-                            <flux:select wire:model="property.address.country" label="Country" variant="listbox" searchable placeholder="Choose country...">
+                            <flux:input mask="99999" wire:model="form.address_postal" label="ZIP / Postal Code" placeholder="12345" />
+                            <flux:select wire:model.change="form.address_country" label="Country" variant="listbox" searchable placeholder="Choose country...">
                                 @foreach (\App\Helpers\GeographyHelper::getCountries() as $key => $value)
                                     <flux:option value="{{ $key }}" wire:key="country-{{ $key }}">{{ $value }}</flux:option>
                                 @endforeach
@@ -39,67 +41,75 @@
                 <x-slot:desc>This is the information that will be displayed on the listing page</x-slot:desc>
                 <div class="space-y-10">
                     <flux:fieldset>
-                        <flux:input class="max-w-sm capitalize" wire:model="property.listing.headline" label="Listing Headline" placeholder="An amazing summer getaway!" />
-                        <flux:editor wire:model.live.debounce="property.listing.description" toolbar="heading | bold italic underline | bullet ordered blockquote | link | align ~ undo redo" label="Listing Description" />
+                        <flux:input class="max-w-sm capitalize" wire:model="form.listing_headline" label="Listing Headline" placeholder="An amazing summer getaway!" />
+                        <flux:editor wire:model.live.debounce="form.listing_description" toolbar="heading | bold italic underline | bullet ordered blockquote | link | align ~ undo redo" label="Listing Description" />
                         <div class="flex items-center justify-between text-right text-xs text-muted">
                             <div>
-                                @if (isset($property['listing']['description']) && $property['listing']['description'])
-                                    <span :class="{ 'text-yellow-500': $wire.property.listing.description.length > 2900, '!text-green-600': $wire.property.listing.description.length == 3000, '!text-red-500': $wire.property.listing.description.length > 3000 }" x-text="$wire.property.listing.description.length">0</span> / 3,000
+                                @if ($form->listing_description)
+                                    <span :class="{ 'text-yellow-500': $wire.form.listing_description.length > 2900, '!text-green-600': $wire.form.listing_description.length == 3000, '!text-red-500': $wire.form.listing_description.length > 3000 }" x-text="$wire.form.listing_description.length">
+                                        0
+                                    </span>
+                                    / 3,000 (includes HTML)
                                 @else
-                                    <span>0 / 2,000</span>
+                                    <div class="h-4 w-36 animate-pulse rounded-full bg-muted-light"></div>
                                 @endif
-                                <span>(includes HTML)</span>
                             </div>
                             <flux:tooltip content="You can use Markdown Syntax as well!">
                                 <div class="flex cursor-help items-center space-x-2">
                                     <span>
-                                        Try markdown syntax
+                                        Try using markdown syntax
                                     </span>
                                     <flux:icon.circle-help class="size-4" />
                                 </div>
                             </flux:tooltip>
                         </div>
                     </flux:fieldset>
-
-                    {{-- <flux:fieldset> --}}
-                    {{-- <div class="max-w-sm"> --}}
-                    {{-- <x-forms.counter label="test" wire:model="property.name" /> --}}
-                    <div class="grid grid-cols-2 gap-x-4 gap-y-6 tablet-sm:grid-cols-4 tablet:grid-cols-2 desktop:grid-cols-4">
-                        <flux:counter label="Guest count" subtext="guests" wire:model="property.listing.guests" min="1" max="16" />
-                        <flux:counter label="Bed count" subtext="beds" wire:model="property.listing.beds" min="0" max="99" />
-                        <flux:counter label="Bedroom count" subtext="bedrooms" wire:model="property.listing.bedrooms" min="0" max="99" />
-                        <flux:counter label="Bathroom count" subtext="baths" wire:model="property.listing.bathrooms" step="0.5" min="0" max="99" />
-                        <div class="col-span-full">
-                            <flux:error name="property.listing.guests" />
-                            <flux:error name="property.listing.beds" />
-                            <flux:error name="property.listing.bedrooms" />
-                            <flux:error name="property.listing.bathrooms" />
+                    <flux:separator />
+                    <flux:fieldset>
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-6 tablet-sm:grid-cols-4 tablet:grid-cols-2 desktop:grid-cols-4">
+                            <flux:counter label="Guest count" subtext="guests" wire:model="form.guest_count" min="1" max="16" />
+                            <flux:counter label="Bed count" subtext="beds" wire:model="form.bed_count" min="0" max="99" />
+                            <flux:counter label="Bedroom count" subtext="bedrooms" wire:model="form.bedroom_count" min="0" max="99" />
+                            <flux:counter label="Bathroom count" subtext="baths" wire:model="form.bathroom_count" step="0.5" min="0" max="99" />
+                            <div class="col-span-full">
+                                <flux:error name="form.guest_count" />
+                                <flux:error name="form.bed_count" />
+                                <flux:error name="form.bedroom_count" />
+                                <flux:error name="form.bathroom_count" />
+                            </div>
                         </div>
-                    </div>
-                    {{-- </div> --}}
-                    {{-- </flux:fieldset> --}}
+                    </flux:fieldset>
+                    <flux:separator />
+                    <flux:fieldset>
+                        <flux:select class="max-w-72" wire:model.change="form.property_type" label="Type of Property" variant="listbox" searchable placeholder="Select the type of property...">
+                            @foreach (\App\Models\PropertyType::all() as $type)
+                                <flux:option value="{{ $type['id'] }}" wire:key="country-{{ $type['id'] }}">{{ $type['name'] }}</flux:option>
+                            @endforeach
+                        </flux:select>
+                    </flux:fieldset>
+
+                    <flux:separator />
 
                     <flux:fieldset class="space-y-4">
-
                         <div class="space-y-2">
                             <flux:heading>Amenities</flux:heading>
                             <flux:button icon="plus" wire:click="openAmenitiesModal">Select amenities</flux:button>
-                            <flux:error name="property.listing.amenities" />
-                            <flux:error name="property.listing.amenities.*" />
+                            <flux:error name="form.selected_amenities" />
+                            <flux:error name="form.selected_amenities.*" />
                         </div>
 
-                        <div class="flex flex-wrap gap-x-4 gap-y-2">
-                            @if (isset($property['listing']['amenities']))
-                                @foreach ($property['listing']['amenities'] as $amenity)
-                                    <div wire:key="amenity-{{ $amenity['id'] }}" wire:loading.remove wire:target="removeAmenity({{ $amenity['id'] }})">
+                        @if (!is_null($form->amenities))
+                            <div class="flex flex-wrap gap-x-4 gap-y-2">
+                                @foreach ($form->amenities as $amenity)
+                                    <div wire:key="amenity-{{ $amenity->id }}" wire:loading.remove wire:target="removeAmenity({{ $amenity->id }})">
                                         <flux:badge size="lg" variant="pill">
-                                            {{ $amenity['name'] }}
-                                            <flux:badge.close wire:click="removeAmenity({{ $amenity['id'] }})" />
+                                            {{ $amenity->name }}
+                                            <flux:badge.close wire:click="removeAmenity({{ $amenity->id }})" />
                                         </flux:badge>
                                     </div>
                                 @endforeach
-                            @endif
-                        </div>
+                            </div>
+                        @endif
 
                         <flux:modal class="w-[90%] space-y-6 tablet-sm:w-[500px]" name="amenities-modal">
                             <div>
@@ -107,17 +117,19 @@
                                 <flux:subheading>Select all of the amenities that your property includes</flux:subheading>
                             </div>
 
-                            <flux:checkbox.group class="columns-2 space-y-6" wire:model="pending_amenities">
-                                @foreach ($amenities as $group)
-                                    <div class="break-inside-avoid space-y-2" wire:key="amenities-group-{{ $group->id }}">
-                                        <div>{{ $group->name }}</div>
-                                        <div class="space-y-1">
-                                            @foreach ($group->amenities as $amenity)
-                                                <flux:checkbox value="{{ $amenity['id'] }}" wire:key="amenity-checkbox-{{ $amenity['id'] }}" label="{{ $amenity['name'] }}" />
-                                            @endforeach
+                            <flux:checkbox.group class="columns-2 space-y-6" wire:model="selected_amenities">
+                                @if ($all_amenities)
+                                    @foreach ($all_amenities as $amenity_group)
+                                        <div class="break-inside-avoid space-y-2" wire:key="amenities-group-{{ $amenity_group->id }}">
+                                            <div>{{ $amenity_group->name }}</div>
+                                            <div class="space-y-1">
+                                                @foreach ($amenity_group->amenities as $amenity)
+                                                    <flux:checkbox value="{{ $amenity->id }}" wire:key="amenity-checkbox-{{ $amenity->id }}" label="{{ $amenity->name }}" />
+                                                @endforeach
+                                            </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                @endif
                             </flux:checkbox.group>
 
                             <div class="flex">
@@ -133,7 +145,6 @@
                 <x-slot:header>Rates & Fees</x-slot:header>
                 <x-slot:desc>The information about the amount to charge per night, as well as taxes and fees.</x-slot:desc>
                 <div class="grid grid-cols-12 gap-4">
-
                     <div class="col-span-6 tablet-sm:col-span-3">
                         <flux:input class="col-span-6" wire:model="property.rates.base" icon="dollar-sign" label="Base Rate" badge="per night" placeholder="00.00" x-mask:dynamic="$money($input)" />
                     </div>

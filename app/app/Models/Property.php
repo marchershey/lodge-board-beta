@@ -11,10 +11,6 @@ class Property extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'in_progress',
-    ];
-
     /**
      * Automatically generate a unique slug for the property.
      */
@@ -63,22 +59,22 @@ class Property extends Model
     }
 
 
-    /**
-     * Return a new or existing property
-     *
-     * To prevent a bunch of empty properties in the database, this function checks
-     * if a property exists in the database that is in progress but doesn't have a name.
-     * If a property is in progress but has a name, it will be displayed on the property
-     * index, so no need to return it.
-     *
-     * @return Property
-     */
-    public static function startNewProperty(): Property
-    {
-        return self::firstOrCreate([
-            'in_progress' => true,
-        ]);
+    // /**
+    //  * Return a new or existing property
+    //  *
+    //  * To prevent a bunch of empty properties in the database, this function checks
+    //  * if a property exists in the database that is in progress but doesn't have a name.
+    //  * If a property is in progress but has a name, it will be displayed on the property
+    //  * index, so no need to return it.
+    //  *
+    //  * @return Property
+    //  */
+    // public static function startNewProperty(): Property
+    // {
+    //     return self::firstOrCreate([
+    //         'in_progress' => true,
+    //     ]);
 
-        // return ($property) ? $property : self::create();
-    }
+    //     // return ($property) ? $property : self::create();
+    // }
 }
