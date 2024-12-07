@@ -32,7 +32,6 @@ class HostPropertyForm extends Form
 
 
     // Listing
-
     #[Validate('required|string|max:250', as: 'headline')]
     public $listing_headline;
 
@@ -61,22 +60,27 @@ class HostPropertyForm extends Form
     ], as: [
         'amenities' => 'amenities',
         'amenities.*' => 'amenities',
+    ], message: [
+        'amenities.required' => 'Amenities are required.',
     ])]
     public $amenities;
 
     // Rates
-    #[Validate('required|', as: '')]
+    #[Validate('required|numeric|min:1|max:1000|decimal:0,2', as: 'base rate', onUpdate: false)]
     public $base_rate;
 
-    #[Validate('required|', as: '')]
+    #[Validate('required|numeric|min:0|max:99', as: 'tax rate', onUpdate: false)]
     public $tax_rate;
 
-    #[Validate('required|', as: '')]
-    public $fees;
-    // Photos
-    #[Validate('required|', as: '')]
-    public $temp_photos;
+    #[Validate([
+        'fees' => '',
+        'fees.*.name' => 'required|string|max:250',
+        'fees.*.amount' => 'required|numeric|min:0|max:1000|decimal:0,2',
+        'fees.*.type' => 'required|',
+    ])]
+    public array $fees;
 
+    // Photos
     #[Validate('required|', as: '')]
     public $selected_photos;
 

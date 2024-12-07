@@ -20,63 +20,46 @@ class NewProperty extends Component
     public HostPropertyForm $form;
     public Collection $all_amenities;
     public $selected_amenities;
+    public $temp_photos;
 
-    // Property
-    // public $property = [
-    //     'listing' => [
-    //         'guests' => 0,
-    //         'bedrooms' => 0,
-    //         'beds' => 0,
-    //         'bathrooms' => 0
-    //     ],
-    //     'options' => [
-    //         'duration-min' => 0,
-    //         'duration-max' => 0,
-    //     ]
-    // ];
-    // public $amenities = [];
-    // public $pending_amenities = [];
-    // public $fees = [];
-    // public $temp_photos = [];
-
-    protected function rules()
-    {
-        return [
-            'property.name' => ['required', 'string', 'max:60', 'unique:properties.name'],
-            'property.address.line_1' => ['required', 'string', 'max:250'],
-            'property.address.line_2' => ['nullable', 'string', 'max:250'],
-            'property.address.city' => ['required', 'string', 'max:250'],
-            'property.address.state' => ['required', 'string', 'alpha', 'size:2'],
-            'property.address.postal' => ['required', 'string', 'numeric', 'digits:5', 'regex:/^\d{5}$/'],
-            'property.address.country' => ['required', 'string', 'alpha', 'size:2'],
-            // Listing
-            'property.listing.type' => ['required'],
-            'property.listing.headline' => ['required', 'string', 'max:250'],
-            'property.listing.description' => ['nullable', 'string', 'max:3000'],
-            'property.listing.guests' => ['required', 'numeric', 'min:1', 'max:16'],
-            'property.listing.beds' => ['required', 'numeric', 'min:0', 'max:99'],
-            'property.listing.bedrooms' => ['required', 'numeric', 'min:0', 'max:99'],
-            'property.listing.bathrooms' => ['required', 'numeric', 'min:0', 'max:99'],
-            'property.listing.amenities' => ['required'],
-            'property.listing.amenities.*' => [],
-            // Pricing
-            'property.rates.base' => ['required', 'numeric'],
-            'property.rates.tax' => ['required', 'numeric'],
-            'property.rates.fees' => [''],
-            'property.rates.fees.*' => [''],
-            'property.rates.fees.*.name' => ['required', 'string', 'max:250'],
-            'property.rates.fees.*.amount' => ['required', 'numeric'],
-            'property.rates.fees.*.type' => ['required', 'string'],
-            'property.photos' => ['required'],
-            'property.photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6144'],
-            'temp_photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6144'],
-            'property.options.visibility' => ['required'],
-            'property.options.min-nights' => ['required', 'numeric', 'min:1', 'max:30'],
-            'property.options.max-nights' => ['required', 'numeric', 'min:1', 'max:30'],
-            'property.options.slug' => ['required'],
-            'property.options.color' => ['required'],
-        ];
-    }
+    // protected function rules()
+    // {
+    //     return [
+    //         'property.name' => ['required', 'string', 'max:60', 'unique:properties.name'],
+    //         'property.address.line_1' => ['required', 'string', 'max:250'],
+    //         'property.address.line_2' => ['nullable', 'string', 'max:250'],
+    //         'property.address.city' => ['required', 'string', 'max:250'],
+    //         'property.address.state' => ['required', 'string', 'alpha', 'size:2'],
+    //         'property.address.postal' => ['required', 'string', 'numeric', 'digits:5', 'regex:/^\d{5}$/'],
+    //         'property.address.country' => ['required', 'string', 'alpha', 'size:2'],
+    //         // Listing
+    //         'property.listing.type' => ['required'],
+    //         'property.listing.headline' => ['required', 'string', 'max:250'],
+    //         'property.listing.description' => ['nullable', 'string', 'max:3000'],
+    //         'property.listing.guests' => ['required', 'numeric', 'min:1', 'max:16'],
+    //         'property.listing.beds' => ['required', 'numeric', 'min:0', 'max:99'],
+    //         'property.listing.bedrooms' => ['required', 'numeric', 'min:0', 'max:99'],
+    //         'property.listing.bathrooms' => ['required', 'numeric', 'min:0', 'max:99'],
+    //         'property.listing.amenities' => ['required'],
+    //         'property.listing.amenities.*' => [],
+    //         // Pricing
+    //         'property.rates.base' => ['required', 'numeric'],
+    //         'property.rates.tax' => ['required', 'numeric'],
+    //         'property.rates.fees' => [''],
+    //         'property.rates.fees.*' => [''],
+    //         'property.rates.fees.*.name' => ['required', 'string', 'max:250'],
+    //         'property.rates.fees.*.amount' => ['required', 'numeric'],
+    //         'property.rates.fees.*.type' => ['required', 'string'],
+    //         'property.photos' => ['required'],
+    //         'property.photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6144'],
+    //         'temp_photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6144'],
+    //         'property.options.visibility' => ['required'],
+    //         'property.options.min-nights' => ['required', 'numeric', 'min:1', 'max:30'],
+    //         'property.options.max-nights' => ['required', 'numeric', 'min:1', 'max:30'],
+    //         'property.options.slug' => ['required'],
+    //         'property.options.color' => ['required'],
+    //     ];
+    // }
 
     // protected function messages()
     // {
@@ -203,6 +186,9 @@ class NewProperty extends Component
         $this->modal('amenities-modal')->show();
     }
 
+    /**
+     * ! asdf
+     */
     public function updateAmenities(): void
     {
         $this->form->reset('amenities');
@@ -213,6 +199,8 @@ class NewProperty extends Component
                 return in_array($amenity->id, $selected_amenities);
             });
         });
+
+        $this->validateOnly('amenities');
 
         $this->modal('amenities-modal')->close();
     }
@@ -230,7 +218,7 @@ class NewProperty extends Component
 
     public function addFee(): void
     {
-        array_push($this->property['rates']['fees'], [
+        array_push($this->form->fees, [
             'name' => '',
             'amount' => '',
             'type' => 'fixed',
@@ -239,7 +227,7 @@ class NewProperty extends Component
 
     public function removeFee($key): void
     {
-        unset($this->property['rates']['fees'][$key]);
+        unset($this->form->fees[$key]);
     }
 
     /**
@@ -294,7 +282,6 @@ class NewProperty extends Component
      */
     public function submit(): void
     {
-        dd($this->form);
         $this->validate();
 
         dd($this->property);

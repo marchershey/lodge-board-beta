@@ -93,7 +93,7 @@
         @apply -my-4;
     }
     .page-content {
-        @apply tablet-sm:page-x-padding flex flex-col space-y-10;
+        @apply page-x-padding flex flex-col space-y-10;
     }
     .page-footer {
         @apply page-padding bg-gray-200 text-xs text-muted;
@@ -146,7 +146,7 @@
     .form-section {
         @apply grid grid-cols-1 gap-x-8 gap-y-4 laptop:grid-cols-3;
     }
-    .form-section-details {
+    /* .form-section-details {
         @apply page-x-padding flex flex-col justify-center space-y-0 tablet-sm:p-0;
     }
     .form-section-header {
@@ -154,7 +154,7 @@
     }
     .form-section-desc {
         @apply text-sm font-normal text-muted;
-    }
+    } */
     .form-section-content {
         @apply page-padding card card-padding col-span-2;
     }

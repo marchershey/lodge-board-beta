@@ -7,17 +7,39 @@
 
     <div class="page-content" wire:init="load">
 
-        <div class="form-container">
-            <x-forms.section>
-                <x-slot:header>Basic Information</x-slot:header>
-                <x-slot:desc>The basic information about your property</x-slot:desc>
-                <div class="space-y-10">
-                    <flux:input class="max-w-sm capitalize" wire:model.blur="form.name" label="Property Name" placeholder="Sunset Cabin" description="This will be used to help guests identify this property." required />
-                    <flux:fieldset class="space-y-4">
-                        <flux:input class="max-w-sm capitalize" wire:model.blur="form.address_line1" label="Street Address" placeholder="123 Main St" required />
-                        <flux:input class="max-w-sm capitalize" wire:model.blur="form.address_line2" placeholder="Address line 2 (optional)" />
-                        <flux:error name="form.address_line2" />
-                        <div class="grid grid-cols-2 gap-x-4 gap-y-4">
+        <div class="mx-auto max-w-4xl space-y-10">
+
+            {{-- Basic information --}}
+            <flux:card class="space-y-6">
+
+                {{-- Property Name --}}
+                <flux:fieldset class="space-y-4">
+                    <div>
+                        <flux:heading size="lg">Property Name</flux:heading>
+                        <flux:subheading>The property name will help guests identify this property. Make it memoriable!</flux:subheading>
+                    </div>
+                    <flux:input class="max-w-sm capitalize" wire:model.blur="form.name" placeholder="Sunset Cabin" required />
+                    <flux:error name="form.name" />
+                </flux:fieldset>
+
+                <flux:separator />
+
+                {{-- Property Address --}}
+                <flux:fieldset class="space-y-6">
+                    <div>
+                        <flux:heading size="lg">Property Address</flux:heading>
+                        <flux:subheading>This address will be given to guests, so make sure it's an address that will help them find your property.</flux:subheading>
+                    </div>
+                    <div>
+                        <div class="grid grid-cols-1 gap-4 tablet-sm:grid-cols-3 tablet:grid-cols-1 laptop:grid-cols-3">
+                            <div class="tablet-sm:col-span-2 tablet:col-span-1 laptop:col-span-2">
+                                <flux:input wire:model.blur="form.address_line1" label="Street Address (Line 1)" placeholder="123 Main St" required />
+                            </div>
+                            <div class="">
+                                <flux:input wire:model.blur="form.address_line2" label="Street Address (Line 2)" placeholder="Apartment, suite, floor, etc" />
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4 tablet-sm:grid-cols-2">
                             <flux:input class="capitalize" wire:model.blur="form.address_city" label="City" placeholder="San Francisco" />
 
                             <flux:select wire:model.change="form.address_state" label="State" variant="listbox" searchable placeholder="Choose state...">
@@ -25,148 +47,160 @@
                                     <flux:option value="{{ $key }}" wire:key="state-{{ $key }}">{{ $value }}</flux:option>
                                 @endforeach
                             </flux:select>
-                            <flux:input mask="99999" wire:model="form.address_postal" label="ZIP / Postal Code" placeholder="12345" />
+                            <flux:input mask="99999" wire:model.blur="form.address_postal" label="ZIP / Postal Code" placeholder="12345" />
                             <flux:select wire:model.change="form.address_country" label="Country" variant="listbox" searchable placeholder="Choose country...">
                                 @foreach (\App\Helpers\GeographyHelper::getCountries() as $key => $value)
                                     <flux:option value="{{ $key }}" wire:key="country-{{ $key }}">{{ $value }}</flux:option>
                                 @endforeach
                             </flux:select>
                         </div>
-                    </flux:fieldset>
+                    </div>
+                </flux:fieldset>
+            </flux:card>
+
+            {{-- Property Listings --}}
+            <flux:card class="space-y-6">
+                <div>
+                    <flux:heading size="lg">Property Listing</flux:heading>
+                    <flux:subheading>The following information will be displayed on the property's listing page</flux:subheading>
                 </div>
-            </x-forms.section>
 
-            <x-forms.section>
-                <x-slot:header>Property Listing</x-slot:header>
-                <x-slot:desc>This is the information that will be displayed on the listing page</x-slot:desc>
-                <div class="space-y-10">
-                    <flux:fieldset>
-                        <flux:input class="max-w-sm capitalize" wire:model="form.listing_headline" label="Listing Headline" placeholder="An amazing summer getaway!" />
-                        <flux:editor wire:model.live.debounce="form.listing_description" toolbar="heading | bold italic underline | bullet ordered blockquote | link | align ~ undo redo" label="Listing Description" />
-                        <div class="flex items-center justify-between text-right text-xs text-muted">
-                            <div>
-                                @if ($form->listing_description)
-                                    <span :class="{ 'text-yellow-500': $wire.form.listing_description.length > 2900, '!text-green-600': $wire.form.listing_description.length == 3000, '!text-red-500': $wire.form.listing_description.length > 3000 }" x-text="$wire.form.listing_description.length">
-                                        0
-                                    </span>
-                                    / 3,000 (includes HTML)
-                                @else
-                                    <div class="h-4 w-36 animate-pulse rounded-full bg-muted-light"></div>
-                                @endif
+                {{-- Headline & Description --}}
+                <flux:fieldset class="space-y-4">
+                    <flux:input class="max-w-sm capitalize" wire:model="form.listing_headline" label="Listing Headline" placeholder="An amazing summer getaway!" />
+                    <flux:editor wire:model.live.debounce="form.listing_description" toolbar="heading | bold italic underline | bullet ordered blockquote | link | align ~ undo redo" label="Listing Description" />
+                    <div class="flex items-center justify-between text-right text-xs text-muted">
+                        <div>
+                            @if ($form->listing_description)
+                                <span :class="{ 'text-yellow-500': $wire.form.listing_description.length > 2900, '!text-green-600': $wire.form.listing_description.length == 3000, '!text-red-500': $wire.form.listing_description.length > 3000 }" x-text="$wire.form.listing_description.length">
+                                    0
+                                </span>
+                                / 3,000 (includes HTML)
+                            @endif
+                        </div>
+                        <flux:tooltip content="You can use Markdown Syntax as well!">
+                            <div class="flex cursor-help items-center space-x-2">
+                                <span>
+                                    Try using markdown syntax
+                                </span>
+                                <flux:icon.circle-help class="size-4" />
                             </div>
-                            <flux:tooltip content="You can use Markdown Syntax as well!">
-                                <div class="flex cursor-help items-center space-x-2">
-                                    <span>
-                                        Try using markdown syntax
-                                    </span>
-                                    <flux:icon.circle-help class="size-4" />
+                        </flux:tooltip>
+                    </div>
+                </flux:fieldset>
+
+                <flux:separator />
+
+                {{-- Property type --}}
+                <flux:fieldset>
+                    <flux:select class="max-w-72" wire:model.change="form.property_type" label="Type of Property" variant="listbox" searchable placeholder="Select the type of property...">
+                        @foreach (\App\Models\PropertyType::all() as $type)
+                            <flux:option value="{{ $type['id'] }}" wire:key="country-{{ $type['id'] }}">{{ $type['name'] }}</flux:option>
+                        @endforeach
+                    </flux:select>
+                </flux:fieldset>
+
+                <flux:separator />
+
+                {{-- Anemities --}}
+                <flux:fieldset class="space-y-6">
+                    <div class="space-y-3">
+                        <flux:heading>Amenities</flux:heading>
+                        <flux:button class="" icon="plus" wire:click="openAmenitiesModal">Select amenities</flux:button>
+                        <flux:error name="form.amenities" />
+                        <flux:error name="form.amenities.*" />
+                    </div>
+
+                    @if (!is_null($form->amenities) && count($form->amenities) > 0)
+                        <div class="flex flex-wrap gap-x-4 gap-y-2">
+                            @foreach ($form->amenities as $amenity)
+                                <div wire:key="amenity-{{ $amenity->id }}" wire:loading.remove wire:target="removeAmenity({{ $amenity->id }})">
+                                    <flux:badge size="lg" variant="pill">
+                                        {{ $amenity->name }}
+                                        <flux:badge.close wire:click="removeAmenity({{ $amenity->id }})" />
+                                    </flux:badge>
                                 </div>
-                            </flux:tooltip>
-                        </div>
-                    </flux:fieldset>
-                    <flux:separator />
-                    <flux:fieldset>
-                        <div class="grid grid-cols-2 gap-x-4 gap-y-6 tablet-sm:grid-cols-4 tablet:grid-cols-2 desktop:grid-cols-4">
-                            <flux:counter label="Guest count" subtext="guests" wire:model="form.guest_count" min="1" max="16" />
-                            <flux:counter label="Bed count" subtext="beds" wire:model="form.bed_count" min="0" max="99" />
-                            <flux:counter label="Bedroom count" subtext="bedrooms" wire:model="form.bedroom_count" min="0" max="99" />
-                            <flux:counter label="Bathroom count" subtext="baths" wire:model="form.bathroom_count" step="0.5" min="0" max="99" />
-                            <div class="col-span-full">
-                                <flux:error name="form.guest_count" />
-                                <flux:error name="form.bed_count" />
-                                <flux:error name="form.bedroom_count" />
-                                <flux:error name="form.bathroom_count" />
-                            </div>
-                        </div>
-                    </flux:fieldset>
-                    <flux:separator />
-                    <flux:fieldset>
-                        <flux:select class="max-w-72" wire:model.change="form.property_type" label="Type of Property" variant="listbox" searchable placeholder="Select the type of property...">
-                            @foreach (\App\Models\PropertyType::all() as $type)
-                                <flux:option value="{{ $type['id'] }}" wire:key="country-{{ $type['id'] }}">{{ $type['name'] }}</flux:option>
                             @endforeach
-                        </flux:select>
-                    </flux:fieldset>
-
-                    <flux:separator />
-
-                    <flux:fieldset class="space-y-4">
-                        <div class="space-y-2">
-                            <flux:heading>Amenities</flux:heading>
-                            <flux:button icon="plus" wire:click="openAmenitiesModal">Select amenities</flux:button>
-                            <flux:error name="form.selected_amenities" />
-                            <flux:error name="form.selected_amenities.*" />
+                        </div>
+                    @endif
+                    <flux:modal class="w-[90%] space-y-6 tablet-sm:w-[500px]" name="amenities-modal">
+                        <div>
+                            <flux:legend size="xl">Select amenities</flux:legend>
+                            <flux:subheading>Select all of the amenities that your property includes</flux:subheading>
                         </div>
 
-                        @if (!is_null($form->amenities))
-                            <div class="flex flex-wrap gap-x-4 gap-y-2">
-                                @foreach ($form->amenities as $amenity)
-                                    <div wire:key="amenity-{{ $amenity->id }}" wire:loading.remove wire:target="removeAmenity({{ $amenity->id }})">
-                                        <flux:badge size="lg" variant="pill">
-                                            {{ $amenity->name }}
-                                            <flux:badge.close wire:click="removeAmenity({{ $amenity->id }})" />
-                                        </flux:badge>
+                        <flux:checkbox.group class="columns-2 space-y-6" wire:model="selected_amenities">
+                            @if ($all_amenities)
+                                @foreach ($all_amenities as $amenity_group)
+                                    <div class="break-inside-avoid space-y-2" wire:key="amenities-group-{{ $amenity_group->id }}">
+                                        <div>{{ $amenity_group->name }}</div>
+                                        <div class="space-y-1">
+                                            @foreach ($amenity_group->amenities as $amenity)
+                                                <flux:checkbox value="{{ $amenity->id }}" wire:key="amenity-checkbox-{{ $amenity->id }}" label="{{ $amenity->name }}" />
+                                            @endforeach
+                                        </div>
                                     </div>
                                 @endforeach
-                            </div>
-                        @endif
+                            @endif
+                        </flux:checkbox.group>
 
-                        <flux:modal class="w-[90%] space-y-6 tablet-sm:w-[500px]" name="amenities-modal">
-                            <div>
-                                <flux:legend size="xl">Select amenities</flux:legend>
-                                <flux:subheading>Select all of the amenities that your property includes</flux:subheading>
-                            </div>
+                        <div class="flex">
+                            <flux:spacer />
+                            <flux:button variant="primary" wire:click="updateAmenities">Save changes</flux:button>
+                        </div>
+                    </flux:modal>
+                </flux:fieldset>
 
-                            <flux:checkbox.group class="columns-2 space-y-6" wire:model="selected_amenities">
-                                @if ($all_amenities)
-                                    @foreach ($all_amenities as $amenity_group)
-                                        <div class="break-inside-avoid space-y-2" wire:key="amenities-group-{{ $amenity_group->id }}">
-                                            <div>{{ $amenity_group->name }}</div>
-                                            <div class="space-y-1">
-                                                @foreach ($amenity_group->amenities as $amenity)
-                                                    <flux:checkbox value="{{ $amenity->id }}" wire:key="amenity-checkbox-{{ $amenity->id }}" label="{{ $amenity->name }}" />
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                @endif
-                            </flux:checkbox.group>
+                <flux:separator />
 
-                            <div class="flex">
-                                <flux:spacer />
-                                <flux:button variant="primary" wire:click="updateAmenities">Save changes</flux:button>
-                            </div>
-                        </flux:modal>
-                    </flux:fieldset>
+                {{-- Counts --}}
+                <flux:fieldset>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-6 tablet-sm:grid-cols-4 tablet:grid-cols-2 desktop:grid-cols-4">
+                        <flux:counter label="Guest count" subtext="guests" wire:model="form.guest_count" min="1" max="16" />
+                        <flux:counter label="Bed count" subtext="beds" wire:model="form.bed_count" min="0" max="99" />
+                        <flux:counter label="Bedroom count" subtext="bedrooms" wire:model="form.bedroom_count" min="0" max="99" />
+                        <flux:counter label="Bathroom count" subtext="baths" wire:model="form.bathroom_count" step="0.5" min="0" max="99" />
+                        <div class="col-span-full">
+                            <flux:error name="form.guest_count" />
+                            <flux:error name="form.bed_count" />
+                            <flux:error name="form.bedroom_count" />
+                            <flux:error name="form.bathroom_count" />
+                        </div>
+                    </div>
+                </flux:fieldset>
+            </flux:card>
+
+            {{-- Rates & Fees --}}
+
+            <flux:card class="space-y-6">
+                <div>
+                    <flux:heading size="lg">Rates & Fees</flux:heading>
+                    <flux:subheading>The information about the amount to charge per night, as well as taxes and fees</flux:subheading>
                 </div>
-            </x-forms.section>
 
-            <x-forms.section>
-                <x-slot:header>Rates & Fees</x-slot:header>
-                <x-slot:desc>The information about the amount to charge per night, as well as taxes and fees.</x-slot:desc>
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-6 tablet-sm:col-span-3">
-                        <flux:input class="col-span-6" wire:model="property.rates.base" icon="dollar-sign" label="Base Rate" badge="per night" placeholder="00.00" x-mask:dynamic="$money($input)" />
+                        <flux:input class="col-span-6" wire:model.change="form.base_rate" icon="dollar-sign" label="Base Rate" badge="per night" placeholder="00.00" x-mask:dynamic="$money($input)" />
                     </div>
                     <div class="col-span-6 tablet-sm:col-span-3">
-                        <flux:input class="col-span-6" wire:model="property.rates.tax" iconTrailing="percent" label="Tax Rate" mask="99" placeholder="00" />
+                        <flux:input class="col-span-6" wire:model="form.tax_rate" iconTrailing="percent" label="Tax Rate" mask="99" placeholder="00" />
                     </div>
                     <div class="col-span-full tablet-sm:col-span-3 tablet-sm:col-start-10 tablet:col-span-4 tablet:col-start-9">
                         <flux:button class="tablet-sm:label-space w-full" wire:click="addFee" icon="plus">Add fee</flux:button>
                     </div>
 
-                    @if (isset($property['rates']['fees']))
-                        @foreach ($property['rates']['fees'] as $key => $fee)
-                            <flux:separator class="col-span-full" />
-                            <div class="col-span-full grid grid-cols-12 gap-4" wire:key="fee-{{ $key }}" wire:target="removeFee({{ $key }})">
+                    @if (isset($form->fees))
+                        @foreach ($form->fees as $key => $fee)
+                            <div class="col-span-full grid grid-cols-12 gap-4" wire:key="fee-{{ $key }}" wire:loading.remove wire:target="removeFee({{ $key }})">
+                                <flux:separator class="col-span-full" />
                                 <div class="col-span-6 tablet-sm:col-span-4 tablet:col-span-6 desktop:col-span-4">
-                                    <flux:input wire:model="property.rates.fees.{{ $key }}.name" label="Fee name" placeholder="Cleaning fee" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
+                                    <flux:input wire:model="form.fees.{{ $key }}.name" label="Fee name" placeholder="Cleaning fee" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
                                 </div>
-                                <div class="col-span-6 tablet-sm:col-span-3 tablet:col-span-6 desktop:col-span-3" wire:loading.class="opacity-50 pointer-events-none" wire:target="property.rates.fees.{{ $key }}.type">
-                                    @if ($property['rates']['fees'][$key]['type'] == 'fixed')
-                                        <flux:input class="" wire:model="property.rates.fees.{{ $key }}.amount" label="Fee amount" icon="dollar-sign" x-mask:dynamic="$money($input)" placeholder="00.00" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
+                                <div class="col-span-6 tablet-sm:col-span-3 tablet:col-span-6 desktop:col-span-3" wire:loading.class="opacity-50 pointer-events-none" wire:target="form.fees.{{ $key }}.type">
+                                    @if ($fee['type'] == 'fixed')
+                                        <flux:input wire:model="form.fees.{{ $key }}.amount" label="Fee amount" icon="dollar-sign" x-mask:dynamic="$money($input)" placeholder="00.00" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
                                     @else
-                                        <flux:input class="" wire:model="property.rates.fees.{{ $key }}.amount" label="Fee amount" iconTrailing="percent" mask="99" placeholder="00" wire:loading.attr="disabled" wire:target="removeFee({{ $key }}), property.rates.fees.{{ $key }}.type" />
+                                        <flux:input wire:model="form.fees.{{ $key }}.amount" label="Fee amount" iconTrailing="percent" mask="99" placeholder="00" wire:loading.attr="disabled" wire:target="removeFee({{ $key }}), form.fees.{{ $key }}.type" />
                                     @endif
                                 </div>
                                 <div class="col-span-6 tablet-sm:col-span-4 tablet:col-span-6 desktop:col-span-4 desktop:justify-center">
@@ -176,41 +210,32 @@
                                             <flux:icon.circle-help class="size-4 text-muted" />
                                         </flux:tooltip>
 
-                                        <flux:radio.group wire:model.live="property.rates.fees.{{ $key }}.type" variant="segmented">
+                                        <flux:radio.group wire:model.live="form.fees.{{ $key }}.type" variant="segmented">
                                             <flux:radio value="fixed" icon="dollar-sign" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
                                             <flux:radio value="variable" icon="percent" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
                                         </flux:radio.group>
 
                                         <flux:error name="email" />
                                     </flux:field>
-                                    {{-- <flux:field>
-                                        <flux:label class="flex items-center space-x-2">
-                                            <span>Fee type</span>
-                                            <flux:tooltip content='Choose a flat fee or a fee based on a percentage of the total cost'>
-                                                <flux:icon.circle-help class="size-4 text-muted" />
-                                            </flux:tooltip>
-                                        </flux:label>
-                                        <flux:radio.group wire:model.live="property.rates.fees.{{ $key }}.type" variant="segmented" size="lg">
-                                            <flux:radio value="fixed" icon="dollar-sign" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
-                                            <flux:radio value="variable" icon="percent" wire:loading.attr="disabled" wire:target="removeFee({{ $key }})" />
-                                        </flux:radio.group>
-                                    </flux:field> --}}
                                 </div>
                                 <div class="label-space col-span-6 flex items-center justify-end tablet-sm:col-span-1 tablet:col-span-6 desktop:col-span-1">
                                     <flux:button variant="subtle" wire:target="removeFee({{ $key }})" wire:click="removeFee({{ $key }})">
                                         <flux:icon.x class="size-5" />
                                         <span class="tablet-sm:hidden tablet:block desktop:hidden">Remove fee</span>
                                     </flux:button>
-                                    {{-- <flux:button class="label-space tablet-sm:hidden tablet:flex desktop:hidden" wire:target="removeFee({{ $key }})" wire:click="removeFee({{ $key }})" icon="trash-2" variant="filled">Delete fee</flux:button>
-                                <flux:button class="hidden label-space tablet-sm:flex tablet:hidden desktop:flex" wire:target="removeFee({{ $key }})" wire:click="removeFee({{ $key }})" icon="x" variant="subtle"></flux:button> --}}
                                 </div>
                             </div>
                         @endforeach
                     @endif
                 </div>
-            </x-forms.section>
+            </flux:card>
 
-            <x-forms.section>
+            <div>
+                <flux:button wire:click="submit">Submit</flux:button>
+            </div>
+
+            {{-- Photos --}}
+            {{-- <x-forms.section>
                 <x-slot:header>Photos</x-slot:header>
                 <x-slot:desc>Show off your property by adding as many photos as possible</x-slot:desc>
                 <div class="space-y-10" x-data="photosuploader">
@@ -280,11 +305,12 @@
                         </flux:accordion>
                     @endif
                 </div>
-            </x-forms.section>
+            </x-forms.section> --}}
 
-            <x-forms.section>
-                <x-slot:header>Options</x-slot:header>
-                <x-slot:desc>Customize your experience by changing the following options</x-slot:desc>
+            {{-- Options --}}
+            <div class="hidden">
+                {{-- <x-slot:header>Options</x-slot:header>
+                <x-slot:desc>Customize your experience by changing the following options</x-slot:desc> --}}
 
                 <div class="space-y-10">
                     <flux:fieldset class="space-y-4">
@@ -293,8 +319,8 @@
                             <flux:subheading>Set minimum and maximum night requirements for your bookings</flux:subheading>
                         </div>
                         <div class="grid grid-cols-2 gap-6">
-                            <flux:counter label="Minimum nights" subtext="nights" wire:model="property.options.duration-min" min="1" max="30" default="1" />
-                            <flux:counter label="Maximum nights" subtext="nights" wire:model="property.options.duration-max" min="1" max="30" default="14" />
+                            <flux:counter label="Minimum nights" subtext="nights" wire:model="form.duration_min" min="1" max="30" default="1" />
+                            <flux:counter label="Maximum nights" subtext="nights" wire:model="form.duration_max" min="1" max="30" default="14" />
                         </div>
                     </flux:fieldset>
 
@@ -343,7 +369,7 @@
 
                     </div>
                 </div>
-            </x-forms.section>
+            </div>
         </div>
 
     </div>
