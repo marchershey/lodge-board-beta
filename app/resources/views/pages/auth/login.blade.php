@@ -25,7 +25,7 @@
 
 </form>
 
-{{-- <div class="mx-auto tablet-sm:max-w-sm">
+{{-- <div class="mx-auto tablet:max-w-sm">
     <h1 class="font-2xl page-title mb-8 text-center font-semibold">Sign into your account</h1>
 
     <div class="card card-padding">

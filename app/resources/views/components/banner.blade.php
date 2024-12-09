@@ -13,7 +13,7 @@
                     </div>
                     <div class="flex flex-col leading-5">
                         <span class="{{ $banner['style']['title'] }} font-semibold">{{ $banner['title'] }}</span>
-                        <span class="{{ $banner['style']['desc'] }} text-xs tablet-sm:text-sm">
+                        <span class="{{ $banner['style']['desc'] }} text-xs tablet:text-sm">
                             {!! $banner['description'] !!}
                         </span>
                     </div>

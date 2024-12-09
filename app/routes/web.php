@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/test', App\Http\Test::class);
+
+
 // require __DIR__ . '/_auth.php';
 // require __DIR__ . '/_frontend.php';
 // require __DIR__ . '/_host.php';

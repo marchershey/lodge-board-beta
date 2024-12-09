@@ -1,4 +1,4 @@
-<div class="mx-auto tablet-sm:max-w-lg" wire:init="load" x-data="{
+<div class="mx-auto tablet:max-w-lg" wire:init="load" x-data="{
     step: $wire.current_step
 }">
 

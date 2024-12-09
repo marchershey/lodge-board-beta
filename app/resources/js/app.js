@@ -24,6 +24,8 @@ Alpine.plugin(AlpineCollapse);
 Alpine.plugin(mask)
 // Alpine.plugin(AlpinePersist);
 Alpine.plugin(ToastComponent);
+// Start Livewire
+Livewire.start();
 
 // Dev bar
 import "./_devbar";
@@ -31,17 +33,18 @@ import "./_devbar";
 // Theme Mode
 import "./_themeMode";
 
+
+
+
 // Photos
 import "./_photos";
+// Masks
+import "./_masks";
 
-// Start Livewire
-Livewire.start();
-
+// Custom dispatch event to write to browser console
 window.addEventListener("console", (event) => {
     console.log(event.detail);
 });
-
-import "./_formatter";
 
 window.addEventListener(
     "popstate",

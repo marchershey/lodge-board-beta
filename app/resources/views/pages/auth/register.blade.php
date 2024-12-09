@@ -1,4 +1,4 @@
-{{-- <section class="mx-auto tablet-sm:max-w-md">
+{{-- <section class="mx-auto tablet:max-w-md">
     <h1 class="page-title mb-8 text-center">Create an account</h1>
 
     <div class="card card-padding">

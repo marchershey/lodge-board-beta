@@ -46,7 +46,7 @@
     </flux:card>
 </div>
 
-{{-- <section class="card card-padding card-flex mx-auto tablet-sm:max-w-lg">
+{{-- <section class="card card-padding card-flex mx-auto tablet:max-w-lg">
     <p>
         <strong class="text-primary">Welcome to {{ config('app.name') }}!</strong> Before we get started with the setup, you'll need to have the following information ready.
     </p>

@@ -1,4 +1,4 @@
-{{-- <section class="card card-padding card-flex mx-auto tablet-sm:max-w-lg" x-data="{ value: $wire.entangle('site_url') }" wire:init="load">
+{{-- <section class="card card-padding card-flex mx-auto tablet:max-w-lg" x-data="{ value: $wire.entangle('site_url') }" wire:init="load">
 
     <div class="card-header text-center">
         <h1>General Site Information</h1>

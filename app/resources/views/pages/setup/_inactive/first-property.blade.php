@@ -1,6 +1,6 @@
-<section class="mx-auto card card-padding card-flex tablet-sm:max-w-lg" wire:init="load">
+<section class="card card-padding card-flex mx-auto tablet:max-w-lg" wire:init="load">
 
-    <div class="text-center card-header">
+    <div class="card-header text-center">
         <h1>Add Your First Property</h1>
         <p>
             Awesome! Next step is to add a property property.

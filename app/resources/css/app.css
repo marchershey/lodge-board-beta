@@ -65,16 +65,16 @@
         @apply -page-x-padding -page-y-padding;
     }
     .page-x-padding {
-        @apply px-4 tablet:px-6;
+        @apply px-4 tablet-lg:px-6;
     }
     .-page-x-padding {
-        @apply -mx-4 tablet:-mx-6;
+        @apply -mx-4 tablet-lg:-mx-6;
     }
     .page-y-padding {
-        @apply py-4 tablet:py-6;
+        @apply py-4 tablet-lg:py-6;
     }
     .-page-y-padding {
-        @apply -my-4 tablet:-my-6;
+        @apply -my-4 tablet-lg:-my-6;
     }
 
     .page-container {
@@ -84,7 +84,7 @@
         @apply page-padding mb-8 border-b border-gray-300 bg-white;
     }
     .page-title {
-        @apply text-2xl font-bold text-gray-700 tablet:font-bold;
+        @apply text-2xl font-bold text-gray-700 tablet-lg:font-bold;
     }
     .page-desc {
         @apply mt-2 text-muted;
@@ -101,20 +101,20 @@
 
     /* Cards */
     /* .card-container {
-        @apply mx-0 w-full tablet-sm:mx-6;
+        @apply mx-0 w-full tablet:mx-6;
     } */
     .card {
-        @apply has-border bg-white tablet-sm:rounded-xl;
+        @apply has-border bg-white tablet:rounded-xl;
     }
     .card-padding {
-        /* @apply px-6 py-8 tablet-sm:px-8; */
+        /* @apply px-6 py-8 tablet:px-8; */
         @apply page-padding;
     }
     .card-flex {
         @apply flex flex-col space-y-8;
     }
     /* .card-padding-sm {
-        @apply px-6 py-6 tablet-sm:px-8;
+        @apply px-6 py-6 tablet:px-8;
     } */
     .card-header {
         @apply flex flex-col space-y-2;
@@ -147,7 +147,7 @@
         @apply grid grid-cols-1 gap-x-8 gap-y-4 laptop:grid-cols-3;
     }
     /* .form-section-details {
-        @apply page-x-padding flex flex-col justify-center space-y-0 tablet-sm:p-0;
+        @apply page-x-padding flex flex-col justify-center space-y-0 tablet:p-0;
     }
     .form-section-header {
         @apply text-lg font-semibold;
@@ -193,7 +193,7 @@
     }
     .form-input {
         @apply w-full border-0 bg-transparent p-0 placeholder:text-muted-light focus-within:placeholder-muted-lighter focus:outline-none focus:ring-0;
-        /* @apply has-border block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-inset placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400/60 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary tablet-sm:text-base; */
+        /* @apply has-border block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-inset placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400/60 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary tablet:text-base; */
     }
     .form-input-error {
         @apply !ring-2 !ring-red-500;
@@ -349,7 +349,7 @@
         @apply mx-auto flex max-w-screen-laptop flex-col space-y-10;
     }
     .frontend-section {
-        @apply flex flex-col space-y-5 tablet-sm:p-10;
+        @apply flex flex-col space-y-5 tablet:p-10;
     }
     .frontend-title {
         @apply text-3xl font-semibold;
@@ -357,7 +357,7 @@
 
     /* Properties */
     .frontend-property-grid {
-        @apply grid grid-cols-1 gap-10 tablet-sm:grid-cols-3;
+        @apply grid grid-cols-1 gap-10 tablet:grid-cols-3;
     }
 }
 
@@ -432,5 +432,8 @@
     /* This is for buttons that need to be next to inputs, but the input have labels */
     .label-space {
         @apply !mt-[31px];
+    }
+    .color-input > input{
+        @apply p-0.5
     }
 }

@@ -8,7 +8,7 @@
             <div class="page-padding flex border-b border-gray-300 bg-white py-1">
                 <div class="flex h-[49px] items-center">
                     <a href="{{ route('host.dashboard') }}" wire:navigate>
-                        <x-logo textSize="text-xl tablet-sm:text-2xl" iconSize="w-4 h-4" />
+                        <x-logo textSize="text-xl tablet:text-2xl" iconSize="w-4 h-4" />
                     </a>
                 </div>
                 {{-- <div class="flex items-center justify-end w-full p-3">

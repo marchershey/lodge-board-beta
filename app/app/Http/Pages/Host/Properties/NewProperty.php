@@ -5,6 +5,7 @@ namespace App\Http\Pages\Host\Properties;
 use App\Livewire\Forms\HostPropertyForm;
 use App\Models\Amenity;
 use App\Models\AmenityGroup;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
@@ -18,204 +19,152 @@ class NewProperty extends Component
     use WireToast, WithFileUploads;
 
     public HostPropertyForm $form;
-    public Collection $all_amenities;
-    public $selected_amenities;
+    public $all_amenities;
+
+    #[Validate([
+        'selected_amenities' => 'nullable|array',
+        'selected_amenities.*' => 'required|integer|min:0|max:9999',
+    ])]
+    public $selected_amenities = [];
+
+    #[Validate([
+        'temp_photos' => 'nullable|array',
+        'temp_photos.*' => 'image|mimes:jpg,jpeg,png,webp,bmp|extensions:jpg,jpeg,png,webp,bmp|max:10240'
+    ], as: [
+        'temp_photos' => 'selected photos',
+        'temp_photos.*' => 'selected photo',
+    ])]
     public $temp_photos;
 
-    // protected function rules()
-    // {
-    //     return [
-    //         'property.name' => ['required', 'string', 'max:60', 'unique:properties.name'],
-    //         'property.address.line_1' => ['required', 'string', 'max:250'],
-    //         'property.address.line_2' => ['nullable', 'string', 'max:250'],
-    //         'property.address.city' => ['required', 'string', 'max:250'],
-    //         'property.address.state' => ['required', 'string', 'alpha', 'size:2'],
-    //         'property.address.postal' => ['required', 'string', 'numeric', 'digits:5', 'regex:/^\d{5}$/'],
-    //         'property.address.country' => ['required', 'string', 'alpha', 'size:2'],
-    //         // Listing
-    //         'property.listing.type' => ['required'],
-    //         'property.listing.headline' => ['required', 'string', 'max:250'],
-    //         'property.listing.description' => ['nullable', 'string', 'max:3000'],
-    //         'property.listing.guests' => ['required', 'numeric', 'min:1', 'max:16'],
-    //         'property.listing.beds' => ['required', 'numeric', 'min:0', 'max:99'],
-    //         'property.listing.bedrooms' => ['required', 'numeric', 'min:0', 'max:99'],
-    //         'property.listing.bathrooms' => ['required', 'numeric', 'min:0', 'max:99'],
-    //         'property.listing.amenities' => ['required'],
-    //         'property.listing.amenities.*' => [],
-    //         // Pricing
-    //         'property.rates.base' => ['required', 'numeric'],
-    //         'property.rates.tax' => ['required', 'numeric'],
-    //         'property.rates.fees' => [''],
-    //         'property.rates.fees.*' => [''],
-    //         'property.rates.fees.*.name' => ['required', 'string', 'max:250'],
-    //         'property.rates.fees.*.amount' => ['required', 'numeric'],
-    //         'property.rates.fees.*.type' => ['required', 'string'],
-    //         'property.photos' => ['required'],
-    //         'property.photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6144'],
-    //         'temp_photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'extensions:jpg,jpeg,png,webp', 'max:6144'],
-    //         'property.options.visibility' => ['required'],
-    //         'property.options.min-nights' => ['required', 'numeric', 'min:1', 'max:30'],
-    //         'property.options.max-nights' => ['required', 'numeric', 'min:1', 'max:30'],
-    //         'property.options.slug' => ['required'],
-    //         'property.options.color' => ['required'],
-    //     ];
-    // }
-
-    // protected function messages()
-    // {
-    //     return [
-    //         'property.rates.base.required' => 'Base rate required',
-    //         'property.rates.tax.required' => 'Tax rate required',
-    //     ];
-    // }
-
-    // protected function validationAttributes()
-    // {
-    //     return [
-    //         'property.name' => 'Property Name',
-    //         'property.address.line_1' => 'Address Line 1',
-    //         'property.address.line_2' => 'Address Line 2',
-    //         'property.address.city' => 'City',
-    //         'property.address.state' => 'State',
-    //         'property.address.postal' => 'ZIP Code',
-    //         'property.address.country' => 'Country',
-    //         'property.listing.headline' => 'Listing Headline',
-    //         'property.listing.description' => 'Listing Description',
-
-    //         'property.listing.guests' => 'number of guests',
-    //         'property.listing.beds' => 'number of beds',
-    //         'property.listing.bedrooms' => 'number of bedrooms',
-    //         'property.listing.bathrooms' => 'number of bathrooms',
-
-    //         'property.listing.amenities' => 'amenities',
-    //         'property.listing.amenities.*' => 'amenity',
-    //         'property.rates.base' => 'base rate',
-    //         'property.rates.tax' => 'tax rate',
-    //         'property.rates.fees' => 'fees',
-    //         'property.rates.fees.*' => 'fee',
-    //         'property.rates.fees.*.name' => 'fee name',
-    //         'property.rates.fees.*.amount' => 'fee amount',
-    //         'property.rates.fees.*.type' => 'fee type',
-    //         'property.photos' => 'photos',
-    //         'property.photos.*' => 'photo',
-    //         'temp_photos.*' => 'photo',
-    //         'property.options.visibility' => 'visibility',
-    //         'property.options.min-nights' => 'minimum nights',
-    //         'property.options.max-nights' => 'maximum nights',
-    //     ];
-    // }
-
-
-    public function mount(): void
-    {
-        // Need to init this so the char counter will work.
-        // WHAT?
-    }
-
-    public function render()
+    /**
+     * Runs on page load
+     *
+     * @return View
+     */
+    function render(): View
     {
         return view('pages.host.properties.new-property');
     }
 
-    public function load(): void
+    /**
+     * Runs on page load, after page rendered
+     *
+     * @return void
+     */
+    function load(): void
     {
-
-        $this->loadAmenities();
-        // $this->property = [
-        //     'name' => '',
-        //     'address' => [
-        //         'street_1' => '',
-        //         'street_2' => '',
-        //         'city' => '',
-        //         'state' => '',
-        //         'postal' => '',
-        //         'country' => '',
-        //     ],
-        //     'listing' => [
-        //         'headline' => '',
-        //         'description' => '',
-        //         'guests' => 1,
-        //         'beds' => 0,
-        //         'bedrooms' => 0,
-        //         'bathrooms' => 0,
-        //         'amenities' => [],
-        //     ],
-        //     'rates' => [
-        //         'base' => '',
-        //         'tax' => '',
-        //         'fees' => [],
-        //     ],
-        //     'photos' => [],
-        //     'options' => [
-        //         'duration-min' => 1,
-        //         'duration-max' => 14,
-        //         'visibility' => 'private',
-        //     ],
-        // ];
+        //
     }
-
-    public function reload(): void
-    {
-        $this->property = [];
-        $this->load();
-        $this->modal('reset-modal')->close();
-    }
-
 
     /**
-     * Amenities
+     * Runs when user clicks the "reset" form button at the bottom of the page.
+     * Resets the form and closes the reset confirmation modal
+     *
+     * @return void
      */
-    public function loadAmenities(): void
+    function reload(): void
     {
-        $this->all_amenities = AmenityGroup::with('amenities')->get();
-        $this->form->amenities = [];
-    }
-    public function openAmenitiesModal(): void
-    {
-        // Loading the amenities if not already
-        if (!$this->all_amenities) {
-            $this->loadAmenities();
-        }
+        // Reset the entire form
+        $this->form->reset();
 
+        // Close the reset modal
+        $this->modal('reset-confirm-modal')->close();
+    }
+
+    /**
+     * Open Amenities Modal
+     * Runs when the user attempts to open the amenities modal
+     *
+     * - Pulls all amenity groups with associated amenenites
+     * - Clears selected amenities
+     * - Loops through each existing amenities, adds to the selected amenities
+     * -
+     *
+     * @return void
+     */
+    function openAmenitiesModal(): void
+    {
+        // Loading the amenity groups with associated amenities from database
+        $this->all_amenities = AmenityGroup::with('amenities')->get();
+
+        // Reset the selected amenities
         $this->selected_amenities = [];
 
+        // Add existing selected amenities to the
         foreach ($this->form->amenities as $amenity) {
             $this->selected_amenities[] = $amenity->id;
         }
 
+        if ($this->selected_amenities) {
+            dd($this->selected_amenities);
+        }
+
+
+        // Close amenities modal
         $this->modal('amenities-modal')->show();
     }
 
     /**
-     * ! asdf
+     * Save Amenities Changes
+     *
+     * Runs when the user presses the "save changes" button on the amenities modal
+     *
+     *
+     * @return void
      */
-    public function updateAmenities(): void
+    public function saveAmenityChanges(): void
     {
+        // Clear out existing amenities
         $this->form->reset('amenities');
 
+        // Set variable for flatMap
         $selected_amenities = $this->selected_amenities;
-        $this->form->amenities = $this->all_amenities->flatMap(function ($amenity_group) use ($selected_amenities) {
+
+        // Validate amenities
+        $this->validateOnly('selected_amenities');
+
+        // Filters through the amenities groups, then each amenity, checks if amenity id exists
+        $new_amenities = $this->all_amenities->flatMap(function ($amenity_group) use ($selected_amenities) {
             return $amenity_group->amenities->filter(function ($amenity) use ($selected_amenities) {
                 return in_array($amenity->id, $selected_amenities);
             });
         });
 
-        $this->validateOnly('amenities');
+        // Adds each amenity to the form
+        foreach ($new_amenities as $new_amenity) {
+            $this->form->amenities[] = $new_amenity;
+        }
 
+        // Closes amenities modal
         $this->modal('amenities-modal')->close();
     }
 
-    public function removeAmenity($amenity_id): void
+    /**
+     * Remove Amenity
+     * Removes an amenity from the existing amenities.
+     *
+     * @param string $amenity_id
+     * @return void
+     */
+    public function removeAmenity(string $amenity_id): void
     {
-        $this->form->amenities = $this->form->amenities->filter(function ($amenity) use ($amenity_id) {
+        $new_amenities = collect($this->form->amenities)->filter(function ($amenity) use ($amenity_id) {
             return $amenity->id != $amenity_id;
         });
+
+        $this->form->reset('amenities');
+
+        foreach ($new_amenities as $amenity) {
+            $this->form->amenities[] = $amenity;
+        }
     }
 
     /**
-     * Rates & Fees
+     * Add new fee
+     * Adds a new fee to the fees array
+     *
+     * @return void
      */
-
     public function addFee(): void
     {
         array_push($this->form->fees, [
@@ -225,56 +174,74 @@ class NewProperty extends Component
         ]);
     }
 
-    public function removeFee($key): void
+    /**
+     * Remove fee
+     * Removes fee by fee array key from the fees array
+     *
+     * @param integer $fee_key - The array key of the fee the user wants removed
+     * @return void
+     */
+    public function removeFee(int $fee_key): void
     {
-        unset($this->form->fees[$key]);
+        unset($this->form->fees[$fee_key]);
     }
 
     /**
      * Photos
-     *
      * When the user uploads photos, $temp_photos are cleared and only shows new photos.
      * This takes all photos from $temp_photos and adds them to $photos so when the user
      * uploads more photos, the previous photos are not cleared.
      *
+     * @param array $temp_photos - an array of photos uploaded via livewire not uploaded yet
      * @return void
      */
     function updatedTempPhotos(): void
     {
+        // Validate temp photos
         $this->validateOnly('temp_photos.*');
 
-        foreach ($this->temp_photos as $temp_photo) {
-            $this->property['photos'][] = $temp_photo;
+        // Loop through each temp photo, adding it to the form
+        foreach ($this->temp_photos as $selected_photo) {
+            $this->form->photos[] = $selected_photo;
         }
 
+        // Clear temp photos
+        // This is primarily to remove the "# selected files" from the file input
         $this->temp_photos = [];
     }
 
     /**
-     * Runs when the user deletes a specific photo from the photo's grid
+     * Runs when the user deletes a specific photo from the photo's grid, then re-indexs
+     * the array
      *
-     * @param int $key The array key of the photo the user wants to delete
+     * @param int $photos_array_key - The array key of the photo the user wants to remove
      * @return void
      */
-    public function deletePhoto($key): void
+    public function removePhoto($photos_array_key): void
     {
-        // remove the photo
-        unset($this->property['photos'][$key]);
+        // Unset the photo from the form's photo array
+        unset($this->form->photos[$photos_array_key]);
 
-        // reset the array keys to
-        $this->property['photos'] = array_values($this->property['photos']);
+        // Re-index the array
+        $this->form->photos = array_values($this->form->photos);
+        // Why? When you have an array [1,2,3,4] and you delete key 3, the array
+        // will now look like [1,2,4], then you can re-index so it looks like [1,2,3]
     }
 
     /**
      * Runs when the user reorders photos.
+     * Most of the magic happens with wire:sortable, but this rearranges the photos based on
+     * a new order specified in the $photo_order_data, given by wire:sortable.
      *
-     * @param array $data
+     * https://github.com/livewire/sortable
+     *
+     * @param array $photo_order_data -
      * @return void
      */
-    function updatePhotoOrder(array $data): void
+    function updatePhotoOrder(array $photo_order_data): void
     {
-        $this->property['photos'] = array_map(fn($item) => $this->property['photos'][$item['value']], $data);
-        toast()->debug('test')->push();
+        // Reorder photos based on the order given in $photo_order_data
+        $this->form->photos = array_map(fn($item) => $this->form->photos[$item['value']], $photo_order_data);
     }
 
     /**
@@ -282,8 +249,8 @@ class NewProperty extends Component
      */
     public function submit(): void
     {
+        $this->dispatch('console', $this->form);
+        // Validate the form
         $this->validate();
-
-        dd($this->property);
     }
 }
