@@ -5,7 +5,7 @@
         <flux:button href="{{ route('host.properties.index') }}" size="base" icon="undo-2" variant="ghost" wire:navigate.hover>Go Back</flux:button>
     </x-slot:pageActions>
 
-    <div class="mx-auto max-w-3xl space-y-10" wire:init="load">
+    <div class="mx-auto max-w-3xl space-y-10">
 
         {{-- Basic information --}}
         <flux:card class="space-y-6">
@@ -70,7 +70,7 @@
             <flux:input class="max-w-sm capitalize" wire:model="form.listing_headline" label="Listing Headline" placeholder="An amazing summer getaway!" required />
             <div>
                 <flux:editor class="ring-black focus-within:ring-2" wire:model.live.debounce.1s="form.listing_description" toolbar="heading | bold italic strike underline | bullet ordered blockquote | link ~ undo redo" label="Listing Description" required />
-                <div class="mt-1 flex items-center justify-between text-right text-xs text-muted">
+                {{-- <div class="mt-1 flex items-center justify-between text-right text-xs text-muted">
                     <div>
                         <span :class="{ 'text-yellow-500': $wire.form.listing_description.length > 2900, '!text-green-600': $wire.form.listing_description.length == 3000, '!text-red-500': $wire.form.listing_description.length > 3000 }" x-text="$wire.form.listing_description.length">
                             0
@@ -87,7 +87,7 @@
                             <flux:icon.circle-help class="size-4" />
                         </div>
                     </flux:tooltip>
-                </div>
+                </div> --}}
             </div>
 
             <flux:separator />

@@ -3,17 +3,29 @@
 namespace App\Http;
 
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-#[Layout('layouts.app', ['title' => 'Add Property'])]
+#[Layout('layouts.minimal', ['title' => 'Add Property'])]
 class Test extends Component
 {
 
-    #[Validate('required|string|numeric|digits:5|regex:/^\d{5}$/', as: 'zip / postal code')]
-    public ?int $address_postal;
+    #[Validate('required', as: 'zip')]
+    public $zip = "";
+    public $description = "";
 
     public function render()
     {
         return view('test');
+    }
+
+    function load(): void
+    {
+        //
+    }
+
+    function submit(): void
+    {
+        $this->validate();
     }
 }
