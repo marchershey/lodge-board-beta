@@ -70,6 +70,12 @@ jobs:
       - name: Create environment file..
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
+      - name: Update Composer Dependencies
+        run: composer update --no-interaction --no-progress --prefer-dist
+
+      - name: FluxUI
+        run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUXUI_USER }}" "${{ secrets.FLUXUI_LICENSE }}"
+
       - name: Install Dependencies
         run: composer install -q --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
