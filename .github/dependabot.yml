@@ -1,4 +1,10 @@
 version: 2
+registries:
+  flux-pro:
+    type: composer
+    url: https://composer.fluxui.dev
+    username: ${{ secrets.FLUXUI_USER }}
+    password: ${{ secrets.FLUXUI_LICENSE }}
 updates:
   # Maintain dependencies for Composer
   - package-ecosystem: composer
