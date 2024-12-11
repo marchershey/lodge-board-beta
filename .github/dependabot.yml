@@ -5,6 +5,7 @@ registries:
     url: https://composer.fluxui.dev
     username: ${{ secrets.FLUXUI_USER }}
     password: ${{ secrets.FLUXUI_LICENSE }}
+    
 updates:
   # Maintain dependencies for Composer
   - package-ecosystem: composer
