@@ -24,7 +24,8 @@ class HostPropertyForm extends Form
     public ?string $address_state;
 
     #[Validate('required|string|numeric|digits:5|regex:/^\d{5}$/', as: 'zip / postal code')]
-    public ?int $address_postal;
+    public $address_postal = "";
+    // would love to make this "public ?int $address_postal" but... https://github.com/livewire/flux/issues/829
 
     #[Validate('required|string|alpha|size:2', as: 'country')]
     public ?string $address_country;
@@ -65,11 +66,11 @@ class HostPropertyForm extends Form
     public array $amenities = [];
 
     // Rates
-    #[Validate('required|numeric|min:1|max:1000|decimal:0,2', as: 'base rate', onUpdate: false)]
-    public ?int $base_rate;
+    #[Validate('required|numeric|min:1|max:1000|decimal:0,2', as: 'base rate')]
+    public int|string $base_rate = "";
 
-    #[Validate('required|numeric|min:0|max:99', as: 'tax rate', onUpdate: false)]
-    public ?int $tax_rate;
+    #[Validate('required|numeric|min:0|max:99', as: 'tax rate')]
+    public int|string $tax_rate = "";
 
     #[Validate([
         'fees' => 'nullable|array:name,amount,type',
