@@ -36,8 +36,8 @@ jobs:
 
 
 
-      # Below adds the ability to prevent a seperate commit just for linting. 
-      # Uncomment to commit linting changes to the previous commit
+      # Below adds the ability to for laravel pint to automatically commit the fixes
+      # Uncomment to auto fix and commit, or leave commented out to just fail
 
       # - name: Get last commit message
       #   id: last-commit
