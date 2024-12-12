@@ -1,6 +1,6 @@
 name: Code Review
 
-on: [push]
+on: [push, pull_request]
  
 jobs:
   laravel-pint:
