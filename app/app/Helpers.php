@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-function addBannerNotification($id = null, $content = null, $type = "info", $expire = null,)
+function addBannerNotification($id = null, $content = null, $type = 'info', $expire = null)
 {
     session()->push('banners', [
         'id' => $id ?? rand(),
@@ -23,14 +23,16 @@ function settings($type = 'general')
     switch ($type) {
         case 'general':
             return app(App\Settings\GeneralSettings::class);
+
         case 'setup':
             return app(App\Settings\SetupSettings::class);
+
         case 'dev':
             return app(App\Settings\DevSettings::class);
     }
 }
 
-function notify($message, $type = "info", $title = "")
+function notify($message, $type = 'info', $title = '')
 {
     toast()->$type($message, $title)->push();
 }
@@ -41,11 +43,9 @@ function devlog($action)
         toast()->debug($action)->push();
     }
 
-    $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-    $out->writeln("Hello from Terminal");
+    $out = new \Symfony\Component\Console\Output\ConsoleOutput;
+    $out->writeln('Hello from Terminal');
 }
-
-
 
 /**
  * I was researching a few new Laravel practices and came across this neat little "attempt()"
@@ -56,8 +56,9 @@ function devlog($action)
  *
  * P.S. The attempt(), attemptIf(), & attemptUnless().
  *
- * @throws Throwable
  * @return null;
+ *
+ * @throws  Throwable
  */
 function attempt(callable $callback, ...$args): mixed
 {
@@ -94,7 +95,6 @@ function attempt(callable $callback, ...$args): mixed
         Log::info($caller_file);
         Log::info($caller_line);
 
-
         // Idk if I want to use this or not. Let's come back to this.
         // report($e);
 
@@ -106,9 +106,9 @@ function attempt(callable $callback, ...$args): mixed
         // Format and log the error
         Log::emergency(['error' => collect($e->getMessage())->toArray()]);
 
-
         // Dispatch a notification for the user to see
         toast()->danger('Please refresh the page and try again.', 'Server Error')->sticky()->push();
+
         // Dispatch a toast for the developer to see, but only if the environment is local
         if (app()->isLocal()) {
             toast()->debug($e->getMessage())->sticky()->push();
@@ -130,7 +130,6 @@ function attempt(callable $callback, ...$args): mixed
 
 /**
  * Global Validate Function
- *
  */
 // function validate($that, bool $showError = false): mixed
 // {

@@ -3,7 +3,6 @@
 namespace App\Http\Components;
 
 use App\Models\Banner as BannerModel;
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class Banner extends Component
@@ -20,6 +19,7 @@ class Banner extends Component
     public function render()
     {
         $banners = BannerModel::where('location', $this->location)->get();
+
         foreach ($banners as $key => $banner) {
             switch ($banner['type']) {
                 case 'info':
@@ -30,7 +30,9 @@ class Banner extends Component
                         'icon' => 'text-blue-300',
                         'close' => 'text-blue-300',
                     ];
+
                     break;
+
                 case 'warning':
                     $banners[$key]['style'] = [
                         'title' => 'text-amber-900',
@@ -39,7 +41,9 @@ class Banner extends Component
                         'icon' => 'text-amber-400',
                         'close' => 'text-amber-400',
                     ];
+
                     break;
+
                 case 'error':
                     $banners[$key]['style'] = [
                         'title' => 'text-white',
@@ -48,11 +52,13 @@ class Banner extends Component
                         'icon' => 'text-red-300',
                         'close' => 'text-red-300',
                     ];
+
                     break;
             }
         }
 
         $this->banners = $banners->toArray();
+
         return view('components.banner');
     }
 

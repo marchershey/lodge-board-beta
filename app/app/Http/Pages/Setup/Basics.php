@@ -16,19 +16,16 @@ class Basics extends Component
     public $site_name;
     public $site_url;
     public $timezone;
-
     protected $rules = [
         'site_name' => ['required', 'string', 'min:3', 'max:250'],
         'site_url' => ['required', 'string', 'min:3', 'max:250', 'regex:/^(?:(http|https):\/\/)?(?![-.])(localhost|[\da-z\.-]+(?<!-)\.[a-z]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/'],
         'timezone' => ['required', 'string', 'timezone:per_country,US'],
     ];
-
     protected $validationAttributes = [
         'site_name' => 'Website / Business Name',
         'site_url' => 'Website URL',
         'timezone' => 'Default Timezone',
     ];
-
     protected $messages = [
         'site_name' => [
             'required' => 'The :attribute is required.',
@@ -47,9 +44,8 @@ class Basics extends Component
             'required' => 'The :attribute is required.',
             'string' => 'That :attribute is invalid.',
             'timezone' => 'That :attribute is invalid.',
-        ]
+        ],
     ];
-
 
     #[Layout('layouts.minimal', ['title' => 'Setup', 'header' => false])]
     public function render(): View
@@ -59,8 +55,6 @@ class Basics extends Component
 
     /**
      * Runs on init page load
-     *
-     * @return void
      */
     public function load(): void
     {
@@ -75,15 +69,13 @@ class Basics extends Component
 
     /**
      * Injects test data during development, or when the app env is locals
-     *
-     * @return void
      */
     public function loadDevData(): void
     {
         if (app()->isLocal()) {
-            $this->site_name = "Demo Name (temp)";
+            $this->site_name = 'Demo Name (temp)';
             $this->site_url = url('/');
-            $this->timezone = "America/Indiana/Indianapolis";
+            $this->timezone = 'America/Indiana/Indianapolis';
             devlog('Basics Test Data filled');
         }
     }
@@ -91,8 +83,6 @@ class Basics extends Component
     /**
      * Runs when the user presses the continue button. Validates the user's data,
      * updates the settings, continues to next step.
-     *
-     * @return void
      */
     public function submit(): void
     {

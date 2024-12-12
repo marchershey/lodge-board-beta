@@ -26,20 +26,17 @@ class HostAccount extends Component
         'email' => ['required', 'string', 'email', 'max:250'],
         'password' => ['required', 'string', 'min:8'],
     ];
-
     protected $validationAttributes = [
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
         'email' => 'Email Address',
         'password' => 'Password',
     ];
-
     protected $messages = [
         'first_name.required' => 'Please enter your first name.',
         'first_name.string' => 'The first name you entered is invalid.',
         'first_name.max' => 'Your first name is too long. Max 250 characters.',
         'first_name.alpha' => 'Your first name is too long. Max 250 characters.',
-
 
         'last_name.required' => 'Please enter your last name.',
         'last_name.string' => 'The last name you entered is invalid.',
@@ -63,32 +60,28 @@ class HostAccount extends Component
 
     /**
      * Render the page
-     *
-     * @return View
      */
     #[Layout('layouts.minimal', ['title' => 'Setup', 'header' => false])]
-    function render(): View
+    public function render(): View
     {
         return view('pages.setup.host-account');
     }
 
-    function load(): void
+    public function load(): void
     {
         $this->loadDevData();
     }
 
     /**
      * Injects test data during development, or when the app env is locals
-     *
-     * @return void
      */
     public function loadDevData(): void
     {
         if (app()->isLocal()) {
-            $this->first_name = "John";
-            $this->last_name = "Smith";
-            $this->email = "host@email.com";
-            $this->password = "password";
+            $this->first_name = 'John';
+            $this->last_name = 'Smith';
+            $this->email = 'host@email.com';
+            $this->password = 'password';
             // $this->password_confirmation = "password";
             devlog('HostAccount Test Data filled');
         }
@@ -101,25 +94,20 @@ class HostAccount extends Component
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
      *
-     * @param string $property
-     * @param string $value
-     * @return void
+     * @param  string  $property
+     * @param  string  $value
      */
-    function updated($property, $value): void
+    public function updated($property, $value): void
     {
         $this->validateOnly($property);
     }
 
-    function submit(): void
+    public function submit(): void
     {
         // Validate user data
         $this->validate();
 
-
-
         attempt(function () {
-
-
             // Create or update user
             // This is in case the user hits the back button, or doesn't finish the setup
             // and comes back. User #1 should be the host, and this helps keep it that way.
@@ -135,8 +123,6 @@ class HostAccount extends Component
             // Authenticate user
             Auth::login($user);
         });
-
-
 
         // Check if email already exists
         // if (DB::table('users')->where('email', $this->email)->exists()) {
@@ -161,9 +147,6 @@ class HostAccount extends Component
         //     // Authenticate user
         //     Auth::login($user);
         // }
-
-
-
 
         $this->redirect('/setup/basics', navigate: true);
     }

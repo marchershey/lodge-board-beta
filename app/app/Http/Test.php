@@ -9,22 +9,19 @@ use Livewire\Component;
 #[Layout('layouts.minimal', ['title' => 'Add Property'])]
 class Test extends Component
 {
-
     #[Validate('required', as: 'zip')]
-    public $zip = "";
-    public $description = "";
+    public $zip = '';
+
+    public $description = '';
 
     public function render()
     {
         return view('test');
     }
 
-    function load(): void
-    {
-        //
-    }
+    public function load(): void {}
 
-    function submit(): void
+    public function submit(): void
     {
         $this->validate();
     }

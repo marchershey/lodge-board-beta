@@ -3,18 +3,16 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
-
     protected $withoutDuplicates = true;
 
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
      *
-     * @var array<int, string>
+     * @var  array<int, string>
      */
     protected $dontFlash = [
         'current_password',
@@ -27,15 +25,13 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        $this->reportable(function (Throwable $e) {});
     }
 
     /**
      * Get the default context variables for logging.
      *
-     * @return array<string, mixed>
+     * @return  array<string, mixed>
      */
     // protected function context(): array
     // {

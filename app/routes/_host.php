@@ -21,8 +21,6 @@ Route::name('host')->middleware(['auth', 'setup.completed'])->prefix('/host')->g
         //     Route::redirect('/', route('host.properties.new-property.overview'));
         // });
 
-
-
         // Route::name('new-property.')->prefix('/app-property')->group(function () {
         //     // Route::name('')
         //     Route::name('create')->get('/add-property', App\Http\Pages\Host\Properties\AddPropertyIndex::class);

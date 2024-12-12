@@ -25,8 +25,12 @@ class Textarea extends Component
 
     /**
      * Create a new component instance.
+     *
+     * @param  mixed       $wiremodel
+     * @param  mixed       $wiremodeltype
+     * @param  mixed|null  $wiretarget
      */
-    public function __construct($wiremodel, $wiremodeltype = "blur", $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $onfocus = null, bool $required = false, bool $hideAsterisk = false, int $rows = 4, int $cols = 0, int $maxlength = 0)
+    public function __construct($wiremodel, $wiremodeltype = 'blur', $wiretarget = null, ?string $label = null, ?string $desc = null, ?string $placeholder = null, string $type = 'text', ?string $autocomplete = null, ?string $onfocus = null, bool $required = false, bool $hideAsterisk = false, int $rows = 4, int $cols = 0, int $maxlength = 0)
     {
         $this->wiremodel = $wiremodel;
         $this->wiremodeltype = $wiremodeltype;
@@ -47,7 +51,7 @@ class Textarea extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): Closure|View|string
     {
         return view('components.forms.textarea');
     }

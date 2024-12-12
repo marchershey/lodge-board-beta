@@ -4,7 +4,6 @@ namespace Database\Seeders\Properties;
 
 use App\Models\Amenity;
 use App\Models\AmenityGroup;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AmenitySeeder extends Seeder

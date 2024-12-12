@@ -6,7 +6,6 @@ use App\Livewire\Forms\HostPropertyForm;
 use App\Models\Amenity;
 use App\Models\AmenityGroup;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -29,7 +28,7 @@ class NewProperty extends Component
 
     #[Validate([
         'temp_photos' => 'nullable|array',
-        'temp_photos.*' => 'image|mimes:jpg,jpeg,png,webp,bmp|extensions:jpg,jpeg,png,webp,bmp|max:10240'
+        'temp_photos.*' => 'image|mimes:jpg,jpeg,png,webp,bmp|extensions:jpg,jpeg,png,webp,bmp|max:10240',
     ], as: [
         'temp_photos' => 'selected photos',
         'temp_photos.*' => 'selected photo',
@@ -38,31 +37,22 @@ class NewProperty extends Component
 
     /**
      * Runs on page load
-     *
-     * @return View
      */
-    function render(): View
+    public function render(): View
     {
         return view('pages.host.properties.new-property');
     }
 
     /**
      * Runs on page load, after page rendered
-     *
-     * @return void
      */
-    function load(): void
-    {
-        //
-    }
+    public function load(): void {}
 
     /**
      * Runs when user clicks the "reset" form button at the bottom of the page.
      * Resets the form and closes the reset confirmation modal
-     *
-     * @return void
      */
-    function reload(): void
+    public function reload(): void
     {
         // Reset the entire form
         $this->form->reset();
@@ -79,10 +69,8 @@ class NewProperty extends Component
      * - Clears selected amenities
      * - Loops through each existing amenities, adds to the selected amenities
      * -
-     *
-     * @return void
      */
-    function openAmenitiesModal(): void
+    public function openAmenitiesModal(): void
     {
         // Loading the amenity groups with associated amenities from database
         $this->all_amenities = AmenityGroup::with('amenities')->get();
@@ -99,7 +87,6 @@ class NewProperty extends Component
             dd($this->selected_amenities);
         }
 
-
         // Close amenities modal
         $this->modal('amenities-modal')->show();
     }
@@ -108,11 +95,8 @@ class NewProperty extends Component
      * Save Amenities Changes
      *
      * Runs when the user presses the "save changes" button on the amenities modal
-     *
-     *
-     * @return void
      */
-    function saveAmenityChanges(): void
+    public function saveAmenityChanges(): void
     {
         // Clear out existing amenities
         $this->form->reset('amenities');
@@ -142,11 +126,8 @@ class NewProperty extends Component
     /**
      * Remove Amenity
      * Removes an amenity from the existing amenities.
-     *
-     * @param string $amenity_id
-     * @return void
      */
-    function removeAmenity(string $amenity_id): void
+    public function removeAmenity(string $amenity_id): void
     {
         $new_amenities = collect($this->form->amenities)->filter(function ($amenity) use ($amenity_id) {
             return $amenity->id != $amenity_id;
@@ -162,10 +143,8 @@ class NewProperty extends Component
     /**
      * Add new fee
      * Adds a new fee to the fees array
-     *
-     * @return void
      */
-    function addFee(): void
+    public function addFee(): void
     {
         array_push($this->form->fees, [
             'name' => '',
@@ -178,10 +157,9 @@ class NewProperty extends Component
      * Remove fee
      * Removes fee by fee array key from the fees array
      *
-     * @param integer $fee_key - The array key of the fee the user wants removed
-     * @return void
+     * @param  int  $fee_key  - The array key of the fee the user wants removed
      */
-    function removeFee(int $fee_key): void
+    public function removeFee(int $fee_key): void
     {
         unset($this->form->fees[$fee_key]);
     }
@@ -192,10 +170,9 @@ class NewProperty extends Component
      * This takes all photos from $temp_photos and adds them to $photos so when the user
      * uploads more photos, the previous photos are not cleared.
      *
-     * @param array $temp_photos - an array of photos uploaded via livewire not uploaded yet
-     * @return void
+     * @param  array  $temp_photos  - an array of photos uploaded via livewire not uploaded yet
      */
-    function updatedTempPhotos(): void
+    public function updatedTempPhotos(): void
     {
         // Validate temp photos
         $this->validateOnly('temp_photos.*');
@@ -214,10 +191,9 @@ class NewProperty extends Component
      * Runs when the user deletes a specific photo from the photo's grid, then re-indexs
      * the array
      *
-     * @param int $photos_array_key - The array key of the photo the user wants to remove
-     * @return void
+     * @param  int  $photos_array_key  - The array key of the photo the user wants to remove
      */
-    function removePhoto($photos_array_key): void
+    public function removePhoto($photos_array_key): void
     {
         // Unset the photo from the form's photo array
         unset($this->form->photos[$photos_array_key]);
@@ -236,19 +212,18 @@ class NewProperty extends Component
      * Using wotzebra/livewire-sortablejs for sorting instead of livewire/sortable
      * https://github.com/wotzebra/livewire-sortablejs
      *
-     * @param array $photo_order_data -
-     * @return void
+     * @param  array  $photo_order_data  -
      */
-    function updatePhotoOrder(array $photo_order_data): void
+    public function updatePhotoOrder(array $photo_order_data): void
     {
         // Reorder photos based on the order given in $photo_order_data
-        $this->form->photos = array_map(fn($item) => $this->form->photos[$item['value']], $photo_order_data);
+        $this->form->photos = array_map(fn ($item) => $this->form->photos[$item['value']], $photo_order_data);
     }
 
     /**
      * Submit
      */
-    function submit(): void
+    public function submit(): void
     {
         // Validate the form
         $this->validate();
