@@ -1,5 +1,5 @@
 version: 2
-registries:
+repositories:
   flux-pro:
     type: composer-repository
     url: composer.fluxui.dev
@@ -10,6 +10,7 @@ updates:
   # Maintain dependencies for Composer
   - package-ecosystem: composer
     directory: './app'
+    registries: "*"
     schedule:
       interval: daily
     open-pull-requests-limit: 10
