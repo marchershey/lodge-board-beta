@@ -15,8 +15,5 @@ class Index extends Component
         return view('pages.frontend.index');
     }
 
-    function loadProperties(): void
-    {
-        //
-    }
+    public function loadProperties(): void {}
 }

@@ -15,7 +15,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var  array<int, string>
      */
     protected $fillable = [
         'first_name',
@@ -27,7 +27,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var  array<int, string>
      */
     protected $hidden = [
         'password',
@@ -37,7 +37,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @var  array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -54,16 +54,16 @@ class User extends Authenticatable
         $this->attributes['last_name'] = ucwords(strtolower($value));
     }
 
-
-    function full_name(): string
+    public function full_name(): string
     {
-        return $this->first_name . " " . $this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
-    function initials(): string
+    public function initials(): string
     {
         $names = explode(' ', $this->full_name());
         $initials = '';
+
         foreach ($names as $name) {
             $initials .= strtoupper(substr($name, 0, 1));
         }

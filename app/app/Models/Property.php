@@ -19,7 +19,6 @@ class Property extends Model
         parent::boot();
 
         static::creating(function ($property) {
-
             /**
              * Create the slug based off of the property name
              * ! No longer works due to creating model before having property name.
@@ -37,13 +36,8 @@ class Property extends Model
         return $this->hasMany(PropertyPhoto::class)->orderBy('order');
     }
 
-
-
     /**
      * Generate a slug based off of the Property's name
-     *
-     * @param  string $property_name
-     * @return string
      */
     public static function generateSlug(string $property_name): string
     {
@@ -51,13 +45,13 @@ class Property extends Model
         $newSlug = $slug;
 
         $n = 1;
+
         while (\App\Models\Property::whereSlug($newSlug)->exists()) {
             $newSlug = Str::slug($slug . '-' . $n++);
         }
 
         return $newSlug;
     }
-
 
     // /**
     //  * Return a new or existing property

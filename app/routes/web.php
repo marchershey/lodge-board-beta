@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/test', App\Http\Test::class);
 
-
 // require __DIR__ . '/_auth.php';
 // require __DIR__ . '/_frontend.php';
 // require __DIR__ . '/_host.php';
@@ -29,10 +28,12 @@ Route::get('/showallbanner', function () {
 
 Route::get('/addBanner', function () {
     addBannerNotification('no-property', 'this is a test banner');
-    return "Banner added...";
+
+    return 'Banner added...';
 });
 
 Route::get('/flushbanner', function () {
     session()->forget('banners');
-    return "Banner Flushed...";
+
+    return 'Banner Flushed...';
 });

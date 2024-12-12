@@ -23,7 +23,7 @@ class Text extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $wiremodeltype = "blur", string $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, string $type = "text", string $autocomplete = null, string $onfocus = null, bool $required = false, bool $hideAsterisk = false)
+    public function __construct(string $wiremodel, string $wiremodeltype = 'blur', ?string $wiretarget = null, ?string $label = null, ?string $desc = null, ?string $placeholder = null, string $type = 'text', ?string $autocomplete = null, ?string $onfocus = null, bool $required = false, bool $hideAsterisk = false)
     {
         $this->wiremodel = $wiremodel;
         $this->wiremodeltype = $wiremodeltype;
@@ -41,7 +41,7 @@ class Text extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): Closure|View|string
     {
         return view('components.forms.text');
     }

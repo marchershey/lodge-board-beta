@@ -39,7 +39,6 @@ return new class extends Migration
             $table->string('slug');
             $table->string('calendar_color');
 
-
             $table->integer('host_id');
             $table->timestamps();
             $table->softDeletes();

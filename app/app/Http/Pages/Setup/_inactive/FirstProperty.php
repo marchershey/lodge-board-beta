@@ -9,12 +9,12 @@ use Livewire\Component;
 class FirstProperty extends Component
 {
     public string $property_name;
+
     // public string $property_type;
     public string $property_street;
     public string $property_city;
     public string $property_state;
     public string $property_zip;
-
     protected $rules = [
         'property_name' => ['required', 'string', 'min:3', 'max:250', 'regex:/^[\p{L}\p{M}\p{N}\'\s]+$/u'],
         // 'property_type' => ['required', 'string', 'numeric'],
@@ -23,7 +23,6 @@ class FirstProperty extends Component
         'property_state' => ['required', 'string', 'size:2', 'alpha'],
         'property_zip' => ['required', 'string', 'digits:5', 'between:501,99734', 'numeric'],
     ];
-
     protected $validationAttributes = [
         'property_name' => 'Property Name',
         // 'property_type' => 'Property Type',
@@ -32,7 +31,6 @@ class FirstProperty extends Component
         'property_state' => 'State',
         'property_zip' => 'Zip Code',
     ];
-
     protected $messages = [
         'property_name' => [
             'required' => 'The :attribute is required.',
@@ -72,8 +70,7 @@ class FirstProperty extends Component
             'digits' => 'The :attribute is invalid.',
             'between' => 'The :attribute is invalid.',
             'numeric' => 'The :attribute is invalid.',
-
-        ]
+        ],
     ];
 
     #[Layout('layouts.minimal', ['title' => 'Setup'])]
@@ -85,7 +82,7 @@ class FirstProperty extends Component
     /**
      * Runs on init page load
      *
-     * @return void
+     * @return  void
      */
     public function load()
     {
@@ -95,18 +92,16 @@ class FirstProperty extends Component
 
     /**
      * Injects test data during development, or when the app env is locals
-     *
-     * @return void
      */
-    function loadDevData(): void
+    public function loadDevData(): void
     {
         if (app()->isLocal()) {
-            $this->property_name = "Ohana Burnside";
+            $this->property_name = 'Ohana Burnside';
             // $this->property_type = 19; // 19 = House
-            $this->property_street = "23 S Highland Dr";
-            $this->property_city = "Burnside";
-            $this->property_state = "KY";
-            $this->property_zip = "42519";
+            $this->property_street = '23 S Highland Dr';
+            $this->property_city = 'Burnside';
+            $this->property_state = 'KY';
+            $this->property_zip = '42519';
             devlog('SiteConfig test data filled');
         }
     }
@@ -118,11 +113,10 @@ class FirstProperty extends Component
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
      *
-     * @param string $property
-     * @param string $value
-     * @return void
+     * @param  string  $property
+     * @param  string  $value
      */
-    function updated($property, $value): void
+    public function updated($property, $value): void
     {
         $this->validateOnly($property);
     }
@@ -132,8 +126,6 @@ class FirstProperty extends Component
      * if there is an existing property property in the database, if so it sets that as
      * the active property, if not it creates a new one. Then it either adds or edits
      * the property data and saves it. Then continues to the next step.
-     *
-     * @return void
      */
     public function submit(): void
     {
@@ -146,7 +138,7 @@ class FirstProperty extends Component
             $property = Property::first();
         } else {
             // No properties exists, create a new one.
-            $property = new Property();
+            $property = new Property;
         }
 
         // Update the property's information

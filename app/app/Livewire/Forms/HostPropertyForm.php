@@ -24,19 +24,18 @@ class HostPropertyForm extends Form
     public ?string $address_state;
 
     #[Validate('required|string|numeric|digits:5|regex:/^\d{5}$/', as: 'zip / postal code')]
-    public $address_postal = "";
+    public $address_postal = '';
     // would love to make this "public ?int $address_postal" but... https://github.com/livewire/flux/issues/829
 
     #[Validate('required|string|alpha|size:2', as: 'country')]
     public ?string $address_country;
-
 
     // Listing
     #[Validate('required|string|max:250', as: 'headline')]
     public ?string $listing_headline;
 
     #[Validate('required|string|max:3000', as: 'description')]
-    public string $listing_description = "";
+    public string $listing_description = '';
 
     #[Validate('required|integer|numeric|min:1|max:16', as: 'guest count')]
     public int $guest_count = 1;
@@ -56,7 +55,7 @@ class HostPropertyForm extends Form
     // #[Validate('required|array', as: 'amenities')]
     #[Validate([
         'amenities' => 'required|array',
-        'amenities.*' => 'required'
+        'amenities.*' => 'required',
     ], as: [
         'amenities' => 'amenities',
         'amenities.*' => 'amenity item',
@@ -67,10 +66,10 @@ class HostPropertyForm extends Form
 
     // Rates
     #[Validate('required|numeric|min:1|max:1000|decimal:0,2', as: 'base rate')]
-    public int|string $base_rate = "";
+    public int|string $base_rate = '';
 
     #[Validate('required|numeric|min:0|max:99', as: 'tax rate')]
-    public int|string $tax_rate = "";
+    public int|string $tax_rate = '';
 
     #[Validate([
         'fees' => 'nullable|array:name,amount,type',
@@ -108,5 +107,5 @@ class HostPropertyForm extends Form
     public ?string $visibility;
 
     #[Validate('required|regex:/^#[0-9A-Fa-f]{6}$/', as: 'color')]
-    public string $calendar_color = "#2563eb";
+    public string $calendar_color = '#2563eb';
 }

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders\Properties;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PropertyTypeSeeder extends Seeder
@@ -42,7 +41,7 @@ class PropertyTypeSeeder extends Seeder
             'Tower',
             'Townhome',
             'Villa',
-            'Yacht'
+            'Yacht',
         ];
 
         foreach ($types as $type) {

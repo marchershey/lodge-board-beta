@@ -3,13 +3,12 @@
 namespace App\Http\Pages\Setup\_inactive;
 
 use App\Models\Property;
-use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 class PropertyDetails extends Component
 {
-
     public $property;
     public $properties = [];
     public $guest_count = 0;
@@ -27,7 +26,7 @@ class PropertyDetails extends Component
      * Runs on initial page load, sets the first (and only) property property
      * as the active property
      *
-     * @return void
+     * @return  void
      */
     public function load()
     {

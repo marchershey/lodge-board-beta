@@ -24,9 +24,9 @@ class SetupIndex extends Component
      * Loads the current setup step, or redirects to dashboard
      * if the setup has already been completed
      *
-     * @return void
+     * @return  void
      */
-    function load()
+    public function load()
     {
         if (app(SetupSettings::class)->completed) {
             return $this->redirectRoute('dashboard');
@@ -39,10 +39,8 @@ class SetupIndex extends Component
      * Sets the view to the current/latest setup step
      *
      * Gets the latest setup step the user was on and sets the view to that step
-     *
-     * @return void
      */
-    function loadCurrentStep(): void
+    public function loadCurrentStep(): void
     {
         $this->current_step = app(SetupSettings::class)->current_step;
 
@@ -54,11 +52,9 @@ class SetupIndex extends Component
 
     /**
      * Goes to the next setup step
-     *
-     * @return void
      */
     #[On('next-step')]
-    function nextStep(): void
+    public function nextStep(): void
     {
         $this->current_step++;
         $this->updateDatabaseWithCurrentStep();
@@ -66,11 +62,9 @@ class SetupIndex extends Component
 
     /**
      * Retrun to the previous setup step
-     *
-     * @return void
      */
     #[On('prev-step')]
-    function prevStep(): void
+    public function prevStep(): void
     {
         $this->current_step > 1 && $this->current_step--;
         $this->updateDatabaseWithCurrentStep();
@@ -78,10 +72,8 @@ class SetupIndex extends Component
 
     /**
      * Updates the database with the current setup step
-     *
-     * @return void
      */
-    function updateDatabaseWithCurrentStep(): void
+    public function updateDatabaseWithCurrentStep(): void
     {
         app(SetupSettings::class)->current_step = $this->current_step;
         app(SetupSettings::class)->save();
@@ -89,11 +81,9 @@ class SetupIndex extends Component
 
     /**
      * Runs when the setup has been completed. Updates the setup settings
-     *
-     * @return void
      */
     #[On('setup-completed')]
-    function setupCompleted(): void
+    public function setupCompleted(): void
     {
         app(SetupSettings::class)->completed = true;
         app(SetupSettings::class)->current_step = 0;
