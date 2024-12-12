@@ -1,5 +1,5 @@
 version: 2
-repositories:
+registries:
   flux-pro:
     type: composer-repository
     url: composer.fluxui.dev
