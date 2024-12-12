@@ -70,7 +70,7 @@
             <flux:input class="max-w-sm capitalize" wire:model="form.listing_headline" label="Listing Headline" placeholder="An amazing summer getaway!" required />
             <div>
                 <flux:editor class="ring-black focus-within:ring-2" wire:model.live.debounce.1s="form.listing_description" toolbar="heading | bold italic strike underline | bullet ordered blockquote | link ~ undo redo" label="Listing Description" required />
-                {{-- <div class="mt-1 flex items-center justify-between text-right text-xs text-muted">
+                <div class="mt-1 flex items-center justify-between text-right text-xs text-muted">
                     <div>
                         <span :class="{ 'text-yellow-500': $wire.form.listing_description.length > 2900, '!text-green-600': $wire.form.listing_description.length == 3000, '!text-red-500': $wire.form.listing_description.length > 3000 }" x-text="$wire.form.listing_description.length">
                             0
@@ -87,7 +87,7 @@
                             <flux:icon.circle-help class="size-4" />
                         </div>
                     </flux:tooltip>
-                </div> --}}
+                </div>
             </div>
 
             <flux:separator />
@@ -107,7 +107,12 @@
             <div class="space-y-6">
                 <div class="space-y-3">
                     <flux:heading>Amenities</flux:heading>
-                    <flux:button class="" icon="plus" wire:click="openAmenitiesModal">Select amenities</flux:button>
+                    {{--
+                        For some reason, you can't add a red error border/ring around buttons using @error.
+                        Come back to this at a later date and try to figure out how to emphasize the button
+                        below when there is an error with amenities.
+                     --}}
+                    <flux:button icon="plus" wire:click="openAmenitiesModal">Select amenities</flux:button>
                     <flux:error name="form.amenities" />
                     <flux:error name="form.amenities.*" />
                     <flux:error name="selected_amenities" />
@@ -311,10 +316,7 @@
                     </flux:accordion.item>
                 </flux:accordion>
             @endif
-        </flux:card>
-
-        {{-- Options --}}
-        <flux:card class="space-y-6">
+        </flux:card> {{-- Options --}} <flux:card class="space-y-6">
             <div>
                 <flux:heading size="lg">Options</flux:heading>
                 <flux:subheading>Set the visibility, duration requirements, and other settings</flux:subheading>
