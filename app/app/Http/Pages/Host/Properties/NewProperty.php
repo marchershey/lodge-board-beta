@@ -112,7 +112,7 @@ class NewProperty extends Component
      *
      * @return void
      */
-    public function saveAmenityChanges(): void
+    function saveAmenityChanges(): void
     {
         // Clear out existing amenities
         $this->form->reset('amenities');
@@ -146,7 +146,7 @@ class NewProperty extends Component
      * @param string $amenity_id
      * @return void
      */
-    public function removeAmenity(string $amenity_id): void
+    function removeAmenity(string $amenity_id): void
     {
         $new_amenities = collect($this->form->amenities)->filter(function ($amenity) use ($amenity_id) {
             return $amenity->id != $amenity_id;
@@ -165,7 +165,7 @@ class NewProperty extends Component
      *
      * @return void
      */
-    public function addFee(): void
+    function addFee(): void
     {
         array_push($this->form->fees, [
             'name' => '',
@@ -181,7 +181,7 @@ class NewProperty extends Component
      * @param integer $fee_key - The array key of the fee the user wants removed
      * @return void
      */
-    public function removeFee(int $fee_key): void
+    function removeFee(int $fee_key): void
     {
         unset($this->form->fees[$fee_key]);
     }
@@ -217,7 +217,7 @@ class NewProperty extends Component
      * @param int $photos_array_key - The array key of the photo the user wants to remove
      * @return void
      */
-    public function removePhoto($photos_array_key): void
+    function removePhoto($photos_array_key): void
     {
         // Unset the photo from the form's photo array
         unset($this->form->photos[$photos_array_key]);
@@ -233,7 +233,8 @@ class NewProperty extends Component
      * Most of the magic happens with wire:sortable, but this rearranges the photos based on
      * a new order specified in the $photo_order_data, given by wire:sortable.
      *
-     * https://github.com/livewire/sortable
+     * Using wotzebra/livewire-sortablejs for sorting instead of livewire/sortable
+     * https://github.com/wotzebra/livewire-sortablejs
      *
      * @param array $photo_order_data -
      * @return void
@@ -247,9 +248,8 @@ class NewProperty extends Component
     /**
      * Submit
      */
-    public function submit(): void
+    function submit(): void
     {
-        $this->dispatch('console', $this->form);
         // Validate the form
         $this->validate();
     }
