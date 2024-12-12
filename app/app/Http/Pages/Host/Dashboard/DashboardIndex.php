@@ -10,6 +10,6 @@ class DashboardIndex extends Component
 {
     public function render()
     {
-        return view('pages.host.dashboard.dashboard-index',);
+        return view('pages.host.dashboard.dashboard-index');
     }
 }

@@ -6,8 +6,5 @@ trait HasForm
 {
     public bool $formDisabled = true;
 
-    function disableForm(): void
-    {
-        //
-    }
+    public function disableForm(): void {}
 }

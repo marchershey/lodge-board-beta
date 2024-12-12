@@ -18,9 +18,7 @@ class Register extends Component
      *
      * - Add activity tracking
      * - Add ability to disable form when an error has occured.
-     *
      */
-
     use WireToast;
 
     public $first_name;
@@ -29,7 +27,6 @@ class Register extends Component
     public $password;
     public $password_confirmation;
     public $terms;
-
     protected $rules = [
         'first_name' => ['required', 'string', 'max:250'],
         'last_name' => ['required', 'string', 'max:250'],
@@ -38,7 +35,6 @@ class Register extends Component
         'password_confirmation' => ['required', 'string', 'min:8'],
         'terms' => ['accepted'],
     ];
-
     protected $validationAttributes = [
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
@@ -47,7 +43,6 @@ class Register extends Component
         'password_confirmation' => 'Password',
         'terms' => 'Terms of Service',
     ];
-
     protected $messages = [
         'first_name.required' => 'Please enter your first name.',
         'first_name.string' => 'The first name you entered is invalid.',
@@ -77,10 +72,8 @@ class Register extends Component
 
     /**
      * Render the page
-     *
-     * @return View
      */
-    function render(): View
+    public function render(): View
     {
         return view('pages.auth.register');
     }
@@ -88,18 +81,16 @@ class Register extends Component
     /**
      * FOR DEV TESTING ONLY
      * If the app's environment is local, dummy data will be loaded
-     *
-     * @return void
      */
-    function mount(): void
+    public function mount(): void
     {
         // If application's environment is local, then inject dummy data for testing
         if (app()->isLocal()) {
-            $this->first_name = "Marc";
-            $this->last_name = "Hershey";
-            $this->email = "host@email.com";
-            $this->password = "password";
-            $this->password_confirmation = "password";
+            $this->first_name = 'Marc';
+            $this->last_name = 'Hershey';
+            $this->email = 'host@email.com';
+            $this->password = 'password';
+            $this->password_confirmation = 'password';
         }
     }
 
@@ -125,11 +116,10 @@ class Register extends Component
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
      *
-     * @param string $property
-     * @param string $value
-     * @return void
+     * @param  string  $property
+     * @param  string  $value
      */
-    function updated($property, $value): void
+    public function updated($property, $value): void
     {
         $this->validateOnly($property);
     }
@@ -148,12 +138,12 @@ class Register extends Component
      * - Dispatch Toast
      * - Redirect to dashboard
      *
-     * @throws Throwable
-     * @return mixed
+     * @return  mixed
+     *
+     * @throws  Throwable
      */
-    function submit(): void
+    public function submit(): void
     {
-
         // Validate user data
         $this->validate();
 

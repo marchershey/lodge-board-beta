@@ -19,7 +19,7 @@ class Logo extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(bool $hideIcon = false, bool $hideText = false, bool $hideBuild = false, bool $bgDark = false, bool $bgThemeSwitch = false, string $textSize = "text-3xl", string $iconSize = "w-6 h-6")
+    public function __construct(bool $hideIcon = false, bool $hideText = false, bool $hideBuild = false, bool $bgDark = false, bool $bgThemeSwitch = false, string $textSize = 'text-3xl', string $iconSize = 'w-6 h-6')
     {
         $this->hideIcon = $hideIcon;
         $this->hideText = $hideText;
@@ -27,13 +27,13 @@ class Logo extends Component
         $this->bgDark = $bgDark;
         $this->bgThemeSwitch = $bgThemeSwitch;
         $this->textSize = $textSize;
-        $this->iconSize =  $iconSize;
+        $this->iconSize = $iconSize;
     }
 
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): Closure|View|string
     {
         return view('components.logo');
     }

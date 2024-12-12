@@ -13,13 +13,13 @@ trait ValidateOnUpdate
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
      *
-     * @param string $property
-     * @param string $value
-     * @return void
+     * @param  string  $property
+     * @param  string  $value
      */
-    function updated($property, $value): void
+    public function updated($property, $value): void
     {
         $this->resetValidation($property);
+
         // This validates the property, ONLY if it isn't null.
         if ($value) {
             $this->validateOnly($property);

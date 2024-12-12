@@ -15,7 +15,7 @@ class Spinner extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiretarget = "", string $size = "w-5 h-5", string $color = "text-muted")
+    public function __construct(string $wiretarget = '', string $size = 'w-5 h-5', string $color = 'text-muted')
     {
         $this->wiretarget = $wiretarget;
         $this->size = $size;
@@ -25,7 +25,7 @@ class Spinner extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): Closure|View|string
     {
         return view('components.spinner');
     }

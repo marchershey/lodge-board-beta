@@ -2,7 +2,6 @@
 
 namespace Database\Seeders\Users;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -16,7 +15,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Host',
             'last_name' => 'User',
             'email' => 'host@email.com',
-            'password' => bcrypt('password')
+            'password' => bcrypt('password'),
         ]);
     }
 }

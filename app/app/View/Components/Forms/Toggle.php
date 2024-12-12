@@ -15,7 +15,7 @@ class Toggle extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $label, string $desc = null)
+    public function __construct(string $wiremodel, string $label, ?string $desc = null)
     {
         $this->wiremodel = $wiremodel;
         $this->label = $label;
@@ -25,7 +25,7 @@ class Toggle extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): Closure|View|string
     {
         return view('components.forms.toggle');
     }

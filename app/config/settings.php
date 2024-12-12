@@ -5,7 +5,6 @@ use App\Settings\GeneralSettings;
 use App\Settings\SetupSettings;
 
 return [
-
     /**
      * Each settings class used in your application must be registered, you can
      * put them (manually) here.

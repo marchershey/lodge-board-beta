@@ -3,7 +3,6 @@
 namespace App\Http\Components\Host\Dashboard;
 
 use App\Models\Property;
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class PropertySelector extends Component
@@ -17,7 +16,7 @@ class PropertySelector extends Component
         return view('components.host.dashboard.property-selector');
     }
 
-    function load(): void
+    public function load(): void
     {
         // Load All Properties
         $this->properties = Property::all()->toArray();

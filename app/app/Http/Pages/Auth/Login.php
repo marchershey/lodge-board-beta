@@ -17,27 +17,22 @@ class Login extends Component
      * - Add activity tracking
      * - Add throttling / rate limiting
      * - figure out if you want to use "exists" rule on email
-     *
      */
-
     use WireToast;
 
     public $email;
     public $password;
     public $remember = false;
-
     protected $rules = [
         // 'email' => ['required', 'string', 'email', 'max:250', 'exists:users'],
         'email' => ['required', 'string', 'email:rfc,strict,spoof,filter,filter_unicode', 'max:250'],
         'password' => ['required', 'string', 'max:250'],
         'remember' => ['boolean'],
     ];
-
     protected $validationAttributes = [
         'email' => 'Email Address',
         'password' => 'Password',
     ];
-
     protected $messages = [
         'email.required' => 'Please enter your email address.',
         'email.string' => 'The email address you entered is invalid.',
@@ -58,10 +53,8 @@ class Login extends Component
 
     /**
      * Render the page
-     *
-     * @return View
      */
-    function render(): View
+    public function render(): View
     {
         return view('pages.auth.login');
     }
@@ -69,15 +62,13 @@ class Login extends Component
     /**
      * FOR DEV TESTING ONLY
      * If the app's environment is local, dummy data will be loaded
-     *
-     * @return void
      */
-    function mount(): void
+    public function mount(): void
     {
         // If application's environment is local, then inject dummy data for testing
         if (app()->isLocal()) {
-            $this->email = "host@email.com";
-            $this->password = "password";
+            $this->email = 'host@email.com';
+            $this->password = 'password';
             $this->remember = true;
         }
     }
@@ -89,11 +80,10 @@ class Login extends Component
      * reset the property's validation, but do not rerun validation until the user
      * resubmits the form
      *
-     * @param string $property
-     * @param string $value
-     * @return void
+     * @param  string  $property
+     * @param  string  $value
      */
-    function updated($property, $value): void
+    public function updated($property, $value): void
     {
         $this->validateOnly($property);
     }
@@ -108,10 +98,9 @@ class Login extends Component
      * - Check user credentials
      * - Redirect to dashboard
      *
-     * @throws Throwable
-     * @return mixed
+     * @throws  Throwable
      */
-    function submit(): mixed
+    public function submit(): mixed
     {
         // Validate user data
         $this->validate();
@@ -141,7 +130,7 @@ class Login extends Component
                 // Dispatch notification
                 toast()->danger('The email or password you entered is incorrect.', 'Invalid Credentials')->push();
             }
-        }, "Account signin");
+        }, 'Account signin');
 
         return false;
     }

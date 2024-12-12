@@ -27,7 +27,6 @@ class Select extends Component
     // Add 'showKeyAsSelection' to the element to set at true.
     public $showKeyAsSelection;
 
-
     // //////////////////////////////
     // public $options = null;
     // public $wiremodel;
@@ -41,7 +40,7 @@ class Select extends Component
      * Create a new component instance.
      */
     // public function __construct(array $options, string $wiremodel, string $label = "", string $desc = "", string $placeholder = "", string $class = "")
-    public function __construct(array $options, string $wiremodel, string $wiretarget = null, string $label = null, string $desc = null, string $placeholder = null, bool $showKeyAsSelection = false)
+    public function __construct(array $options, string $wiremodel, ?string $wiretarget = null, ?string $label = null, ?string $desc = null, ?string $placeholder = null, bool $showKeyAsSelection = false)
     {
         $this->wiremodel = $wiremodel;
         $this->wiretarget = $wiretarget;
@@ -55,7 +54,7 @@ class Select extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): Closure|View|string
     {
         return view('components.forms.select');
     }

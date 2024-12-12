@@ -13,6 +13,7 @@ Route::middleware(['auth'])->group(function () {
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
+
         return redirect()->route('login');
     })->name('logout');
 });
