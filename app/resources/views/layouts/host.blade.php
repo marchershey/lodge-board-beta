@@ -154,7 +154,7 @@
                 </div>
 
                 {{-- Content Container --}}
-                <div class="relative">
+                <div class="relative flex-1">
                     <div class="page-header sticky top-0 z-10">
                         <div class="page-x-padding container flex items-center justify-between">
                             <h1 class="page-title">{{ $pageTitle }}</h1>
