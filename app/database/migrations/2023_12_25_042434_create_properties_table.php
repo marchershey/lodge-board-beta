@@ -22,9 +22,9 @@ return new class extends Migration
             $table->integer('address_postal');
             $table->string('address_country');
             // Listing
-            $table->integer('type_id');
             $table->string('listing_headline');
             $table->text('listing_description');
+            $table->integer('type_id');
             $table->integer('guest_count');
             $table->integer('bed_count');
             $table->integer('bedroom_count');
@@ -33,11 +33,11 @@ return new class extends Migration
             $table->integer('base_rate');
             $table->integer('tax_rate');
             // Options
+            $table->string('slug');
+            $table->string('calendar_color');
             $table->integer('duration_min');
             $table->integer('duration_max');
             $table->string('visibility');
-            $table->string('slug');
-            $table->string('calendar_color');
 
             $table->integer('host_id');
             $table->timestamps();

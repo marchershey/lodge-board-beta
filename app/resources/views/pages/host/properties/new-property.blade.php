@@ -134,7 +134,7 @@
                 @endif
 
                 {{-- Amenities modal --}}
-                <flux:modal class="w-[90%] space-y-6 tablet:w-[500px]" name="amenities-modal">
+                <flux:modal class="max-h-[50rem] w-[90%] space-y-6" name="amenities-modal">
                     <div>
                         <flux:legend size="xl">Select amenities</flux:legend>
                         <flux:subheading>Select all of the amenities that your property includes</flux:subheading>
