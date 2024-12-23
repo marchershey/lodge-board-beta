@@ -2,6 +2,9 @@
 
 namespace App\Forms;
 
+use App\Models\Amenity;
+use App\Models\AmenityGroup;
+use App\Models\Property;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -108,4 +111,40 @@ class HostPropertyForm extends Form
 
     #[Validate('required|regex:/^#[0-9A-Fa-f]{6}$/', as: 'color')]
     public string $calendar_color = '#2563eb';
+
+    public function loadDevData(): void
+    {
+        // Basic information
+        $this->name = 'Sunset Cabin';
+        $this->address_line1 = '123 Main St';
+        $this->address_line2 = '';
+        $this->address_city = 'San Francisco';
+        $this->address_state = 'AL';
+        $this->address_postal = '12345';
+        $this->address_country = 'US';
+
+        // Listing information
+        $this->listing_headline = 'An amazing summer getaway!';
+        $this->listing_description = '<p>This is the listing description for Sunset Cabin, located in San Francisco, AL. </p>';
+        $this->property_type = 7;
+
+        // Amenities
+        $amenities = Amenity::all()->random(\rand(5, 30));
+
+        foreach ($amenities as $amenity) {
+            $this->amenities[] = $amenity;
+        }
+        // $amenityGroups = AmenityGroup::all()->random(\rand(1, 5));
+        // foreach ($amenityGroups as $group) {
+        //     $this->amenities[] =
+        // }
+    }
+
+    public function saveProperty(): void
+    {
+        // Validate all form data
+        $this->validate();
+
+        $results = Property::saveProperty($this->all());
+    }
 }

@@ -265,8 +265,9 @@
         "unary_operator_spaces": true,
         "visibility_required": {
             "elements": [
+                "property",
                 "method",
-                "property"
+                "const"
             ]
         },
         "whitespace_after_comma_in_array": true,

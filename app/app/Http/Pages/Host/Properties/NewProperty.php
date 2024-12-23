@@ -2,8 +2,7 @@
 
 namespace App\Http\Pages\Host\Properties;
 
-use App\Livewire\Forms\HostPropertyForm;
-use App\Models\Amenity;
+use App\Forms\HostPropertyForm;
 use App\Models\AmenityGroup;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
@@ -46,7 +45,10 @@ class NewProperty extends Component
     /**
      * Runs on page load, after page rendered
      */
-    public function load(): void {}
+    public function load(): void
+    {
+        $this->form->loadDevData();
+    }
 
     /**
      * Runs when user clicks the "reset" form button at the bottom of the page.
@@ -83,9 +85,9 @@ class NewProperty extends Component
             $this->selected_amenities[] = $amenity->id;
         }
 
-        if ($this->selected_amenities) {
-            dd($this->selected_amenities);
-        }
+        // if ($this->selected_amenities) {
+        //     dd($this->selected_amenities);
+        // }
 
         // Close amenities modal
         $this->modal('amenities-modal')->show();
@@ -225,7 +227,12 @@ class NewProperty extends Component
      */
     public function submit(): void
     {
+        dd($this->form->toArray());
+
         // Validate the form
         $this->validate();
+
+        // Save property
+        $this->form->saveProperty();
     }
 }

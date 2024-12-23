@@ -5,7 +5,7 @@
         <flux:button href="{{ route('host.properties.index') }}" size="base" icon="undo-2" variant="ghost" wire:navigate.hover>Go Back</flux:button>
     </x-slot:pageActions>
 
-    <div class="mx-auto max-w-3xl space-y-10">
+    <div class="mx-auto max-w-3xl space-y-10" wire:init="load">
 
         {{-- Basic information --}}
         <flux:card class="space-y-6">
@@ -124,7 +124,7 @@
                     <div class="flex flex-wrap gap-x-4 gap-y-2">
                         @foreach ($form->amenities as $amenity)
                             <div wire:key="amenity-{{ $amenity->id }}" wire:loading.remove wire:target="removeAmenity({{ $amenity->id }})">
-                                <flux:badge size="lg" variant="pill">
+                                <flux:badge size="sm">
                                     {{ $amenity->name }}
                                     <flux:badge.close wire:click="removeAmenity({{ $amenity->id }})" />
                                 </flux:badge>
@@ -141,7 +141,23 @@
                     </div>
 
                     @if ($all_amenities)
-                        <flux:checkbox.group class="columns-2 space-y-6" wire:model="selected_amenities">
+                        <flux:checkbox.group class="flex flex-col space-y-6" wire:model="selected_amenities">
+                            @foreach ($all_amenities as $amenity_group)
+                                <div class="space-y-2">
+                                    <flux:heading level="3">{{ $amenity_group->name }}</flux:heading>
+                                    <flux:separator />
+                                    <div class="columns-2 space-y-2">
+                                        @foreach ($amenity_group['amenities'] as $amenity)
+                                            <flux:checkbox value="{{ $amenity->id }}"
+                                            wire:key="amenity-checkbox-{{ $amenity['id'] }}" label="{{ $amenity['name'] }}" />
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        </flux:checkbox.group>
+
+                        {{-- <flux:checkbox.group class="columns-2 space-y-6" wire:model="selected_amenities">
                             @foreach ($all_amenities as $amenity_group)
                                 <div class="break-inside-avoid space-y-2" wire:key="amenities-group-{{ $amenity_group['id'] }}">
                                     <div>{{ $amenity_group['name'] }}</div>
@@ -152,7 +168,7 @@
                                     </div>
                                 </div>
                             @endforeach
-                        </flux:checkbox.group>
+                        </flux:checkbox.group> --}}
                     @endif
 
                     <div class="flex">

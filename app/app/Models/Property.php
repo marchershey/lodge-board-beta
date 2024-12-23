@@ -72,4 +72,9 @@ class Property extends Model
 
     //     // return ($property) ? $property : self::create();
     // }
+
+    public static function saveProperty($form): void
+    {
+        dd($form);
+    }
 }
