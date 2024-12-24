@@ -20,7 +20,7 @@
         "@alpinejs/collapse": "3.14.7",
         "@alpinejs/focus": "3.14.7",
         "@alpinejs/mask": "3.14.7",
-        "@alpinejs/persist": "3.14.7",
+        "@alpinejs/persist": "3.14.8",
         "@alpinejs/ui": "3.14.7",
         "@nextapps-be/livewire-sortablejs": "0.4.1",
         "@tailwindcss/aspect-ratio": "0.4.2",
