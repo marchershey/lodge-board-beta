@@ -21,7 +21,10 @@
     add() { this.value = (this.addDisabled) ? (this.value + this.step) : this.value },
     subtract() { this.value = (this.subtractDisabled) ? (this.value - this.step) : this.value },
     addDisabled() { return this.value >= this.max },
-    subtractDisabled() { return this.value <= this.min }
+    subtractDisabled() { return this.value <= this.min },
+    formatValue() {
+        return this.value % 1 === 0 ? this.value.toFixed(0) : this.value.toFixed(1);
+    }
 }">
 
     <flux:field>
@@ -31,14 +34,14 @@
         @if ($desc)
             <flux:description>{{ $desc }}</flux:description>
         @endif
-        <div class="flex min-w-fit items-center">
+        <div class="flex items-center min-w-fit">
             <div class="@error($model) rounded-lg ring-1 ring-red-500 @enderror flex items-center">
                 <div :class="subtractDisabled() && 'opacity-20'">
                     <flux:button square icon="minus" variant="filled" x-bind:disabled="subtractDisabled" x-on:click="subtract()" />
                 </div>
-                <div class="flex-center w-20">
+                <div class="w-20 flex-center">
                     <div class="flex flex-col text-center">
-                        <span x-text="value">0</span>
+                        <span x-text="formatValue()">0</span>
                         @if ($subtext)
                             <span class="text-xs text-muted">{{ $subtext }}</span>
                         @endif

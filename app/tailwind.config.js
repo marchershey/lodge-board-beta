@@ -45,10 +45,10 @@ export default {
                 desktop: "1280px", // => @media (min-width: 1280px) { ... }
             },
             width: {
-                '128': '32rem',
+                128: "32rem",
             },
             fontFamily: {
-                sans: ['Inter', 'sans-serif'],
+                sans: ["Inter", "sans-serif"],
             },
             // fontFamily: {
             //     default: ["Inter Tight", ...defaultTheme.fontFamily.sans],

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('property_fees', function (Blueprint $table) {
             $table->id();
-            $table->integer('key');
+            $table->integer('position');
             $table->integer('property_id');
             $table->string('name');
             $table->integer('amount');
-            $table->boolean('fixed');
+            $table->string('type');
             $table->timestamps();
         });
     }

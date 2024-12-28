@@ -65,20 +65,23 @@ return [
     */
 
     'temporary_file_upload' => [
-        'disk' => null,                                                             // Example: 'local', 's3'              | Default: 'default'
-        'rules' => ['required', 'mimes:png,jpeg,jpg,webp', 'max:12288'],            // Example: ['file', 'mimes:png,jpg']  | Default: ['required', 'file', 'max:12288'] (12MB)
-        'directory' => 'temp',                                                      // Example: 'tmp'                      | Default: 'livewire-tmp'
-        'middleware' => null,                                                       // Example: 'throttle:5,1'             | Default: 'throttle:60,1'
-        'preview_mimes' => [                                                        // Supported file types for temporary pre-signed file URLs...
+        'disk' => null,                     // Example: 'local', 's3'              | Default: 'default'
+        // 'rules' => [],
+        'rules' => [                        // Example: ['file', 'mimes:png,jpg']  | Default: ['required', 'file', 'max:12288'] (12MB)
+            'mimetypes:image/jpeg,image/jpg,image/png,image/webp,image/bmp',
+            'extensions:jpg,jpeg,png,webp,bmp',
+            'mimes:jpg,jpeg,png,webp,bmp',
+            'max:12288',
+        ],
+        'directory' => 'temp',              // Example: 'tmp'                      | Default: 'livewire-tmp'
+        'middleware' => 'throttle:60,1',    // Example: 'throttle:5,1'             | Default: 'throttle:60,1'
+        'preview_mimes' => [                // Supported file types for temporary pre-signed file URLs...
             'png',
             'jpeg',
             'jpg',
             'webp',
-            // 'png', 'gif', 'bmp', 'svg', 'wav', 'mp4',
-            // 'mov', 'avi', 'wmv', 'mp3', 'm4a',
-            // 'jpg', 'jpeg', 'mpga', 'webp', 'wma',
         ],
-        'max_upload_time' => 5,                                                     // Max duration (in minutes) before an upload is invalidated...
+        'max_upload_time' => 5,
     ],
 
     /*
@@ -133,6 +136,7 @@ return [
 
     'navigate' => [
         'show_progress_bar' => true,
+        'progress_bar_color' => '#2563eb',
     ],
 
     /*

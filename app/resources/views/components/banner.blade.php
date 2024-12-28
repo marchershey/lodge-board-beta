@@ -1,8 +1,8 @@
-<div>
+<div class="flex-none">
     @foreach ($banners as $banner)
         <div class="page-x-padding {{ $banner['style']['bg'] }} border-b py-4 text-white">
-            <div class="page-x-padding container flex justify-between space-x-2">
-                <a class="flex w-full items-center space-x-4" href="{{ $banner['link'] ?? '#' }}" wire:navigate.hover>
+            <div class="container flex justify-between space-x-2 page-x-padding">
+                <a class="flex items-center w-full space-x-4" href="{{ $banner['link'] ?? '#' }}" wire:navigate.hover>
                     <div>
                         <svg class="{{ $banner['style']['icon'] }} h-8 w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />

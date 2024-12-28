@@ -81,7 +81,7 @@
         @apply flex-auto flex-col;
     }
     .page-header {
-        @apply page-padding mb-8 border-b border-gray-300 bg-white;
+        @apply mb-8 border-b border-gray-300 bg-white;
     }
     .page-title {
         @apply text-2xl font-bold text-gray-700 tablet-lg:font-bold;
@@ -93,7 +93,7 @@
         @apply -my-4;
     }
     .page-content {
-        @apply page-x-padding flex flex-col space-y-10;
+        @apply flex flex-col space-y-10;
     }
     .page-footer {
         @apply page-padding bg-gray-200 text-xs text-muted;
@@ -193,7 +193,7 @@
     }
     .form-input {
         @apply w-full border-0 bg-transparent p-0 placeholder:text-muted-light focus-within:placeholder-muted-lighter focus:outline-none focus:ring-0;
-        /* @apply has-border block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-inset placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400/60 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-gray-900/70 dark:ring-gray-700 dark:placeholder:text-gray-700 dark:focus:ring-primary tablet:text-base; */
+        /* @apply has-border block w-full rounded-md border-0 bg-gray-100 px-3 py-2 text-lg leading-6 ring-inset placeholder:text-muted-light hover:shadow hover:ring-1 hover:ring-gray-400/60 focus:bg-white focus:placeholder-gray-200 focus:ring-2 focus:ring-inset focus:ring-primary tablet:text-base; */
     }
     .form-input-error {
         @apply !ring-2 !ring-red-500;
@@ -243,7 +243,7 @@
         @apply flex items-center justify-between;
     }
     .form-toggle button {
-        @apply relative ml-4 inline-flex w-14 rounded-full bg-gray-100 py-1 ring-1 ring-gray-300 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary group-hover:ring-2 group-hover:ring-gray-400 dark:bg-gray-900/70 dark:ring-gray-700 dark:focus-visible:ring-primary dark:group-hover:ring-gray-700;
+        @apply relative ml-4 inline-flex w-14 rounded-full bg-gray-100 py-1 ring-1 ring-gray-300 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary group-hover:ring-2 group-hover:ring-gray-400;
     }
     .form-toggle-error {
         @apply !ring-2 !ring-red-500;
@@ -252,7 +252,7 @@
         @apply h-5 w-5 rounded-full bg-white ring-1 ring-gray-300 transition-transform;
     }
     .form-toggle-button-active {
-        @apply !bg-primary focus-visible:!ring-black group-hover:!bg-primary-hover group-hover:!ring-0 dark:focus-visible:!ring-white dark:group-hover:!ring-primary-hover;
+        @apply !bg-primary focus-visible:!ring-black group-hover:!bg-primary-hover group-hover:!ring-0;
     }
 
     /* Buttons */
@@ -322,7 +322,7 @@
     } */
 
     /* .button {
-        @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-md px-2.5 py-1.5 font-medium outline-none ring-black focus-visible:ring-2 dark:ring-white;
+        @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-md px-2.5 py-1.5 font-medium outline-none ring-black focus-visible:ring-2;
     }
     .button-md {
         @apply h-auto !p-1.5 text-sm;
@@ -336,7 +336,7 @@
         @apply bg-primary text-white hover:bg-primary-hover active:bg-primary-active;
     }
     .button-muted {
-        @apply bg-muted-lighter text-gray-800 ring-1 ring-gray-300 hover:bg-gray-300 dark:bg-gray-900/70 dark:text-white dark:ring-gray-700 dark:hover:bg-gray-900;
+        @apply bg-muted-lighter text-gray-800 ring-1 ring-gray-300 hover:bg-gray-300;
     }
     .button-muted-dark {
         @apply bg-gray-900/70 text-white ring-1 ring-gray-700 hover:bg-gray-900;

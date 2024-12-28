@@ -1,6 +1,6 @@
 <x-layouts.host>
 
-    <x-slot:pageTitle>Dashboard</x-slot:pageTitle>
+    <x-slot:page-title>Dashboard</x-slot:page-title>
 
     <div class="page-content">
         <div class="card card-padding card-flex">

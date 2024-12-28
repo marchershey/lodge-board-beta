@@ -7,4 +7,4 @@ Alpine.data("photosuploader", () => ({
     photosCount: 0,
 }));
 
-import "@nextapps-be/livewire-sortablejs";
+import "@wotz/livewire-sortablejs";

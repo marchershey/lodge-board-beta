@@ -13,6 +13,7 @@ Route::name('host')->middleware(['auth', 'setup.completed'])->prefix('/host')->g
     Route::name('.properties')->prefix('/properties')->group(function () {
         Route::name('.index')->get('/', App\Http\Pages\Host\Properties\PropertiesIndex::class);
         Route::name('.new')->get('/new', App\Http\Pages\Host\Properties\NewProperty::class);
+        Route::name('.view')->get('/{slug}', App\Http\Pages\Host\Properties\ViewProperty::class);
 
         // New Property
         // Route::name('.new-property')->prefix('/new')->group(function () {

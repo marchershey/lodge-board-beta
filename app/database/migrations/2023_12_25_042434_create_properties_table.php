@@ -16,7 +16,7 @@ return new class extends Migration
             // Basics
             $table->string('name');
             $table->string('address_line1');
-            $table->string('address_line2');
+            $table->string('address_line2')->nullable();
             $table->string('address_city');
             $table->string('address_state');
             $table->integer('address_postal');
@@ -28,9 +28,9 @@ return new class extends Migration
             $table->integer('guest_count');
             $table->integer('bed_count');
             $table->integer('bedroom_count');
-            $table->decimal('bathroom_count', 4, 1);
+            $table->decimal('bathroom_count', 2, 1);
             // Pricing
-            $table->integer('base_rate');
+            $table->decimal('base_rate', 9, 2);
             $table->integer('tax_rate');
             // Options
             $table->string('slug');

@@ -4,7 +4,9 @@ namespace App\Http\Pages\Host\Properties;
 
 use App\Forms\HostPropertyForm;
 use App\Models\AmenityGroup;
+use App\Models\Property;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -27,12 +29,20 @@ class NewProperty extends Component
 
     #[Validate([
         'temp_photos' => 'nullable|array',
-        'temp_photos.*' => 'image|mimes:jpg,jpeg,png,webp,bmp|extensions:jpg,jpeg,png,webp,bmp|max:10240',
+        'temp_photos.*' => 'image|mimetypes:image/jpeg,image/jpg,image/png,image/webp,image/bmp|mimes:jpg,jpeg,png,webp,bmp|extensions:jpg,jpeg,png,webp,bmp|max:12288',
+    ], message: [
+        'temp_photos.*.image' => 'Only image files are permitted for upload.',
+        'temp_photos.*.max' => 'Uploaded images can not exceed a max file size of 12MB.',
+        'temp_photos.*.mimes' => '1Images must be in a common image format. (e.g., jpeg, jpg, png, webp, and bmp)',
+        'temp_photos.*.extensions' => '2Images must be in a common image format. (e.g., jpeg, jpg, png, webp, and bmp)',
     ], as: [
         'temp_photos' => 'selected photos',
         'temp_photos.*' => 'selected photo',
+    ], attribute: [
+        'temp_photos' => 'selected photos',
+        'temp_photos.*' => 'selected photo',
     ])]
-    public $temp_photos;
+    public $temp_photos = [];
 
     /**
      * Runs on page load
@@ -64,13 +74,27 @@ class NewProperty extends Component
     }
 
     /**
+     * Property name updated hook
+     *
+     * When the user updates the property name, we need to generate a slug for it.
+     * We also need to capitalize the value.
+     */
+    public function updatedFormName(string $value): void
+    {
+        // Generate property url slug
+        $this->form->slug = Property::generateSlug($value);
+
+        // Capitalize value
+        $this->form->name = ucwords($this->form->name);
+    }
+
+    /**
      * Open Amenities Modal
      * Runs when the user attempts to open the amenities modal
      *
      * - Pulls all amenity groups with associated amenenites
      * - Clears selected amenities
      * - Loops through each existing amenities, adds to the selected amenities
-     * -
      */
     public function openAmenitiesModal(): void
     {
@@ -127,6 +151,7 @@ class NewProperty extends Component
 
     /**
      * Remove Amenity
+     *
      * Removes an amenity from the existing amenities.
      */
     public function removeAmenity(string $amenity_id): void
@@ -143,8 +168,23 @@ class NewProperty extends Component
     }
 
     /**
-     * Add new fee
-     * Adds a new fee to the fees array
+     * Clear amenities
+     *
+     * Clears all the selected amenities
+     */
+    public function clearAmenities(): void
+    {
+        // Clear out all amenities
+        $this->form->amenities = [];
+
+        // Close the clear amenities modal
+        $this->modal('clear-amenities-modal')->close();
+    }
+
+    /**
+     * Add fee
+     *
+     * Adds a new empty fee to the fees array
      */
     public function addFee(): void
     {
@@ -177,12 +217,16 @@ class NewProperty extends Component
     public function updatedTempPhotos(): void
     {
         // Validate temp photos
+        $this->validateOnly('temp_photos');
         $this->validateOnly('temp_photos.*');
 
         // Loop through each temp photo, adding it to the form
         foreach ($this->temp_photos as $selected_photo) {
             $this->form->photos[] = $selected_photo;
         }
+
+        $this->validateOnly('photos');
+        $this->validateOnly('photos.*');
 
         // Clear temp photos
         // This is primarily to remove the "# selected files" from the file input
@@ -219,20 +263,26 @@ class NewProperty extends Component
     public function updatePhotoOrder(array $photo_order_data): void
     {
         // Reorder photos based on the order given in $photo_order_data
-        $this->form->photos = array_map(fn ($item) => $this->form->photos[$item['value']], $photo_order_data);
+        $this->form->photos = array_map(fn($item) => $this->form->photos[$item['value']], $photo_order_data);
     }
 
     /**
      * Submit
      */
-    public function submit(): void
+    public function submit()
     {
-        dd($this->form->toArray());
-
-        // Validate the form
-        $this->validate();
-
         // Save property
-        $this->form->saveProperty();
+        try {
+            // code...
+            $property = $this->form->saveProperty();
+        } catch (\Throwable $th) {
+            toast()->danger('There was an issue saving the property.')->push();
+
+            return;
+        }
+
+        toast()->success($property->name . ' was successfully added!')->pushOnNextPage();
+
+        return $this->redirect(route('host.properties.index'), navigate: true);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,7 +9,32 @@ use Illuminate\Support\Str;
 
 class Property extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'address_line1',
+        'address_line2',
+        'address_city',
+        'address_state',
+        'address_postal',
+        'address_country',
+        'listing_headline',
+        'listing_description',
+        'type_id',
+        'guest_count',
+        'bed_count',
+        'bedroom_count',
+        'bathroom_count',
+        'base_rate',
+        'tax_rate',
+        'slug',
+        'calendar_color',
+        'duration_min',
+        'duration_max',
+        'visibility',
+        'host_id',
+    ];
 
     /**
      * Automatically generate a unique slug for the property.
@@ -29,12 +53,17 @@ class Property extends Model
         });
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     /**
      * Get the photos for the property.
      */
     public function photos(): HasMany
     {
-        return $this->hasMany(PropertyPhoto::class)->orderBy('order');
+        return $this->hasMany(PropertyPhoto::class)->orderBy('position');
     }
 
     /**
