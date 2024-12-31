@@ -21,7 +21,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "v3.14.9",
         "fakerphp/faker": "v1.24.1",
-        "laravel/pint": "v1.18.3",
+        "laravel/pint": "v1.19.0",
         "laravel/sail": "v1.39.1",
         "laravel/telescope": "v5.2.6",
         "laravel/tinker": "v2.10.0",
