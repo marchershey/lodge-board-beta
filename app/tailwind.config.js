@@ -4,7 +4,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 export default {
-    darkMode: "selector",
+    darkMode: "null",
     content: [
         "./resources/**/*.blade.php",
         "./app/**/*.php",
