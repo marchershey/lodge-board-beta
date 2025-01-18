@@ -41,7 +41,7 @@
                     <livewire:pages.host.properties.view-property-details :property="$property" @property-updated="$refresh" />
                 </flux:tab.panel>
                 <flux:tab.panel name="listing">
-                    <flux:card>listing</flux:card>
+                    <livewire:pages.host.properties.view-property-listing :property="$property" @property-updated="$refresh" />
                 </flux:tab.panel>
                 <flux:tab.panel name="rates">
                     <flux:card>rates</flux:card>

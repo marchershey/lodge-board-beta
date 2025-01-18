@@ -46,11 +46,11 @@ window.addEventListener("console", (event) => {
 /**
  * https://github.com/marchershey/lodge-board-beta/issues/130
  */
-// window.addEventListener(
-//     "popstate",
-//     (event) => {
-//         // The popstate event is fired each time when the current history entry changes.
-//         location.reload();
-//     },
-//     false,
-// );
+window.addEventListener(
+    "popstate",
+    (event) => {
+        // The popstate event is fired each time when the current history entry changes.
+        location.reload();
+    },
+    false,
+);

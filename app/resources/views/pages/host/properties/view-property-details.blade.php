@@ -47,7 +47,7 @@
                     @endforeach
                 </flux:select>
             </div>
-            <div class="flex" wire:dirty>
+            <div class="flex" wire:dirty wire:target="address">
                 <flux:spacer></flux:spacer>
                 <flux:button type="submit">Update address</flux:button>
             </div>
