@@ -19,7 +19,7 @@
         "usernotnull/tall-toasts": "v2.1.0"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "v3.15.0",
+        "barryvdh/laravel-debugbar": "v3.15.2",
         "fakerphp/faker": "v1.24.1",
         "laravel/pint": "v1.21.0",
         "laravel/sail": "v1.41.0",
