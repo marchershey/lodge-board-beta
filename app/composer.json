@@ -16,7 +16,7 @@
         "livewire/flux-pro": "^2.0",
         "livewire/livewire": "v3.5.20",
         "spatie/laravel-settings": "^3.4.2",
-        "usernotnull/tall-toasts": "v2.1.0"
+        "usernotnull/tall-toasts": "v2.2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "v3.15.0",
