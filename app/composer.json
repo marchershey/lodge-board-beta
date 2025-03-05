@@ -10,7 +10,7 @@
     "require": {
         "php": ">=8.3",
         "guzzlehttp/guzzle": "^7.9.2",
-        "laravel/framework": "v11.43.2",
+        "laravel/framework": "v11.44.1",
         "laravel/sanctum": "v4.0.8",
         "livewire/flux": "v2.0.2",
         "livewire/flux-pro": "^2.0",
