@@ -7,7 +7,7 @@
     },
     "devDependencies": {
         "@wotz/livewire-sortablejs": "^1.0.0",
-        "autoprefixer": "^10.4.20",
+        "autoprefixer": "^10.4.21",
         "laravel-vite-plugin": "^1.2.0",
         "postcss": "^8.5.3",
         "prettier": "^3.5.2",
