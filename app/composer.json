@@ -14,7 +14,7 @@
         "laravel/sanctum": "v4.0.8",
         "livewire/flux": "v2.0.2",
         "livewire/flux-pro": "^2.0",
-        "livewire/livewire": "v3.5.20",
+        "livewire/livewire": "v3.6.2",
         "spatie/laravel-settings": "^3.4.2",
         "usernotnull/tall-toasts": "v2.1.0"
     },
