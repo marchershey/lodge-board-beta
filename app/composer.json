@@ -23,7 +23,7 @@
         "fakerphp/faker": "v1.24.1",
         "laravel/pint": "v1.21.0",
         "laravel/sail": "v1.41.0",
-        "laravel/telescope": "v5.5.0",
+        "laravel/telescope": "v5.5.1",
         "laravel/tinker": "v2.10.1",
         "mockery/mockery": "^1.6.12",
         "nunomaduro/collision": "v8.6.1",
